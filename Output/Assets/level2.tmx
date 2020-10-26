@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="63" height="63" tilewidth="32" tileheight="32" nextobjectid="156">
  <tileset firstgid="1" name="warped_caves_spritesheet32x32" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="180" columns="18">
-  <image source="warped_caves_spritesheet32x32.png" width="595" height="331"/>
+  <image source="../../../../../3r/dev/Charged/Game/maps/warped_caves_spritesheet32x32.png" width="595" height="331"/>
   <terraintypes>
    <terrain name="Ground" tile="37"/>
    <terrain name="Water1" tile="129"/>
@@ -56,7 +56,7 @@
   <tile id="178" terrain=",0,0,0"/>
  </tileset>
  <tileset firstgid="181" name="background2" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="42" columns="7">
-  <image source="background2.png" width="249" height="218"/>
+  <image source="../../../../../3r/dev/Charged/Game/maps/background2.png" width="249" height="218"/>
   <terraintypes>
    <terrain name="Rock" tile="31"/>
   </terraintypes>
@@ -79,16 +79,16 @@
   <tile id="39" terrain="0,,,"/>
  </tileset>
  <tileset firstgid="223" name="background" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="35" columns="7">
-  <image source="background.png" width="240" height="176"/>
+  <image source="../../../../../3r/dev/Charged/Game/maps/background.png" width="240" height="176"/>
  </tileset>
  <tileset firstgid="258" name="middleground-no-fungus" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="40" columns="8">
-  <image source="middleground-no-fungus.png" width="272" height="176"/>
+  <image source="../../../../../3r/dev/Charged/Game/maps/middleground-no-fungus.png" width="272" height="176"/>
  </tileset>
  <tileset firstgid="298" name="middleground" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="40" columns="8">
-  <image source="middleground.png" width="272" height="176"/>
+  <image source="../../../../../3r/dev/Charged/Game/maps/middleground.png" width="272" height="176"/>
  </tileset>
  <tileset firstgid="338" name="reversed-tube" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="4" columns="2">
-  <image source="reversed-tube.png" width="67" height="67"/>
+  <image source="../../../../../3r/dev/Charged/Game/maps/reversed-tube.png" width="67" height="67"/>
  </tileset>
  <layer name="Background3" width="63" height="63" opacity="0.5">
   <data>
