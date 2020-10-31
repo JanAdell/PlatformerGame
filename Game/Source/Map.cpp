@@ -221,9 +221,14 @@ bool Map::Load(const char* file_name)
 			data.layers.add(lay);
 
 	}
+		
 
-	pugi::xml_node cnode = map_file.child("map").child("objectgroup");
+	pugi::xml_node object;
+	for (object = map_file.child("map").child("objectgroup"); object && ret; object = object.next_sibling("objectgroup"))
+	{
+		ret = LoadObjects(object);
 
+	}
 
 	if (ret == true)
 	{
@@ -436,13 +441,13 @@ bool Map::LoadObjects(pugi::xml_node& node)
 
 	}
 
-	else if (name == "MapDamage")
+	else if (name == "ColliderDmg")
 	{
 		for (pugi::xml_node obj = node.child("object"); obj && ret; obj = obj.next_sibling("object"))
 			app->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER_DAMAGE);
 	}
 
-	else if (name == "NextLevel")
+	else if (name == "NextLvl")
 	{
 		for (pugi::xml_node obj = node.child("object"); obj && ret; obj = obj.next_sibling("object"))
 		{

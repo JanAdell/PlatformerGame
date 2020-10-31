@@ -6,14 +6,17 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Animation.h"
+#include "Collisions.h"
+#include "Map.h"
 #include "SString.h"
 
 #define GRAVITY 0.7f
-//#define COLLIDER_OFFSET -25
+#define COLLIDER_OFFSET -25
 
 Player::Player() : Module()
 {
 	name.create("player");
+	
 }
 
 bool Player::Awake(pugi::xml_node& player_node)
@@ -76,6 +79,8 @@ bool Player::Awake(pugi::xml_node& player_node)
 
 	currentAnim = &idleAnim;
 
+	//collider_player = app->collisions->AddCollider({ node.attribute("x").as_int(),node.attribute("y").as_int() ,node.attribute("w").as_int() ,node.attribute("h").as_int() }, COLLIDER_PLAYER);
+
 	return true;
 }
 
@@ -83,6 +88,12 @@ bool Player::Awake(pugi::xml_node& player_node)
 bool Player::Start()
 {
 	characterTex = app->tex->Load("Assets/textures/player.png");
+	pugi::xml_node node = player_node.child("position");
+	position.x = node.attribute("x").as_int();
+	position.y = node.attribute("y").as_int();
+	size.x = node.attribute("w").as_int();
+	size.y = node.attribute("h").as_int();
+	collider_player = app->collisions->AddCollider({ node.attribute("x").as_int(),node.attribute("y").as_int() ,node.attribute("w").as_int() ,node.attribute("h").as_int() }, COLLIDER_TYPE::COLLIDER_PLAYER);
 
 	return true;
 }
@@ -144,6 +155,53 @@ bool Player::PreUpdate()
 	}
 
 	return true;
+}
+
+void Player::OnCollision(Collider* col1)
+{
+	if (col1->type == COLLIDER_TYPE::COLLIDER)
+	{
+		//vertical collisions
+		if (app->map->collider->rect.x < col1->rect.x + col1->rect.w - 5 && app->map->collider->rect.x + app->map->collider->rect.w > col1->rect.x + 5)
+		{
+			if (app->map->collider->rect.y + app->map->collider->rect.h > col1->rect.y && app->map->collider->rect.y < col1->rect.y && state != PLAYER_STATE::JUMPING && state != PLAYER_STATE::RUNNING)
+			{
+				//speed.y = initialJumpSpeed;
+				state = PLAYER_STATE::IDLE;
+				//jumpTime.Start();
+			}
+
+			else if (app->map->collider->rect.y < col1->rect.y + col1->rect.h && app->map->collider->rect.y + app->map->collider->rect.h > col1->rect.y + col1->rect.h)
+			{
+				state = PLAYER_STATE::FALLING;
+			}
+		}
+
+		//horitzontal collisions
+		if (app->map->collider->rect.y < col1->rect.y + col1->rect.h - 5 && app->map->collider->rect.y + app->map->collider->rect.h > col1->rect.y + 5)
+		{
+			if (app->map->collider->rect.x < col1->rect.x + col1->rect.w && app->map->collider->rect.x + app->map->collider->rect.w > col1->rect.x + col1->rect.w)
+			{
+				position.x += speed.x;
+			}
+
+			else if (app->map->collider->rect.x + app->map->collider->rect.w > col1->rect.x && app->map->collider->rect.x < col1->rect.x)
+			{
+				position.x -= speed.x;
+			}
+		}
+
+	}
+
+	else if (col1->type == COLLIDER_TYPE::NEXTLVL)
+	{
+		
+	}
+	else if (col1->type == COLLIDER_TYPE::COLLIDER_DAMAGE)
+	{
+		state = PLAYER_STATE::DEAD;
+	}
+	
 }
 
 bool Player::Update(float dt)

@@ -13,6 +13,16 @@ struct SDL_Texture;
 struct SDL_Rect;
 struct Collider;
 
+enum PLAYER_STATE
+{
+	IDLE,
+	RUNNING,
+	JUMPING,
+	FALLING,
+	DEAD,
+	MAX_STATES
+};
+
 class Player : public Module
 {
 public:
@@ -33,8 +43,8 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
-	//void OnCollision(Collider* c1, Collider* c2);
-	//Collider* colliderplayer = nullptr;
+	void OnCollision(Collider* c1);
+	Collider* collider_player;
 
 	bool IsStanding();
 	fPoint position;
@@ -43,14 +53,14 @@ public:
 	fPoint GetSpeed() const;
 
 	bool firstUpdate = true;
-	Collider* collider_player = nullptr;
+	//Collider* collider_player = nullptr;
 
 private:
 	float moveSpeed = 30;
 	float contpeed = -25;
 
 	iPoint size;
-
+	iPoint offset;
 	fPoint speed;
 	fPoint acceleration;
 
@@ -69,6 +79,8 @@ private:
 	float deltaTime = 0;
 	Uint32 lastTime = 0;
 	Uint32 currTime = 0;
+
+	PLAYER_STATE state = IDLE;
 
 	bool jumping;
 	float maxJumpHeight;

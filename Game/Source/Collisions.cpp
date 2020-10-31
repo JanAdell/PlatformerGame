@@ -124,9 +124,6 @@ void Collisions::DebugDraw()
 
 		switch (colliders[i]->type)
 		{
-		case COLLIDER_NONE:
-			app->render->DrawRectangle(colliders[i]->rect, 255, 255, 255, alpha);
-			break;
 		case COLLIDER:
 			app->render->DrawRectangle(colliders[i]->rect, 0, 0, 255, alpha);
 			break;
@@ -147,7 +144,7 @@ bool Collisions::CleanUp()
 {
 	//LOG("Freeing all colliders");
 
-	for (uint i = 0; i < COLLIDER_MAX; ++i)
+	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
 		if (colliders[i] != nullptr)
 		{
@@ -163,7 +160,7 @@ Collider* Collisions::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, Module* cal
 {
 	Collider* ret = nullptr;
 
-	for (uint i = 0; i < COLLIDER_MAX; ++i)
+	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
 		if (colliders[i] == nullptr)
 		{

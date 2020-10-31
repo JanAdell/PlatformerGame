@@ -112,6 +112,8 @@ private:
 public:
 
 	MapData data;
+	Collider* collider;
+	
 
 private:
 
