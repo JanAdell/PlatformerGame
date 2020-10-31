@@ -3,8 +3,11 @@
 #include "App.h"
 #include "Render.h"
 #include "Textures.h"
+#include "Player.h"
 #include "Map.h"
 #include "Window.h"
+#include "Collisions.h"
+#include "Scene.h"
 #include <math.h>
 
 Map::Map() : Module(), map_loaded(false)
@@ -410,6 +413,57 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 			layer->data[i++] = tile.attribute("gid").as_int(0);
 		}
 	}
+
+	return ret;
+}
+
+bool Map::LoadObjects(pugi::xml_node& node)
+{
+	bool ret = true;
+	if (node == NULL)
+		LOG("Error");
+	SString name(node.attribute("name").as_string());
+
+	if (name == "Colliders")
+	{
+		for (pugi::xml_node obj = node.child("object"); obj && ret; obj = obj.next_sibling("object"))
+		{
+			pugi::xml_node properties = obj.child("properties").child("property");
+			bool is_win = properties.attribute("value").as_bool();
+			app->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER);
+
+		}
+
+	}
+
+	else if (name == "MapDamage")
+	{
+		for (pugi::xml_node obj = node.child("object"); obj && ret; obj = obj.next_sibling("object"))
+			app->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER_DAMAGE);
+	}
+
+	else if (name == "NextLevel")
+	{
+		for (pugi::xml_node obj = node.child("object"); obj && ret; obj = obj.next_sibling("object"))
+		{
+			pugi::xml_node properties = obj.child("properties").child("property");
+
+			SString check_point_type = properties.attribute("name").as_string();
+
+			bool value = properties.attribute("value").as_bool();
+
+			if (check_point_type == "win" && value)
+				app->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::NEXTLVL);
+			else if (check_point_type == "first" && value)
+			{
+				app->player->collider_player = app->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER_PLAYER);
+				app->render->camera.x = -app->player->position.x;
+				app->render->camera.y = -app->player->position.y + app->render->camera.h;
+			}
+		}
+	}
+
+
 
 	return ret;
 }

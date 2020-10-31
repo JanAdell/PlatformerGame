@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Point.h"
 #include "Animation.h"
+#include "Collisions.h"
 #include "SDL_mixer/include/SDL_mixer.h"
 #include "SDL/include/SDL_render.h"
 //#pragma comment(lib, "SDL_mixer/libx86/SDL2_mixer.lib")
@@ -42,6 +43,7 @@ public:
 	fPoint GetSpeed() const;
 
 	bool firstUpdate = true;
+	Collider* collider_player = nullptr;
 
 private:
 	float moveSpeed = 30;

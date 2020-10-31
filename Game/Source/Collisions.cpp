@@ -11,8 +11,8 @@ Collisions::Collisions()
 		colliders[i] = nullptr;
 
 	matrix[COLLIDER][COLLIDER] = false;
-	matrix[COLLIDER][NEXTLVL] = true;
-	matrix[COLLIDER][COLLIDER_PLAYER] = false;
+	matrix[COLLIDER][NEXTLVL] = false;
+	matrix[COLLIDER][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER][COLLIDER_DAMAGE] = false;
 
 	matrix[COLLIDER_PLAYER][COLLIDER] = true;
@@ -147,7 +147,7 @@ bool Collisions::CleanUp()
 {
 	//LOG("Freeing all colliders");
 
-	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	for (uint i = 0; i < COLLIDER_MAX; ++i)
 	{
 		if (colliders[i] != nullptr)
 		{
@@ -163,7 +163,7 @@ Collider* Collisions::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, Module* cal
 {
 	Collider* ret = nullptr;
 
-	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	for (uint i = 0; i < COLLIDER_MAX; ++i)
 	{
 		if (colliders[i] == nullptr)
 		{
