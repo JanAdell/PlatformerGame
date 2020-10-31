@@ -6,7 +6,7 @@
   </app>
     
   <renderer>
-    <vsync value="false"/>
+    <vsync value="true"/>
   </renderer>
     
   <window>
@@ -84,7 +84,7 @@
       <frame x="97" y="116" w="20" h="34"/>
       <frame x="118" y="119" w="25" h="24"/>
     </animation>
-    <position x = "60" y = "600"/>
+    <position x = "500" y = "300"/>
     <speed x = "2" y = "2"/>
   </player>
     
