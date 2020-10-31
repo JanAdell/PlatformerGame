@@ -4,9 +4,11 @@
     <title>Game Development Testbed</title>
     <organization>UPC</organization>
   </app>
+    
   <renderer>
     <vsync value="false"/>
   </renderer>
+    
   <window>
     <resolution width="1280" height="720" scale="1"/>
     <fullscreen value="false"/>
@@ -14,4 +16,13 @@
     <resizable value="false"/>
     <fullscreen_window value="false"/>
   </window>
+        
+  <file_system>
+    <path>data.zip</path>
+  </file_system>
+    
+  <map>
+    <folder>maps/</folder>
+  </map>
+    
 </config>
