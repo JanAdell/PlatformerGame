@@ -43,7 +43,7 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
-	void OnCollision(Collider* c1);
+	void OnCollision(Collider* c1, Collider* c2);
 	Collider* collider_player;
 
 	bool IsStanding();

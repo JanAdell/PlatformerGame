@@ -1,6 +1,7 @@
 #include "App.h"
 #include "Window.h"
 #include "Render.h"
+#include "Player.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -70,6 +71,8 @@ bool Render::PreUpdate()
 
 bool Render::Update(float dt)
 {
+	//camera.x = app->player->position.x;
+	//camera.y = app->player->position.y;
 	return true;
 }
 

@@ -10,7 +10,7 @@
 #include "Map.h"
 #include "SString.h"
 
-#define GRAVITY 0.7f
+#define GRAVITY 1.0f
 #define COLLIDER_OFFSET -25
 
 Player::Player() : Module()
@@ -78,9 +78,7 @@ bool Player::Awake(pugi::xml_node& player_node)
 	size.y = node.attribute("h").as_int();
 
 	currentAnim = &idleAnim;
-
-	//collider_player = app->collisions->AddCollider({ node.attribute("x").as_int(),node.attribute("y").as_int() ,node.attribute("w").as_int() ,node.attribute("h").as_int() }, COLLIDER_PLAYER);
-
+	
 	return true;
 }
 
@@ -93,7 +91,7 @@ bool Player::Start()
 	position.y = node.attribute("y").as_int();
 	size.x = node.attribute("w").as_int();
 	size.y = node.attribute("h").as_int();
-	collider_player = app->collisions->AddCollider({ node.attribute("x").as_int(),node.attribute("y").as_int() ,node.attribute("w").as_int() ,node.attribute("h").as_int() }, COLLIDER_TYPE::COLLIDER_PLAYER);
+	collider_player = app->collisions->AddCollider({ node.attribute("x").as_int(),node.attribute("y").as_int() ,node.attribute("w").as_int() ,node.attribute("h").as_int() }, COLLIDER_TYPE::COLLIDER_PLAYER, this);
 
 	return true;
 }
@@ -157,35 +155,35 @@ bool Player::PreUpdate()
 	return true;
 }
 
-void Player::OnCollision(Collider* col1)
+void Player::OnCollision(Collider* col1, Collider* col2)
 {
-	if (col1->type == COLLIDER_TYPE::COLLIDER)
+	if (col1->type == COLLIDER_TYPE::COLLIDER || col2->type == COLLIDER_TYPE::COLLIDER)
 	{
 		//vertical collisions
-		if (app->map->collider->rect.x < col1->rect.x + col1->rect.w - 5 && app->map->collider->rect.x + app->map->collider->rect.w > col1->rect.x + 5)
+		if (collider_player->rect.x < col1->rect.x + col1->rect.w - 5 && collider_player->rect.x + collider_player->rect.w > col1->rect.x + 5 || collider_player->rect.x < col2->rect.x + col2->rect.w - 5 && collider_player->rect.x + collider_player->rect.w > col2->rect.x + 5)
 		{
-			if (app->map->collider->rect.y + app->map->collider->rect.h > col1->rect.y && app->map->collider->rect.y < col1->rect.y && state != PLAYER_STATE::JUMPING && state != PLAYER_STATE::RUNNING)
+			if (collider_player->rect.y + collider_player->rect.h > col1->rect.y && collider_player->rect.y < col1->rect.y && state != PLAYER_STATE::JUMPING && state != PLAYER_STATE::RUNNING || collider_player->rect.y + collider_player->rect.h > col2->rect.y && collider_player->rect.y < col2->rect.y && state != PLAYER_STATE::JUMPING && state != PLAYER_STATE::RUNNING)
 			{
-				//speed.y = initialJumpSpeed;
-				state = PLAYER_STATE::IDLE;
-				//jumpTime.Start();
+				state = IDLE;
+				speed.y = -GRAVITY;
 			}
 
-			else if (app->map->collider->rect.y < col1->rect.y + col1->rect.h && app->map->collider->rect.y + app->map->collider->rect.h > col1->rect.y + col1->rect.h)
+			else if (collider_player->rect.y < col1->rect.y + col1->rect.h && collider_player->rect.y + collider_player->rect.h > col1->rect.y + col1->rect.h || collider_player->rect.y < col2->rect.y + col2->rect.h && collider_player->rect.y + collider_player->rect.h > col2->rect.y + col2->rect.h)
 			{
-				state = PLAYER_STATE::FALLING;
+				state = FALLING;
+				speed.y = -GRAVITY;
 			}
 		}
 
 		//horitzontal collisions
-		if (app->map->collider->rect.y < col1->rect.y + col1->rect.h - 5 && app->map->collider->rect.y + app->map->collider->rect.h > col1->rect.y + 5)
+		if (collider_player->rect.y < col1->rect.y + col1->rect.h - 5 && collider_player->rect.y + collider_player->rect.h > col1->rect.y + 5 || collider_player->rect.y < col2->rect.y + col2->rect.h - 5 && collider_player->rect.y + collider_player->rect.h > col2->rect.y + 5)
 		{
-			if (app->map->collider->rect.x < col1->rect.x + col1->rect.w && app->map->collider->rect.x + app->map->collider->rect.w > col1->rect.x + col1->rect.w)
+			if (collider_player->rect.x < col1->rect.x + col1->rect.w && collider_player->rect.x + collider_player->rect.w > col1->rect.x + col1->rect.w || collider_player->rect.x < col2->rect.x + col2->rect.w && collider_player->rect.x + collider_player->rect.w > col2->rect.x + col2->rect.w)
 			{
 				position.x += speed.x;
 			}
 
-			else if (app->map->collider->rect.x + app->map->collider->rect.w > col1->rect.x && app->map->collider->rect.x < col1->rect.x)
+			else if (collider_player->rect.x + collider_player->rect.w > col1->rect.x && collider_player->rect.x < col1->rect.x || collider_player->rect.x + collider_player->rect.w > col2->rect.x && collider_player->rect.x < col2->rect.x)
 			{
 				position.x -= speed.x;
 			}
@@ -193,14 +191,16 @@ void Player::OnCollision(Collider* col1)
 
 	}
 
-	else if (col1->type == COLLIDER_TYPE::NEXTLVL)
+	
+
+	/*else if (col1->type == COLLIDER_TYPE::NEXTLVL)
 	{
 		
 	}
 	else if (col1->type == COLLIDER_TYPE::COLLIDER_DAMAGE)
 	{
 		state = PLAYER_STATE::DEAD;
-	}
+	}*/
 	
 }
 
@@ -234,11 +234,23 @@ bool Player::Update(float dt)
 	{
 		currentAnim = &jumpAnim;
 	}
+
+	switch (state) 
+	{
+		
+		case DEAD:
+
+			break;
+
+	}
+
 	speed.x = speed.x + acceleration.x * deltaTime;
 	speed.y = speed.y + acceleration.y * deltaTime;
 
 	position.x = position.x + speed.x * deltaTime;
 	position.y = position.y + speed.y * deltaTime;
+
+	collider_player->SetPos(position.x, position.y);
 
 	return true;
 }

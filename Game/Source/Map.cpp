@@ -433,8 +433,6 @@ bool Map::LoadObjects(pugi::xml_node& node)
 	{
 		for (pugi::xml_node obj = node.child("object"); obj && ret; obj = obj.next_sibling("object"))
 		{
-			pugi::xml_node properties = obj.child("properties").child("property");
-			bool is_win = properties.attribute("value").as_bool();
 			app->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER);
 
 		}
@@ -451,20 +449,8 @@ bool Map::LoadObjects(pugi::xml_node& node)
 	{
 		for (pugi::xml_node obj = node.child("object"); obj && ret; obj = obj.next_sibling("object"))
 		{
-			pugi::xml_node properties = obj.child("properties").child("property");
-
-			SString check_point_type = properties.attribute("name").as_string();
-
-			bool value = properties.attribute("value").as_bool();
-
-			if (check_point_type == "win" && value)
-				app->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::NEXTLVL);
-			else if (check_point_type == "first" && value)
-			{
-				app->player->collider_player = app->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER_PLAYER);
-				app->render->camera.x = -app->player->position.x;
-				app->render->camera.y = -app->player->position.y + app->render->camera.h;
-			}
+			app->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::NEXTLVL);
+					
 		}
 	}
 
