@@ -35,14 +35,20 @@ bool Player::Awake(pugi::xml_node& player_node)
 			if (name == "idle")
 			{
 				idleAnim.PushBack(frame);
+				idleAnim.speed = node.attribute("speed").as_float();
+				idleAnim.loop = node.attribute("loop").as_bool();
 			}
 			else if (name == "jump")
 			{
 				jumpAnim.PushBack(frame);
+				jumpAnim.speed = node.attribute("speed").as_float();
+				jumpAnim.loop = node.attribute("loop").as_bool();
 			}
 			else if (name == "run")
 			{
 				runAnim.PushBack(frame);
+				runAnim.speed = node.attribute("speed").as_float();
+				runAnim.loop = node.attribute("loop").as_bool();
 			}
 		}
 
