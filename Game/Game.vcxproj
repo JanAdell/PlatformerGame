@@ -89,6 +89,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EntityManager.cpp" />
+    <ClCompile Include="FadeToBlack.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\App.cpp" />
     <ClCompile Include="Source\Audio.cpp" />
@@ -98,6 +100,8 @@
     <ClCompile Include="Source\Render.cpp" />
     <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\Window.cpp" />
+    <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="FadeToBlack.h" />
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\Audio.h" />

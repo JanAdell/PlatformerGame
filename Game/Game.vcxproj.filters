@@ -16,6 +16,8 @@
       <Filter>External\PugiXml</Filter>
     </ClCompile>
     <ClCompile Include="Source\Map.cpp" />
+    <ClCompile Include="FadeToBlack.cpp" />
+    <ClCompile Include="EntityManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -51,6 +53,8 @@
       <Filter>External\PugiXml</Filter>
     </ClInclude>
     <ClInclude Include="Source\Map.h" />
+    <ClInclude Include="FadeToBlack.h" />
+    <ClInclude Include="EntityManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
