@@ -6,6 +6,7 @@
 #include "Audio.h"
 #include "Scene.h"
 #include "Map.h"
+#include "FadeToBlack.h"
 #include "Player.h"
 #include "Collisions.h"
 
@@ -27,6 +28,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new Audio();
 	scene = new Scene();
 	map = new Map();
+	fade = new FadeToBlack();
 	player = new Player();
 	collisions = new Collisions();
 

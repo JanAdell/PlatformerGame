@@ -32,6 +32,11 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void LoadLevel1();
+	void LoadLevel2();
+
+	bool Lvl1 = true;
+
 private:
 	SDL_Texture* img;
 };

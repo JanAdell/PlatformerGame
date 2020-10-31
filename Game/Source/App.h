@@ -14,6 +14,7 @@ class Textures;
 class Audio;
 class Scene;
 class Map;
+class FadeToBlack;
 class Player;
 class Collisions;
 
@@ -78,6 +79,7 @@ public:
 	Audio* audio;
 	Scene* scene;
 	Map* map;
+	FadeToBlack* fade;
 	Player* player;
 	Collisions* collisions;
 

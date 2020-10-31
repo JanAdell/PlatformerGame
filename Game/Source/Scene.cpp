@@ -6,7 +6,8 @@
 #include "Window.h"
 #include "Map.h"
 #include "Scene.h"
-
+#include "Player.h"
+#include "FadetoBlack.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -33,8 +34,7 @@ bool Scene::Start()
 {
 	app->win->SetTitle("Charged v0.1");
 	//img = app->tex->Load("Assets/textures/test.png");
-	//app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
-	app->map->Load("level1.tmx");
+	LoadLevel1();
 
 	return true;
 }
@@ -59,6 +59,16 @@ bool Scene::Update(float dt)
 
 	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		app->render->camera.x += 1;
+	
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_REPEAT)
+	{
+		LoadLevel1();
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_REPEAT)
+	{
+		LoadLevel2();
+	}
 
 	//app->render->DrawTexture(img, 380, 100);
 	app->map->Draw();
@@ -83,4 +93,28 @@ bool Scene::CleanUp()
 	LOG("Freeing scene");
 
 	return true;
+}
+
+void Scene::LoadLevel1()
+{
+	Lvl1;
+	app->player->CleanUp();
+	app->fade->FadeTo();
+	app->map->CleanUp();
+	app->fade->FadeTo();
+	app->player->Start();
+	app->map->Load("level1.tmx");
+	app->audio->PlayMusic("Assets/audio/music/lvl1bgm.ogg");
+}
+
+void Scene::LoadLevel2()
+{
+	!Lvl1;
+	app->player->CleanUp();
+	app->fade->FadeTo();
+	app->map->CleanUp();
+	app->fade->FadeTo();
+	app->player->Start();
+	app->map->Load("level2.tmx");
+	app->audio->PlayMusic("Assets/audio/music/lvl2bgm.ogg");
 }

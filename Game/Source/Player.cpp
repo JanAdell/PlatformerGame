@@ -5,6 +5,7 @@
 #include "App.h"
 #include "Render.h"
 #include "Textures.h"
+#include "Scene.h"
 #include "Animation.h"
 #include "Collisions.h"
 #include "Map.h"
@@ -69,15 +70,23 @@ bool Player::Awake(pugi::xml_node& player_node)
 
 	}
 
-	pugi::xml_node node = player_node.child("position");
-	position.x = node.attribute("x").as_int();
-	position.y = node.attribute("y").as_int();
-	speed.x = 0;
-	speed.y = 0;
-	size.x = node.attribute("w").as_int();
-	size.y = node.attribute("h").as_int();
+	if (app->scene->Lvl1)
+	{
+		pugi::xml_node node = player_node.child("positionLvl1");
+		position.x = node.attribute("x").as_int();
+		position.y = node.attribute("y").as_int();
+		size.x = node.attribute("w").as_int();
+		size.y = node.attribute("h").as_int();
+	}
 
-	currentAnim = &idleAnim;
+	else if (app->scene->Lvl1)
+	{
+		pugi::xml_node node = player_node.child("positionLvl2");
+		position.x = node.attribute("x").as_int();
+		position.y = node.attribute("y").as_int();
+		size.x = node.attribute("w").as_int();
+		size.y = node.attribute("h").as_int();
+	}
 	
 	return true;
 }
