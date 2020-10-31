@@ -7,6 +7,8 @@
 #include "Log.h"
 
 #define VSYNC true
+#define CAMERA_MARGE_L 150
+#define CAMERA_MARGE_XL 330
 
 Render::Render() : Module()
 {
@@ -15,6 +17,7 @@ Render::Render() : Module()
 	background.g = 0;
 	background.b = 0;
 	background.a = 0;
+
 }
 
 // Destructor
@@ -25,11 +28,12 @@ Render::~Render()
 bool Render::Awake(pugi::xml_node& config)
 {
 	LOG("Create SDL rendering context");
+
 	bool ret = true;
 
 	Uint32 flags = SDL_RENDERER_ACCELERATED;
 
-	if(config.child("vsync").attribute("value").as_bool(true) == true)
+	if (config.child("vsync").attribute("value").as_bool(true) == true)
 	{
 		flags |= SDL_RENDERER_PRESENTVSYNC;
 		LOG("Using vsync");
@@ -37,7 +41,7 @@ bool Render::Awake(pugi::xml_node& config)
 
 	renderer = SDL_CreateRenderer(app->win->window, -1, flags);
 
-	if(renderer == NULL)
+	if (renderer == NULL)
 	{
 		LOG("Could not create the renderer! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
@@ -57,8 +61,7 @@ bool Render::Awake(pugi::xml_node& config)
 bool Render::Start()
 {
 	LOG("render start");
-	// back background
-	SDL_RenderGetViewport(renderer, &viewport);
+	
 	return true;
 }
 
@@ -66,20 +69,22 @@ bool Render::Start()
 bool Render::PreUpdate()
 {
 	SDL_RenderClear(renderer);
+	CameraPos();
+
 	return true;
 }
 
 bool Render::Update(float dt)
 {
-	//camera.x = app->player->position.x;
-	//camera.y = app->player->position.y;
 	return true;
 }
 
 bool Render::PostUpdate()
 {
+	
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
 	SDL_RenderPresent(renderer);
+
 	return true;
 }
 
@@ -91,15 +96,61 @@ bool Render::CleanUp()
 	return true;
 }
 
-// TODO 6: Create a method to load the state
-// for now it will be camera's x and y
+// Load Game State
+bool Render::Load(pugi::xml_node& data)
+{
+	camera.x = data.child("camera").attribute("x").as_int();
+	camera.y = data.child("camera").attribute("y").as_int();
 
-// TODO 8: Create a method to save the state of the renderer
-// using append_child and append_attribute
+	return true;
+}
+
+// Save Game State
+bool Render::Save(pugi::xml_node& data) const
+{
+	pugi::xml_node cam = data.append_child("camera");
+
+	cam.append_attribute("x") = camera.x;
+	cam.append_attribute("y") = camera.y;
+
+	return true;
+}
 
 void Render::SetBackgroundColor(SDL_Color color)
 {
 	background = color;
+}
+
+bool Render::IsOnCamera(const int& x, const int& y, const int& w, const int& h, const float& speed) const
+{
+	uint scale = app->win->GetScale();
+	SDL_Rect rect = { x * scale / speed,y * scale,w * scale / speed,h * scale };
+	SDL_Rect cam = { -camera.x * scale,-camera.y * scale,camera.w * scale / speed,camera.h * scale };
+
+	return SDL_HasIntersection(&rect, &cam);
+}
+
+void Render::CameraPos()
+{
+	uint scale = app->win->GetScale();
+	SDL_Rect rect = { app->player->collider_player->rect.x * scale ,app->player->collider_player->rect.y * scale ,app->player->collider_player->rect.w * scale ,app->player->collider_player->rect.h * scale };
+	SDL_Rect cam = { -camera.x * scale ,-camera.y * scale ,camera.w * scale ,camera.h * scale };
+
+	if (cam.x + cam.w - (float)CAMERA_MARGE_XL < rect.x + rect.w)
+		cam.x = rect.x + rect.w + (float)CAMERA_MARGE_XL - cam.w;
+
+	else if (cam.x + (float)CAMERA_MARGE_L > rect.x)
+		cam.x = rect.x - (float)CAMERA_MARGE_L;
+
+	if (cam.y + cam.h - (float)CAMERA_MARGE_L < rect.y + rect.h)
+		cam.y = (rect.y + rect.h + (float)CAMERA_MARGE_L - cam.h);
+
+	else if (cam.y + (float)CAMERA_MARGE_XL > rect.y)
+		cam.y = (rect.y - (float)CAMERA_MARGE_XL);
+
+	camera.x = -cam.x;
+	camera.y = -cam.y;
+
 }
 
 void Render::SetViewPort(const SDL_Rect& rect)
@@ -120,9 +171,10 @@ bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* sec
 
 	SDL_Rect rect;
 	rect.x = (int)(camera.x * speed) + x * scale;
-	rect.y = (int)(camera.y * speed) + y * scale;
+	rect.y = (int)(camera.y) + y * scale;
 
-	if(section != NULL)
+	
+	if (section != NULL)
 	{
 		rect.w = section->w;
 		rect.h = section->h;
@@ -131,21 +183,22 @@ bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* sec
 	{
 		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
 	}
-
-	rect.w *= scale;
-	rect.h *= scale;
+	
 
 	SDL_Point* p = NULL;
 	SDL_Point pivot;
 
-	if(pivotX != INT_MAX && pivotY != INT_MAX)
+	if (pivotX != INT_MAX && pivotY != INT_MAX)
 	{
 		pivot.x = pivotX;
 		pivot.y = pivotY;
 		p = &pivot;
 	}
 
-	if(SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, flip) != 0)
+	
+		
+
+	if (SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, flip) != 0)
 	{
 		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
 		ret = false;
@@ -163,7 +216,7 @@ bool Render::DrawRectangle(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint
 	SDL_SetRenderDrawColor(renderer, r, g, b, a);
 
 	SDL_Rect rec(rect);
-	if(use_camera)
+	if (use_camera)
 	{
 		rec.x = (int)(camera.x + rect.x * scale);
 		rec.y = (int)(camera.y + rect.y * scale);
@@ -173,7 +226,7 @@ bool Render::DrawRectangle(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint
 
 	int result = (filled) ? SDL_RenderFillRect(renderer, &rec) : SDL_RenderDrawRect(renderer, &rec);
 
-	if(result != 0)
+	if (result != 0)
 	{
 		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
 		ret = false;
@@ -192,12 +245,12 @@ bool Render::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b,
 
 	int result = -1;
 
-	if(use_camera)
+	if (use_camera)
 		result = SDL_RenderDrawLine(renderer, camera.x + x1 * scale, camera.y + y1 * scale, camera.x + x2 * scale, camera.y + y2 * scale);
 	else
 		result = SDL_RenderDrawLine(renderer, x1 * scale, y1 * scale, x2 * scale, y2 * scale);
 
-	if(result != 0)
+	if (result != 0)
 	{
 		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
 		ret = false;
@@ -219,7 +272,7 @@ bool Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uin
 
 	float factor = (float)M_PI / 180.0f;
 
-	for(uint i = 0; i < 360; ++i)
+	for (uint i = 0; i < 360; ++i)
 	{
 		points[i].x = (int)(x + radius * cos(i * factor));
 		points[i].y = (int)(y + radius * sin(i * factor));
@@ -227,7 +280,7 @@ bool Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uin
 
 	result = SDL_RenderDrawPoints(renderer, points, 360);
 
-	if(result != 0)
+	if (result != 0)
 	{
 		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
 		ret = false;

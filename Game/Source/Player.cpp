@@ -8,11 +8,12 @@
 #include "Scene.h"
 #include "Animation.h"
 #include "Collisions.h"
+#include "Window.h"
 #include "Map.h"
 #include "SString.h"
 
-#define GRAVITY 1.0f
-#define COLLIDER_OFFSET -25
+#define GRAVITY 1.5f
+//#define COLLIDER_OFFSET -25
 
 Player::Player() : Module()
 {
@@ -95,7 +96,7 @@ bool Player::Awake(pugi::xml_node& player_node)
 bool Player::Start()
 {
 	characterTex = app->tex->Load("Assets/textures/player.png");
-	pugi::xml_node node = player_node.child("position");
+	pugi::xml_node node = player_node.child("positionLvl1");
 	position.x = node.attribute("x").as_int();
 	position.y = node.attribute("y").as_int();
 	size.x = node.attribute("w").as_int();
@@ -129,16 +130,15 @@ bool Player::PreUpdate()
 	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP) {
 		speed.x -= moveSpeed;
 	}
-
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && state != JUMPING)
 	{
-		speed.y = jumpPower;
-		solidGround = false;
-		cont++;
+		speed.y = -50;
+		state = JUMPING;
 	}
+	
 	doubleJump = true;
 
-	if (doubleJump && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	/*if (doubleJump && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		cont++;
 		if (cont == 3)
@@ -151,10 +151,10 @@ bool Player::PreUpdate()
 	}
 	if (speed.y <= maxJumpHeight)
 	{
-		speed.y += GRAVITY;
+		//speed.y += GRAVITY;
 		solidGround = false;
-	}
-	position.y += speed.y;
+	}*/
+
 
 	if (app->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
 	{
@@ -166,21 +166,22 @@ bool Player::PreUpdate()
 
 void Player::OnCollision(Collider* col1, Collider* col2)
 {
+	
 	if (col1->type == COLLIDER_TYPE::COLLIDER || col2->type == COLLIDER_TYPE::COLLIDER)
 	{
 		//vertical collisions
-		if (collider_player->rect.x < col1->rect.x + col1->rect.w - 5 && collider_player->rect.x + collider_player->rect.w > col1->rect.x + 5 || collider_player->rect.x < col2->rect.x + col2->rect.w - 5 && collider_player->rect.x + collider_player->rect.w > col2->rect.x + 5)
+		if (collider_player->rect.x < col1->rect.x + col1->rect.w  && collider_player->rect.x + collider_player->rect.w > col1->rect.x || collider_player->rect.x < col2->rect.x + col2->rect.w  && collider_player->rect.x + collider_player->rect.w > col2->rect.x )
 		{
 			if (collider_player->rect.y + collider_player->rect.h > col1->rect.y && collider_player->rect.y < col1->rect.y && state != PLAYER_STATE::JUMPING && state != PLAYER_STATE::RUNNING || collider_player->rect.y + collider_player->rect.h > col2->rect.y && collider_player->rect.y < col2->rect.y && state != PLAYER_STATE::JUMPING && state != PLAYER_STATE::RUNNING)
 			{
 				state = IDLE;
-				speed.y = -GRAVITY;
+				speed.y = 0;
 			}
 
 			else if (collider_player->rect.y < col1->rect.y + col1->rect.h && collider_player->rect.y + collider_player->rect.h > col1->rect.y + col1->rect.h || collider_player->rect.y < col2->rect.y + col2->rect.h && collider_player->rect.y + collider_player->rect.h > col2->rect.y + col2->rect.h)
 			{
 				state = FALLING;
-				speed.y = -GRAVITY;
+				speed.y = 0;
 			}
 		}
 
@@ -189,12 +190,12 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 		{
 			if (collider_player->rect.x < col1->rect.x + col1->rect.w && collider_player->rect.x + collider_player->rect.w > col1->rect.x + col1->rect.w || collider_player->rect.x < col2->rect.x + col2->rect.w && collider_player->rect.x + collider_player->rect.w > col2->rect.x + col2->rect.w)
 			{
-				position.x += speed.x;
+				position.x += speed.x * deltaTime;
 			}
 
 			else if (collider_player->rect.x + collider_player->rect.w > col1->rect.x && collider_player->rect.x < col1->rect.x || collider_player->rect.x + collider_player->rect.w > col2->rect.x && collider_player->rect.x < col2->rect.x)
 			{
-				position.x -= speed.x;
+				position.x -= speed.x * deltaTime;
 			}
 		}
 
@@ -215,16 +216,17 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 
 bool Player::Update(float dt)
 {
+	
 
 	deltaTime = SDL_GetTicks() - lastTime;
 	deltaTime /= 200;
 	lastTime = SDL_GetTicks();
-	acceleration.y = 0.0f;
+	//acceleration.y = 0.0f;
 
-	if (speed.y > 0)
+	/*if (speed.y > 0)
 	{
 		speed.y = 0.0f;
-	}
+	}*/
 
 	if (speed.x != 0)
 	{
@@ -243,23 +245,48 @@ bool Player::Update(float dt)
 	{
 		currentAnim = &jumpAnim;
 	}
+		
 
 	switch (state) 
 	{
-		
+		case IDLE:
+			acceleration.y = 0;
+			speed.y = 0;
+			
+			break;
+		case FALLING:
+			acceleration.y = GRAVITY;
+			break;
+		case JUMPING:
+			acceleration.y = GRAVITY;
+			
+			break;
 		case DEAD:
 
 			break;
 
 	}
 
-	speed.x = speed.x + acceleration.x * deltaTime;
-	speed.y = speed.y + acceleration.y * deltaTime;
+	
+	speed.y = speed.y + acceleration.y;
+
+	if (speed.y >= 30) {
+		speed.y = 30;
+	}
+	if (speed.y <= -30) {
+		speed.y = -30;
+	}
+	
 
 	position.x = position.x + speed.x * deltaTime;
 	position.y = position.y + speed.y * deltaTime;
 
 	collider_player->SetPos(position.x, position.y);
+
+	//app->render->camera.x = (-position.x * 3) + (app->win->screenSurface->w / 2);
+	//app->render->camera.y = (-position.y * 3) + (app->win->screenSurface->h / 2);
+	
+	state = FALLING;
 
 	return true;
 }
@@ -274,7 +301,8 @@ bool Player::PostUpdate()
 bool Player::CleanUp()
 {
 	app->tex->UnLoad(characterTex);
-
+	if(collider_player != nullptr)
+		collider_player->to_delete = true;
 	return true;
 }
 

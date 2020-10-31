@@ -41,6 +41,14 @@ public:
 
 	// Set background color
 	void SetBackgroundColor(SDL_Color color);
+	
+	//camera functionality
+	void CameraPos();
+	bool IsOnCamera(const int& x, const int& y, const int& w, const int& h, const float& speed) const;
+
+	//Save & Load1
+	bool Save(pugi::xml_node& data) const;
+	bool Load(pugi::xml_node& data);
 
 public:
 

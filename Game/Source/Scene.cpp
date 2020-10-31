@@ -32,8 +32,7 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
-	app->win->SetTitle("Charged v0.1");
-	//img = app->tex->Load("Assets/textures/test.png");
+	app->win->SetTitle("Platformer Game: Charged v0.1");
 	LoadLevel1();
 
 	return true;
@@ -99,11 +98,9 @@ void Scene::LoadLevel1()
 {
 	Lvl1;
 	app->player->CleanUp();
-	app->fade->FadeTo();
 	app->map->CleanUp();
-	app->fade->FadeTo();
-	app->player->Start();
 	app->map->Load("level1.tmx");
+	app->player->Start();
 	app->audio->PlayMusic("Assets/audio/music/lvl1bgm.ogg");
 }
 
@@ -114,7 +111,7 @@ void Scene::LoadLevel2()
 	app->fade->FadeTo();
 	app->map->CleanUp();
 	app->fade->FadeTo();
-	app->player->Start();
 	app->map->Load("level2.tmx");
+	app->player->Start();
 	app->audio->PlayMusic("Assets/audio/music/lvl2bgm.ogg");
 }

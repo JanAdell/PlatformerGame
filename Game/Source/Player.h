@@ -80,7 +80,7 @@ private:
 	Uint32 lastTime = 0;
 	Uint32 currTime = 0;
 
-	PLAYER_STATE state = IDLE;
+	PLAYER_STATE state = FALLING;
 
 	bool jumping;
 	float maxJumpHeight;
