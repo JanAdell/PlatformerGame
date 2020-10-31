@@ -59,6 +59,7 @@ private:
 	Animation jumpAnim;
 	Animation runAnim;
 	Animation deathAnim;
+	Animation duckAnim;
 
 	pugi::xml_node player_node;
 	SDL_RendererFlip flip;

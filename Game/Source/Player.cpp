@@ -50,6 +50,18 @@ bool Player::Awake(pugi::xml_node& player_node)
 				runAnim.speed = node.attribute("speed").as_float();
 				runAnim.loop = node.attribute("loop").as_bool();
 			}
+			else if (name == "duck")
+			{
+				duckAnim.PushBack(frame);
+				duckAnim.speed = node.attribute("speed").as_float();
+				duckAnim.loop = node.attribute("loop").as_bool();
+			}
+			else if (name == "hurt")
+			{
+				deathAnim.PushBack(frame);
+				deathAnim.speed = node.attribute("speed").as_float();
+				deathAnim.loop = node.attribute("loop").as_bool();
+			}
 		}
 
 	}
@@ -87,6 +99,11 @@ bool Player::PreUpdate()
 		speed.x += moveSpeed;
 	}
 
+	if (app->input->GetKey(SDL_SCANCODE_S)== KEY_REPEAT)
+	{
+		currentAnim = &duckAnim;
+	}
+
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) {
 		flip = SDL_FLIP_NONE;
 		speed.x += moveSpeed;
@@ -94,6 +111,7 @@ bool Player::PreUpdate()
 	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP) {
 		speed.x -= moveSpeed;
 	}
+
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		speed.y = jumpPower;
@@ -119,6 +137,12 @@ bool Player::PreUpdate()
 		solidGround = false;
 	}
 	position.y += speed.y;
+
+	if (app->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+	{
+		currentAnim = &deathAnim;
+	}
+
 	return true;
 }
 
