@@ -81,7 +81,7 @@ Simply try to reach the end of the level though jumping. Some colliders might fe
 
 * You can find our latest releases and updates here!
 
-> https://github.com/JanAdell/Charged
+> https://github.com/JanAdell/PlatformerGame
 
 ## Find our latest Release here
 
