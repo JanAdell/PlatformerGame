@@ -89,6 +89,10 @@ public:
 	FadeToBlack* fade;
 	Player* player;
 	Collisions* collisions;
+	
+public:
+
+	bool god_mode = false;
 
 private:
 

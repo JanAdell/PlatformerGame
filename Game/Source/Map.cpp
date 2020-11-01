@@ -453,6 +453,14 @@ bool Map::LoadObjects(pugi::xml_node& data)
 					
 	}
 
+	else if (name == "Spawn")
+	{
+		for (pugi::xml_node obj = data.child("object"); obj && ret; obj = obj.next_sibling("object"))
+		{
+			app->player->spawn_pos.x = obj.attribute("x").as_int();
+			app->player->spawn_pos.y = obj.attribute("y").as_int();
+		}
+	}
 
 
 	return ret;

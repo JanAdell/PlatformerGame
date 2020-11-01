@@ -87,22 +87,7 @@ bool Collisions::Update(float dt)
 
 	// To be implemented debug capabilities for painting colliders and godmode
 	DebugDraw();
-	if (app->input->GetKey(SDL_SCANCODE_F10))
-		god_mode = !god_mode;
-
-
-	if (god_mode)
-	{
-		matrix[COLLIDER_PLAYER][COLLIDER_DAMAGE] = false;
-		matrix[COLLIDER_DAMAGE][COLLIDER_PLAYER] = false;
-
-	}
-	else
-	{
-		matrix[COLLIDER_PLAYER][COLLIDER_DAMAGE] = true;
-		matrix[COLLIDER_DAMAGE][COLLIDER_PLAYER] = true;
-
-	}
+	GodMode();
 
 	return true;
 
@@ -184,7 +169,11 @@ bool Collider::CheckCollision(const SDL_Rect& r) const
 
 void Collisions::GodMode()
 {
-	matrix[COLLIDER_PLAYER][COLLIDER_DAMAGE] = god_mode;
-	matrix[COLLIDER_PLAYER][COLLIDER] = god_mode;
-	god_mode = !god_mode;
+	matrix[COLLIDER_PLAYER][COLLIDER_DAMAGE] = !app->god_mode;
+	matrix[COLLIDER_PLAYER][COLLIDER] = !app->god_mode;
+
+	matrix[COLLIDER_DAMAGE][COLLIDER_PLAYER] = !app->god_mode;
+	matrix[COLLIDER][COLLIDER_PLAYER] = !app->god_mode;
+
+	
 }

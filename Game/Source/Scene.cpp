@@ -48,31 +48,23 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	
-	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_REPEAT && intro)
+	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && intro)
 		LoadLevel1();
 
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
 		LoadLevel1();
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
 		LoadLevel2();
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
-		if (Lvl == 1) 
-		{
-			app->player->position.x = 410;
-			app->player->position.y = 430;
-		}
-		else if (Lvl == 2) 
-		{
-			app->player->position.x = 250;
-			app->player->position.y = 1700;
-		}
+		app->player->position.x = app->player->spawn_pos.x;
+		app->player->position.y = app->player->spawn_pos.y;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
@@ -82,7 +74,7 @@ bool Scene::Update(float dt)
 		app->SaveGame();
 
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
-		app->collisions->GodMode();
+		app->god_mode = !app->god_mode;
 
 	//app->render->DrawTexture(img, 380, 100);
 	app->map->Draw();
@@ -111,6 +103,7 @@ bool Scene::CleanUp()
 
 void Scene::LoadLevel()
 {
+	app->god_mode = false;
 	app->player->CleanUp();
 	app->fade->FadeTo();
 	app->map->CleanUp();
@@ -132,6 +125,7 @@ void Scene::LoadLevel()
 
 void Scene::LoadLevel1()
 {
+	app->god_mode = false;
 	Lvl = 1;
 	app->collisions->CleanUp();
 	app->player->CleanUp();
@@ -143,6 +137,7 @@ void Scene::LoadLevel1()
 
 void Scene::LoadLevel2()
 {
+	app->god_mode = false;
 	Lvl = 2;
 	app->collisions->CleanUp();
 	app->player->CleanUp();

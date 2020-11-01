@@ -98,16 +98,16 @@ bool Player::Start()
 	characterTex = app->tex->Load("Assets/textures/player.png");
 	if (app->scene->Lvl == 1) {
 		pugi::xml_node node = player_node.child("positionLvl1");
-		position.x = node.attribute("x").as_int();
-		position.y = node.attribute("y").as_int();
+		position.x = spawn_pos.x;
+		position.y = spawn_pos.y;
 		size.x = node.attribute("w").as_int();
 		size.y = node.attribute("h").as_int();
 		collider_player = app->collisions->AddCollider({ node.attribute("x").as_int(),node.attribute("y").as_int() ,node.attribute("w").as_int() ,node.attribute("h").as_int() }, COLLIDER_TYPE::COLLIDER_PLAYER, this);
 	}
 	if (app->scene->Lvl == 2) {
 		pugi::xml_node node = player_node.child("positionLvl2");
-		position.x = node.attribute("x").as_int();
-		position.y = node.attribute("y").as_int();
+		position.x = spawn_pos.x;
+		position.y = spawn_pos.y;
 		size.x = node.attribute("w").as_int();
 		size.y = node.attribute("h").as_int();
 		collider_player = app->collisions->AddCollider({ node.attribute("x").as_int(),node.attribute("y").as_int() ,node.attribute("w").as_int() ,node.attribute("h").as_int() }, COLLIDER_TYPE::COLLIDER_PLAYER, this);
@@ -131,7 +131,7 @@ bool Player::PreUpdate()
 		speed.x = 0;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_S)== KEY_REPEAT && !app->collisions->god_mode)
+	if (app->input->GetKey(SDL_SCANCODE_S)== KEY_REPEAT && !app->god_mode)
 	{
 		currentAnim = &duckAnim;
 	}
@@ -146,19 +146,19 @@ bool Player::PreUpdate()
 		speed.x = 0;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && app->collisions->god_mode)
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && app->god_mode)
 	{
 		position.y -= 5;
-		state = GOD_MODE;
+		
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && app->collisions->god_mode)
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && app->god_mode)
 	{
 		position.y += 5;
 		
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && state != JUMPING && doubleJump == true && !app->collisions->god_mode)
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && state != JUMPING && doubleJump == true)
 	{
 		speed.y = -100;
 		cont++;
@@ -237,13 +237,18 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 		}
 
 	}
-		
-			else if (col1->type == COLLIDER_TYPE::NEXTLVL || col2->type == COLLIDER_TYPE::NEXTLVL)
+			
+			if (col1->type == COLLIDER_TYPE::NEXTLVL || col2->type == COLLIDER_TYPE::NEXTLVL)
 			{
+				speed.x = 0;
+				acceleration.x = 0;
+				speed.y = 0;
+				acceleration.y = 0;
 				if(app->scene->Lvl == 1)
+				
 					app->scene->LoadLevel2();
 
-				if (app->scene->Lvl == 2)
+				else if (app->scene->Lvl == 2)
 					app->scene->LoadLevel1();
 			}
 			else if (col1->type == COLLIDER_TYPE::COLLIDER_DAMAGE || col2->type == COLLIDER_TYPE::COLLIDER_DAMAGE)
@@ -269,8 +274,12 @@ bool Player::Update(float dt)
 			break;
 		
 		case FALLING:
-			acceleration.y = GRAVITY;
-			currentAnim = &jumpAnim;
+			if (!app->god_mode)
+			{
+				acceleration.y = GRAVITY;
+				currentAnim = &jumpAnim;
+			}
+			
 			break;
 		
 		case RUNNING:
@@ -284,26 +293,11 @@ bool Player::Update(float dt)
 			break;
 		
 		case DEAD:
-
-			if (app->scene->Lvl == 1)
-			{
-				pugi::xml_node node = player_node.child("positionLvl1");
-				position.x = node.attribute("x").as_int();
-				position.y = node.attribute("y").as_int();
-			}
-			else if (app->scene->Lvl == 2)
-			{
-				pugi::xml_node node = player_node.child("positionLvl2");
-				position.x = node.attribute("x").as_int();
-				position.y = node.attribute("y").as_int();
-			}
-			
+						
+			position.x = spawn_pos.x;
+			position.y = spawn_pos.y;				
 			break;
-
-		case GOD_MODE:
-			if (!app->collisions->god_mode)
-				state = FALLING;
-			break;
+		
 	}
 
 	
@@ -320,9 +314,10 @@ bool Player::Update(float dt)
 	position.y = position.y + speed.y * deltaTime;
 
 	collider_player->SetPos(position.x + 2, position.y);
-		
+	
+	
 	state = FALLING;
-
+	
 	speed.x = 0;
 
 	return true;

@@ -55,6 +55,7 @@ public:
 
 	bool firstUpdate = true;
 	//Collider* collider_player = nullptr;
+	fPoint spawn_pos;
 
 private:
 	float moveSpeed = 30;

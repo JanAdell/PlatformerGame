@@ -56,7 +56,7 @@ public:
 	bool debug = false;
 
 	void GodMode();
-	bool god_mode = false;
+	
 
 private:
 
