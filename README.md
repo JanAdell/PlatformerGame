@@ -83,6 +83,10 @@ Simply try to reach the end of the level though jumping. Some colliders might fe
 
 > https://github.com/JanAdell/Charged
 
+## Find our latest Release here
+
+> https://github.com/JanAdell/PlatformerGame/releases
+
 ## License
 
 This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking with closed source software. Check [LICENSE](LICENSE) for further details.
