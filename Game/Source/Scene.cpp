@@ -109,7 +109,7 @@ void Scene::LoadLevel()
 	app->map->CleanUp();
 	app->fade->FadeTo();
 	app->player->Start();
-	if (Lvl = 1)
+	if (Lvl == 1)
 	{
 		app->map->Load("level1.tmx");
 		app->audio->PlayMusic("Assets/audio/music/lvl1bgm.ogg");
@@ -175,6 +175,10 @@ bool Scene::Load(pugi::xml_node& data)
 	if (Lvl != lvl_stats.attribute("level").as_uint())
 		Lvl = lvl_stats.attribute("level").as_uint();
 
-	LoadLevel();
+	if (Lvl == 1)
+	{
+		LoadLevel1();
+	}
+	else LoadLevel2();
 	return ret;
 }
