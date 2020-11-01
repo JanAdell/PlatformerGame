@@ -139,9 +139,9 @@ void Scene::LoadLevel2()
 {
 	Lvl = 2;
 	app->player->CleanUp();
-	app->fade->FadeTo();
+	//app->fade->FadeTo();
 	app->map->CleanUp();
-	app->fade->FadeTo();
+	//app->fade->FadeTo();
 	app->map->Load("level2.tmx");
 	app->player->Start();
 	app->audio->PlayMusic("Assets/audio/music/lvl2bgm.ogg");
@@ -151,9 +151,9 @@ void Scene::LoadIntro()
 {
 	intro;
 	//app->player->CleanUp();
-	app->fade->FadeTo();
+	//app->fade->FadeTo();
 	app->map->CleanUp();
-	app->fade->FadeTo();
+	//app->fade->FadeTo();
 	app->map->Load("intro.tmx");
 	app->player->Start();
 	app->audio->PlayMusic("Assets/audio/music/lvl2bgm.ogg");
