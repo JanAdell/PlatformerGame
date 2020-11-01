@@ -6,11 +6,34 @@ In this repository we will be updating our platformer assignment for the Develop
 
 ## Description
 
+Charged is a 2D platformer in which vertical mobility is all. 
+
+## How to Play
+
+Simply try to reach the end of the level though jumping. Some colliders might feel off so we reccommend, if stuck, to check the debug keys in order to be able to print colliders on screen and see in a more easier manner the laydout we're colliding against.
+
 ## Key Features
+
+### Code Related
+
+* **Configuration loaded though XML** files:
+  * Player animation.
+  * Asset pathing.
+  * Window configuration.
+* **Map Loading** from TMX:
+  * Colliders taken from object groups defined in Tiled.
+  * Spawn positions for the player defined in Tiled as an object and loaded into the game through tmx.
+  
+ ### Gameplay Related
+  
+* Double Jump
+* Wall Jump (when colliding against a vertical wall jump can be performed again).
+> Wall Jumping can sometimes feel strange due to collision feedback, we reccommend letting the character collide clearly and then fall a bit off the wall so a double jump can be performed comfortably again.
 
 ## Controls
 
-* WASD - Movement
+* A Key - Left Horizontal Movement
+* D Key - Right Horizontal Movement
 * Spacebar - Jump
 
 ### Debug Keys
@@ -22,6 +45,7 @@ In this repository we will be updating our platformer assignment for the Develop
 * F6 - Load
 * F9 - View colliders and logic
 * F10 - God Mode
+> Movement in God Mode is performed with the WASD keys. God Mode deactivates once the level changes.
 
 ## Developers
 
@@ -37,8 +61,9 @@ In this repository we will be updating our platformer assignment for the Develop
 
 ## Found and Fixed bugs
 
-* The maps we created using Tiled crashed the code.
+* Parallax desynced from camera movement.
 * The colliders that didn't exist/we were'nt able to register, were replaced by selected areas in tiled.
+* When level changing, acceleration from the player during loading made subsequent spawn point be in the wrong position.
 
 ## Assets
 
@@ -58,6 +83,6 @@ In this repository we will be updating our platformer assignment for the Develop
 
 This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking with closed source software. Check [LICENSE](LICENSE) for further details.
 
-{AdditionalLicenses}
+
 
 
