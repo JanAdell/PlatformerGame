@@ -35,10 +35,13 @@ public:
 	void LoadLevel();
 	void LoadLevel1();
 	void LoadLevel2();
+	void LoadIntro();
 
 	bool Load(pugi::xml_node& data);
 
 	bool Save(pugi::xml_node& data) const;
+
+	bool intro = true;
 
 	uint Lvl = 1;
 

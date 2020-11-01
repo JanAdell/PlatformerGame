@@ -33,7 +33,7 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 	app->win->SetTitle("Platformer Game: Charged v0.1");
-	LoadLevel();
+	LoadIntro();
 
 	return true;
 }
@@ -59,6 +59,9 @@ bool Scene::Update(float dt)
 	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		app->render->camera.x += 1;
 	
+	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_REPEAT && intro)
+		LoadLevel1();
+
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_REPEAT)
 	{
 		LoadLevel1();
@@ -140,6 +143,18 @@ void Scene::LoadLevel2()
 	app->map->CleanUp();
 	app->fade->FadeTo();
 	app->map->Load("level2.tmx");
+	app->player->Start();
+	app->audio->PlayMusic("Assets/audio/music/lvl2bgm.ogg");
+}
+
+void Scene::LoadIntro()
+{
+	intro;
+	//app->player->CleanUp();
+	app->fade->FadeTo();
+	app->map->CleanUp();
+	app->fade->FadeTo();
+	app->map->Load("intro.tmx");
 	app->player->Start();
 	app->audio->PlayMusic("Assets/audio/music/lvl2bgm.ogg");
 }

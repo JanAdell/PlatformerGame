@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<game_state>
+	<input />
+	<window />
+	<textures />
+	<audio />
+	<scene>
+		<lvl_stats level="1" />
+	</scene>
+	<map />
+	<player>
+		<position x="400" y="460.544952" />
+	</player>
+	<:anonymous />
+	<FadeToBlack />
+	<renderer>
+		<camera x="0" y="0" />
+	</renderer>
+</game_state>
