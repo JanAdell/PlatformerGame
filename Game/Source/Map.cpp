@@ -164,7 +164,6 @@ bool Map::CleanUp()
 	data.layers.clear();
 
 
-
 	// Clean up the pugui tree
 	map_file.reset();
 
@@ -447,13 +446,11 @@ bool Map::LoadObjects(pugi::xml_node& data)
 			app->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER_DAMAGE);
 	}
 
-	else if (name == "NextLvl")
+	else if (name == "Nextlvl")
 	{
 		for (pugi::xml_node obj = data.child("object"); obj && ret; obj = obj.next_sibling("object"))
-		{
 			app->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::NEXTLVL);
 					
-		}
 	}
 
 

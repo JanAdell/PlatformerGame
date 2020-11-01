@@ -43,7 +43,7 @@
       <frame x="22" y="116" w="21" h="37"/>
       <frame x="42" y="0" w="21" h="37"/>
     </animation>
-    <animation name="jump" speed="0.05f" loop="true">
+    <animation name="jump" speed="0.1f" loop="true">
       <frame x="104" y="2" w="27" h="38"/>
       <frame x="132" y="10" w="29" h="21"/>
       <frame x="162" y="12" w="28" h="16"/>
@@ -51,7 +51,7 @@
       <frame x="208" y="8" w="28" h="16"/>
       <frame x="237" y="3" w="16" h="28"/>
     </animation>
-    <animation name="run" speed="0.05f" loop="true">
+    <animation name="run" speed="0.1f" loop="true">
       <frame x="0" y="43" w="21" h="34"/>
       <frame x="23" y="41" w="22" h="36"/>
       <frame x="46" y="41" w="26" h="36"/>
@@ -84,7 +84,7 @@
       <frame x="97" y="116" w="20" h="34"/>
       <frame x="118" y="119" w="25" h="24"/>
     </animation>
-    <positionLvl1 x = "400" y = "430" w ="10" h = "40"/>
+    <positionLvl1 x = "410" y = "430" w ="10" h = "40"/>
     <positionLvl2 x = "600" y = "700" w ="10" h = "40"/>
 
     <speed x = "2" y = "2"/>

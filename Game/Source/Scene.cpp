@@ -128,6 +128,7 @@ void Scene::LoadLevel()
 void Scene::LoadLevel1()
 {
 	Lvl = 1;
+	app->collisions->CleanUp();
 	app->player->CleanUp();
 	app->map->CleanUp();
 	app->map->Load("level1.tmx");
@@ -138,6 +139,7 @@ void Scene::LoadLevel1()
 void Scene::LoadLevel2()
 {
 	Lvl = 2;
+	app->collisions->CleanUp();
 	app->player->CleanUp();
 	//app->fade->FadeTo();
 	app->map->CleanUp();

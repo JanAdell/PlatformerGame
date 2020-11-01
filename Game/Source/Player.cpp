@@ -103,19 +103,23 @@ bool Player::Start()
 	size.y = node.attribute("h").as_int();
 	collider_player = app->collisions->AddCollider({ node.attribute("x").as_int(),node.attribute("y").as_int() ,node.attribute("w").as_int() ,node.attribute("h").as_int() }, COLLIDER_TYPE::COLLIDER_PLAYER, this);
 
+	cont = 0;
+
 	return true;
 }
 
 bool Player::PreUpdate()
 {
 	currentAnim = &idleAnim;
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) {
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		flip = SDL_FLIP_HORIZONTAL;
-		speed.x -= moveSpeed;
+		speed.x = -moveSpeed;
+		currentAnim = &runAnim;
+		
 	}
 	else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_UP) {
 		currentAnim = &runAnim;
-		speed.x += moveSpeed;
+		speed.x = 0;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_S)== KEY_REPEAT)
@@ -123,21 +127,25 @@ bool Player::PreUpdate()
 		currentAnim = &duckAnim;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) {
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		flip = SDL_FLIP_NONE;
-		speed.x += moveSpeed;
+		speed.x = moveSpeed;
+		currentAnim = &runAnim;
+		
 	}
 	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP) {
-		speed.x -= moveSpeed;
+		speed.x = 0;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && state != JUMPING && doubleJump)
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && state != JUMPING && doubleJump == true)
 	{
 		speed.y = -100;
-		state = JUMPING;
 		cont++;
-
+		state = JUMPING;
+		
+		
 		if (cont == 2) {
 			doubleJump = false;
+			
 			cont = 0;
 		}
 	}
@@ -146,6 +154,8 @@ bool Player::PreUpdate()
 	{
 		currentAnim = &deathAnim;
 	}
+
+	
 
 	return true;
 }
@@ -163,7 +173,17 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 				state = IDLE;
 				speed.y = 0;
 				doubleJump = true;
-				cont = 2;
+
+				if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) {
+					flip = SDL_FLIP_HORIZONTAL;
+					state = RUNNING;
+				}
+				if (app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) {
+					flip = SDL_FLIP_NONE;
+					state = RUNNING;
+				}
+				
+				
 			}
 
 			else if (collider_player->rect.y < col1->rect.y + col1->rect.h && collider_player->rect.y + collider_player->rect.h > col1->rect.y + col1->rect.h || collider_player->rect.y < col2->rect.y + col2->rect.h && collider_player->rect.y + collider_player->rect.h > col2->rect.y + col2->rect.h)
@@ -171,7 +191,8 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 				state = FALLING;
 				speed.y = 0;
 				doubleJump = true;
-				cont = 2;
+				
+			
 			}
 		}
 
@@ -182,13 +203,13 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 			//LEFT
 			if (collider_player->rect.x < col1->rect.x + col1->rect.w && collider_player->rect.x + collider_player->rect.w > col1->rect.x + col1->rect.w || collider_player->rect.x < col2->rect.x + col2->rect.w && collider_player->rect.x + collider_player->rect.w > col2->rect.x + col2->rect.w)
 			{
-				position.x -= speed.x * deltaTime;
+				speed.x = moveSpeed;
 			}
 
 			//RIGHT
 			else if (collider_player->rect.x + collider_player->rect.w > col1->rect.x && collider_player->rect.x < col1->rect.x || collider_player->rect.x + collider_player->rect.w > col2->rect.x && collider_player->rect.x < col2->rect.x)
-			{
-				position.x -= speed.x * deltaTime;
+			{	
+				speed.x = -moveSpeed;
 			}
 		}
 
@@ -211,27 +232,8 @@ bool Player::Update(float dt)
 	deltaTime = SDL_GetTicks() - lastTime;
 	deltaTime /= 200;
 	lastTime = SDL_GetTicks();
-	
-
-	if (speed.x != 0)
-	{
-		currentAnim = &runAnim;
-		currentAnim = &runAnim;
-		if (speed.x < 0)
-		{
-			flip = SDL_FLIP_HORIZONTAL;
-		}
-		else
-		{
-			flip = SDL_FLIP_NONE;
-		}
-	}
-	if (speed.y != 0)
-	{
-		currentAnim = &jumpAnim;
-	}
+			
 		
-
 	switch (state) 
 	{
 		case IDLE:
@@ -241,8 +243,16 @@ bool Player::Update(float dt)
 		
 		case FALLING:
 			acceleration.y = GRAVITY;
+			currentAnim = &jumpAnim;
 			break;
 		
+		case RUNNING:
+			currentAnim = &runAnim;
+
+			acceleration.y = 0;
+			speed.y = 0;
+			break;
+
 		case JUMPING:
 			acceleration.y = GRAVITY;
 			break;
@@ -258,11 +268,11 @@ bool Player::Update(float dt)
 	
 	speed.y = speed.y + acceleration.y;
 
-	if (speed.y >= 40) {
-		speed.y = 40;
+	if (speed.y >= 60) {
+		speed.y = 60;
 	}
-	if (speed.y <= -40) {
-		speed.y = -40;
+	if (speed.y <= -50) {
+		speed.y = -50;
 	}
 	
 	position.x = position.x + speed.x * deltaTime;
@@ -272,6 +282,7 @@ bool Player::Update(float dt)
 		
 	
 	state = FALLING;
+	speed.x = 0;
 
 	return true;
 }
@@ -288,6 +299,7 @@ bool Player::CleanUp()
 	app->tex->UnLoad(characterTex);
 	if(collider_player != nullptr)
 		collider_player->to_delete = true;
+
 	return true;
 }
 

@@ -82,11 +82,10 @@ private:
 
 	PLAYER_STATE state = FALLING;
 
-	bool jumping;
-	float maxJumpHeight;
+
 	bool doubleJump;
 	int cont = 0;
-	bool solidGround = false;
+	bool solidGround;
 	int jumpPower = -10;
 };
 

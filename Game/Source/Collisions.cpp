@@ -152,6 +152,8 @@ bool Collisions::CleanUp()
 			colliders[i] = nullptr;
 		}
 	}
+	*colliders = nullptr;
+
 	return true;
 
 }
