@@ -32,10 +32,15 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void LoadLevel();
 	void LoadLevel1();
 	void LoadLevel2();
 
-	bool Lvl1 = true;
+	bool Load(pugi::xml_node& data);
+
+	bool Save(pugi::xml_node& data) const;
+
+	uint Lvl = 1;
 
 private:
 	SDL_Texture* img;

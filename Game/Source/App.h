@@ -3,7 +3,6 @@
 
 #include "Module.h"
 #include "List.h"
-
 #include "PugiXml/src/pugixml.hpp"
 
 // Modules
@@ -49,6 +48,10 @@ public:
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
 
+	void LoadGame();
+	void SaveGame() const;
+	//void GetSaveGames();
+
 private:
 
 	// Load config file
@@ -68,6 +71,10 @@ private:
 
 	// Call modules after each loop iteration
 	bool PostUpdate();
+
+	// Save & Load
+	bool LoadGameNow();
+	bool SaveGameNow() const;
 
 public:
 
@@ -89,6 +96,11 @@ private:
 	char** args;
 	SString title;
 	SString organization;
+
+	mutable bool		saveRequest;
+	bool				loadRequest;
+	SString			load_game;
+	mutable SString	save_game;
 
 	List<Module *> modules;
 

@@ -102,10 +102,10 @@ public:
 private:
 
 	bool LoadMap();
-	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
-	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
-	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
-	bool LoadObjects(pugi::xml_node& node);
+	bool LoadTilesetDetails(pugi::xml_node& tileset_data, TileSet* set);
+	bool LoadTilesetImage(pugi::xml_node& tileset_data, TileSet* set);
+	bool LoadLayer(pugi::xml_node& data, MapLayer* layer);
+	bool LoadObjects(pugi::xml_node& data);
 
 	TileSet* GetTilesetFromTileId(int id) const;
 

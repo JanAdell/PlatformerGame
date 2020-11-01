@@ -329,16 +329,16 @@ bool Map::LoadMap()
 	return ret;
 }
 
-bool Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
+bool Map::LoadTilesetDetails(pugi::xml_node& tileset_data, TileSet* set)
 {
 	bool ret = true;
-	set->name.create(tileset_node.attribute("name").as_string());
-	set->firstgid = tileset_node.attribute("firstgid").as_int();
-	set->tile_width = tileset_node.attribute("tilewidth").as_int();
-	set->tile_height = tileset_node.attribute("tileheight").as_int();
-	set->margin = tileset_node.attribute("margin").as_int();
-	set->spacing = tileset_node.attribute("spacing").as_int();
-	pugi::xml_node offset = tileset_node.child("tileoffset");
+	set->name.create(tileset_data.attribute("name").as_string());
+	set->firstgid = tileset_data.attribute("firstgid").as_int();
+	set->tile_width = tileset_data.attribute("tilewidth").as_int();
+	set->tile_height = tileset_data.attribute("tileheight").as_int();
+	set->margin = tileset_data.attribute("margin").as_int();
+	set->spacing = tileset_data.attribute("spacing").as_int();
+	pugi::xml_node offset = tileset_data.child("tileoffset");
 
 	if (offset != NULL)
 	{
@@ -354,10 +354,10 @@ bool Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 	return ret;
 }
 
-bool Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
+bool Map::LoadTilesetImage(pugi::xml_node& tileset_data, TileSet* set)
 {
 	bool ret = true;
-	pugi::xml_node image = tileset_node.child("image");
+	pugi::xml_node image = tileset_data.child("image");
 
 	if (image == NULL)
 	{
@@ -390,15 +390,15 @@ bool Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 	return ret;
 }
 
-bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
+bool Map::LoadLayer(pugi::xml_node& data, MapLayer* layer)
 {
 	bool ret = true;
 
-	layer->name = node.attribute("name").as_string();
-	layer->width = node.attribute("width").as_int();
-	layer->height = node.attribute("height").as_int();
-	layer->parallax = node.child("properties").child("property").attribute("value").as_float();
-	pugi::xml_node layer_data = node.child("data");
+	layer->name = data.attribute("name").as_string();
+	layer->width = data.attribute("width").as_int();
+	layer->height = data.attribute("height").as_int();
+	layer->parallax = data.child("properties").child("property").attribute("value").as_float();
+	pugi::xml_node layer_data = data.child("data");
 
 
 	if (layer_data == NULL)
@@ -422,16 +422,16 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	return ret;
 }
 
-bool Map::LoadObjects(pugi::xml_node& node)
+bool Map::LoadObjects(pugi::xml_node& data)
 {
 	bool ret = true;
-	if (node == NULL)
+	if (data == NULL)
 		LOG("Error");
-	SString name(node.attribute("name").as_string());
+	SString name(data.attribute("name").as_string());
 
 	if (name == "Colliders")
 	{
-		for (pugi::xml_node obj = node.child("object"); obj && ret; obj = obj.next_sibling("object"))
+		for (pugi::xml_node obj = data.child("object"); obj && ret; obj = obj.next_sibling("object"))
 		{
 			app->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER);
 
@@ -441,13 +441,13 @@ bool Map::LoadObjects(pugi::xml_node& node)
 
 	else if (name == "ColliderDmg")
 	{
-		for (pugi::xml_node obj = node.child("object"); obj && ret; obj = obj.next_sibling("object"))
+		for (pugi::xml_node obj = data.child("object"); obj && ret; obj = obj.next_sibling("object"))
 			app->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER_DAMAGE);
 	}
 
 	else if (name == "NextLvl")
 	{
-		for (pugi::xml_node obj = node.child("object"); obj && ret; obj = obj.next_sibling("object"))
+		for (pugi::xml_node obj = data.child("object"); obj && ret; obj = obj.next_sibling("object"))
 		{
 			app->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::NEXTLVL);
 					

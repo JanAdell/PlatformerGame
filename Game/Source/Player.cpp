@@ -12,8 +12,8 @@
 #include "Map.h"
 #include "SString.h"
 
-#define GRAVITY 1.5f
-//#define COLLIDER_OFFSET -25
+#define GRAVITY 1.0f
+#define COLLIDER_OFFSET -25
 
 Player::Player() : Module()
 {
@@ -71,22 +71,22 @@ bool Player::Awake(pugi::xml_node& player_node)
 
 	}
 
-	if (app->scene->Lvl1)
+	if (app->scene->Lvl == 1)
 	{
-		pugi::xml_node node = player_node.child("positionLvl1");
-		position.x = node.attribute("x").as_int();
-		position.y = node.attribute("y").as_int();
-		size.x = node.attribute("w").as_int();
-		size.y = node.attribute("h").as_int();
+		pugi::xml_node data = player_node.child("positionLvl1");
+		position.x = data.attribute("x").as_int();
+		position.y = data.attribute("y").as_int();
+		size.x = data.attribute("w").as_int();
+		size.y = data.attribute("h").as_int();
 	}
 
-	else if (app->scene->Lvl1)
+	else
 	{
-		pugi::xml_node node = player_node.child("positionLvl2");
-		position.x = node.attribute("x").as_int();
-		position.y = node.attribute("y").as_int();
-		size.x = node.attribute("w").as_int();
-		size.y = node.attribute("h").as_int();
+		pugi::xml_node data = player_node.child("positionLvl2");
+		position.x = data.attribute("x").as_int();
+		position.y = data.attribute("y").as_int();
+		size.x = data.attribute("w").as_int();
+		size.y = data.attribute("h").as_int();
 	}
 	
 	return true;
@@ -188,11 +188,14 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 		//horitzontal collisions
 		if (collider_player->rect.y < col1->rect.y + col1->rect.h - 5 && collider_player->rect.y + collider_player->rect.h > col1->rect.y + 5 || collider_player->rect.y < col2->rect.y + col2->rect.h - 5 && collider_player->rect.y + collider_player->rect.h > col2->rect.y + 5)
 		{
+
+			//LEFT
 			if (collider_player->rect.x < col1->rect.x + col1->rect.w && collider_player->rect.x + collider_player->rect.w > col1->rect.x + col1->rect.w || collider_player->rect.x < col2->rect.x + col2->rect.w && collider_player->rect.x + collider_player->rect.w > col2->rect.x + col2->rect.w)
 			{
-				position.x += speed.x * deltaTime;
+				position.x -= speed.x * deltaTime;
 			}
 
+			//RIGHT
 			else if (collider_player->rect.x + collider_player->rect.w > col1->rect.x && collider_player->rect.x < col1->rect.x || collider_player->rect.x + collider_player->rect.w > col2->rect.x && collider_player->rect.x < col2->rect.x)
 			{
 				position.x -= speed.x * deltaTime;
@@ -306,14 +309,26 @@ bool Player::CleanUp()
 	return true;
 }
 
-bool Player::Load(pugi::xml_node&)
+bool Player::Load(pugi::xml_node& data)
 {
-	return true;
+	bool ret = true;
+
+	position.x = data.child("position").attribute("x").as_int();
+	position.y = data.child("position").attribute("y").as_int();
+	LOG("%f", position.x);
+	LOG("%f", position.y);
+
+	return ret;
 }
 
-bool Player::Save(pugi::xml_node&) const
+bool Player::Save(pugi::xml_node& data) const
 {
-	return true;
+	bool ret = true;
+
+	data.append_child("position").append_attribute("x") = position.x;
+	data.child("position").append_attribute("y") = position.y;
+
+	return ret;
 }
 
 fPoint Player::GetPos() const

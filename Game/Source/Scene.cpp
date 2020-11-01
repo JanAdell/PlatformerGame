@@ -33,7 +33,7 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 	app->win->SetTitle("Platformer Game: Charged v0.1");
-	LoadLevel1();
+	LoadLevel();
 
 	return true;
 }
@@ -69,6 +69,13 @@ bool Scene::Update(float dt)
 		LoadLevel2();
 	}
 
+	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+		app->LoadGame();
+
+	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+		app->SaveGame();
+
+
 	//app->render->DrawTexture(img, 380, 100);
 	app->map->Draw();
 
@@ -94,9 +101,30 @@ bool Scene::CleanUp()
 	return true;
 }
 
+void Scene::LoadLevel()
+{
+	app->player->CleanUp();
+	app->fade->FadeTo();
+	app->map->CleanUp();
+	app->fade->FadeTo();
+	app->player->Start();
+	if (Lvl = 1)
+	{
+		app->map->Load("level1.tmx");
+		app->audio->PlayMusic("Assets/audio/music/lvl1bgm.ogg");
+		Lvl = 2;
+	}
+	else
+	{
+		app->map->Load("level2.tmx");
+		app->audio->PlayMusic("Assets/audio/music/lvl2bgm.ogg");
+		Lvl = 1;
+	}
+}
+
 void Scene::LoadLevel1()
 {
-	Lvl1;
+	Lvl = 1;
 	app->player->CleanUp();
 	app->map->CleanUp();
 	app->map->Load("level1.tmx");
@@ -106,7 +134,7 @@ void Scene::LoadLevel1()
 
 void Scene::LoadLevel2()
 {
-	!Lvl1;
+	Lvl = 2;
 	app->player->CleanUp();
 	app->fade->FadeTo();
 	app->map->CleanUp();
@@ -114,4 +142,22 @@ void Scene::LoadLevel2()
 	app->map->Load("level2.tmx");
 	app->player->Start();
 	app->audio->PlayMusic("Assets/audio/music/lvl2bgm.ogg");
+}
+
+bool Scene::Save(pugi::xml_node& data)const
+{
+	bool ret = true;
+	pugi::xml_node lvl_stats = data.append_child("lvl_stats");
+	lvl_stats.append_attribute("level") = Lvl;
+	return ret;
+}
+bool Scene::Load(pugi::xml_node& data)
+{
+	bool ret = true;
+	pugi::xml_node lvl_stats = data.child("lvl_stats");
+	if (Lvl != lvl_stats.attribute("level").as_uint())
+		Lvl = lvl_stats.attribute("level").as_uint();
+
+	LoadLevel();
+	return ret;
 }
