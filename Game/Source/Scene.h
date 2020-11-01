@@ -44,6 +44,7 @@ public:
 	bool intro = true;
 
 	uint Lvl = 1;
+	pugi::xml_node player_node_scene;
 
 private:
 	SDL_Texture* img;

@@ -55,10 +55,13 @@ public:
 	Collider* colliders[MAX_COLLIDERS];
 	bool debug = false;
 
+	void GodMode();
+	bool god_mode = false;
+
 private:
 
 	bool matrix[COLLIDER_MAX][COLLIDER_MAX];
-	bool god_mode = false;
+	
 
 };
 

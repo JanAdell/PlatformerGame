@@ -47,17 +47,6 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		app->render->camera.y -= 1;
-
-	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		app->render->camera.y += 1;
-
-	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		app->render->camera.x -= 1;
-
-	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		app->render->camera.x += 1;
 	
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_REPEAT && intro)
 		LoadLevel1();
@@ -72,12 +61,28 @@ bool Scene::Update(float dt)
 		LoadLevel2();
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-		app->LoadGame();
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_REPEAT)
+	{
+		if (Lvl == 1) 
+		{
+			app->player->position.x = 410;
+			app->player->position.y = 430;
+		}
+		else if (Lvl == 2) 
+		{
+			app->player->position.x = 250;
+			app->player->position.y = 1700;
+		}
+	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+		app->LoadGame();
+
+	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		app->SaveGame();
 
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+		app->collisions->GodMode();
 
 	//app->render->DrawTexture(img, 380, 100);
 	app->map->Draw();

@@ -181,3 +181,10 @@ bool Collider::CheckCollision(const SDL_Rect& r) const
 		rect.y < r.y + r.h &&
 		rect.h + rect.y > r.y);
 }
+
+void Collisions::GodMode()
+{
+	matrix[COLLIDER_PLAYER][COLLIDER_DAMAGE] = god_mode;
+	matrix[COLLIDER_PLAYER][COLLIDER] = god_mode;
+	god_mode = !god_mode;
+}

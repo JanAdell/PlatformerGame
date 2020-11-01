@@ -13,7 +13,7 @@
 #include "SString.h"
 
 #define GRAVITY 1.0f
-#define COLLIDER_OFFSET -25
+//#define COLLIDER_OFFSET -25
 
 Player::Player() : Module()
 {
@@ -131,11 +131,11 @@ bool Player::PreUpdate()
 		speed.x = 0;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_S)== KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_S)== KEY_REPEAT && !app->collisions->god_mode)
 	{
 		currentAnim = &duckAnim;
 	}
-
+	
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		flip = SDL_FLIP_NONE;
 		speed.x = moveSpeed;
@@ -145,7 +145,20 @@ bool Player::PreUpdate()
 	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP) {
 		speed.x = 0;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && state != JUMPING && doubleJump == true)
+
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && app->collisions->god_mode)
+	{
+		position.y -= 5;
+		state = GOD_MODE;
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && app->collisions->god_mode)
+	{
+		position.y += 5;
+		
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && state != JUMPING && doubleJump == true && !app->collisions->god_mode)
 	{
 		speed.y = -100;
 		cont++;
@@ -262,7 +275,6 @@ bool Player::Update(float dt)
 		
 		case RUNNING:
 			currentAnim = &runAnim;
-
 			acceleration.y = 0;
 			speed.y = 0;
 			break;
@@ -285,9 +297,13 @@ bool Player::Update(float dt)
 				position.x = node.attribute("x").as_int();
 				position.y = node.attribute("y").as_int();
 			}
-
+			
 			break;
 
+		case GOD_MODE:
+			if (!app->collisions->god_mode)
+				state = FALLING;
+			break;
 	}
 
 	
@@ -303,10 +319,10 @@ bool Player::Update(float dt)
 	position.x = position.x + speed.x * deltaTime;
 	position.y = position.y + speed.y * deltaTime;
 
-	collider_player->SetPos(position.x, position.y);
+	collider_player->SetPos(position.x + 2, position.y);
 		
-	
 	state = FALLING;
+
 	speed.x = 0;
 
 	return true;
