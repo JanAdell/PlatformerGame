@@ -63,8 +63,8 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
-		app->player->position.x = app->player->spawn_pos.x;
-		app->player->position.y = app->player->spawn_pos.y;
+		app->player->position.x = app->player->spawnPos.x;
+		app->player->position.y = app->player->spawnPos.y;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
@@ -109,24 +109,24 @@ void Scene::LoadLevel()
 	app->map->CleanUp();
 	app->fade->FadeTo();
 	app->player->Start();
-	if (Lvl == 1)
+	if (lvl == 1)
 	{
 		app->map->Load("level1.tmx");
 		app->audio->PlayMusic("Assets/audio/music/lvl1bgm.ogg");
-		Lvl = 2;
+		lvl = 2;
 	}
 	else
 	{
 		app->map->Load("level2.tmx");
 		app->audio->PlayMusic("Assets/audio/music/lvl2bgm.ogg");
-		Lvl = 1;
+		lvl = 1;
 	}
 }
 
 void Scene::LoadLevel1()
 {
 	app->god_mode = false;
-	Lvl = 1;
+	lvl = 1;
 	app->collisions->CleanUp();
 	app->player->CleanUp();
 	app->map->CleanUp();
@@ -138,7 +138,7 @@ void Scene::LoadLevel1()
 void Scene::LoadLevel2()
 {
 	app->god_mode = false;
-	Lvl = 2;
+	lvl = 2;
 	app->collisions->CleanUp();
 	app->player->CleanUp();
 	//app->fade->FadeTo();
@@ -165,17 +165,17 @@ bool Scene::Save(pugi::xml_node& data)const
 {
 	bool ret = true;
 	pugi::xml_node lvl_stats = data.append_child("lvl_stats");
-	lvl_stats.append_attribute("level") = Lvl;
+	lvl_stats.append_attribute("level") = lvl;
 	return ret;
 }
 bool Scene::Load(pugi::xml_node& data)
 {
 	bool ret = true;
 	pugi::xml_node lvl_stats = data.child("lvl_stats");
-	if (Lvl != lvl_stats.attribute("level").as_uint())
-		Lvl = lvl_stats.attribute("level").as_uint();
+	if (lvl != lvl_stats.attribute("level").as_uint())
+		lvl = lvl_stats.attribute("level").as_uint();
 
-	if (Lvl == 1)
+	if (lvl == 1)
 	{
 		LoadLevel1();
 	}

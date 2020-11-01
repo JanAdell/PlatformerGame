@@ -27,30 +27,30 @@ bool FadeToBlack::Start()
 
 bool FadeToBlack::Update(float dt)
 {
-	if (current_step == fade_step::none)
+	if (currentStep == FadeStep::NONE)
 		return true;
 
-	Uint32 now = SDL_GetTicks() - start_time;
-	float normalized = MIN(1.0f, (float)now / (float)total_time);
+	Uint32 now = SDL_GetTicks() - startTime;
+	float normalized = MIN(1.0f, (float)now / (float)totalTime);
 
-	switch (current_step)
+	switch (currentStep)
 	{
-	case fade_step::fade_to_black:
+	case FadeStep::FADE_TO_BLACK:
 	{
-		if (now >= total_time)
+		if (now >= totalTime)
 		{
-			total_time += total_time;
-			start_time = SDL_GetTicks();
-			current_step = fade_step::fade_from_black;
+			totalTime += totalTime;
+			startTime = SDL_GetTicks();
+			currentStep = FadeStep::FADE_FROM_BLACK;
 		}
 	} break;
 
-	case fade_step::fade_from_black:
+	case FadeStep::FADE_FROM_BLACK:
 	{
 		normalized = 1.0f - normalized;
 
-		if (now >= total_time)
-			current_step = fade_step::none;
+		if (now >= totalTime)
+			currentStep = FadeStep::NONE;
 	} break;
 	}
 
@@ -69,11 +69,11 @@ bool FadeToBlack::FadeTo(float time)
 {
 	bool ret = false;
 
-	if (current_step == fade_step::none)
+	if (currentStep == FadeStep::NONE)
 	{
-		current_step = fade_step::fade_to_black;
-		start_time = SDL_GetTicks();
-		total_time = (Uint32)(time * 0.5f * 1000.0f);
+		currentStep = FadeStep::FADE_TO_BLACK;
+		startTime = SDL_GetTicks();
+		totalTime = (Uint32)(time * 0.5f * 1000.0f);
 
 		ret = true;
 	}
@@ -84,11 +84,11 @@ bool FadeToBlack::FadeFrom(float time)
 {
 	bool ret = false;
 
-	if (current_step == fade_step::none)
+	if (currentStep == FadeStep::NONE)
 	{
-		current_step = fade_step::fade_from_black;
-		start_time = SDL_GetTicks();
-		total_time = (Uint32)(time * 0.5f * 1000.0f);
+		currentStep = FadeStep::FADE_FROM_BLACK;
+		startTime = SDL_GetTicks();
+		totalTime = (Uint32)(time * 0.5f * 1000.0f);
 
 		ret = true;
 	}
@@ -98,5 +98,5 @@ bool FadeToBlack::FadeFrom(float time)
 
 bool FadeToBlack::Fading() const
 {
-	return current_step != fade_step::none;
+	return currentStep != FadeStep::NONE;
 }

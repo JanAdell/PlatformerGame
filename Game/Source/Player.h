@@ -13,7 +13,7 @@ struct SDL_Texture;
 struct SDL_Rect;
 struct Collider;
 
-enum PLAYER_STATE
+enum PlayerState
 {
 	IDLE,
 	RUNNING,
@@ -45,7 +45,7 @@ public:
 	bool Save(pugi::xml_node&) const;
 
 	void OnCollision(Collider* c1, Collider* c2);
-	Collider* collider_player;
+	Collider* colliderPlayer;
 
 	bool IsStanding();
 	fPoint position;
@@ -54,8 +54,8 @@ public:
 	fPoint GetSpeed() const;
 
 	bool firstUpdate = true;
-	//Collider* collider_player = nullptr;
-	fPoint spawn_pos;
+	//Collider* colliderPlayer = nullptr;
+	fPoint spawnPos;
 
 private:
 	float moveSpeed = 30;
@@ -75,14 +75,14 @@ private:
 	Animation deathAnim;
 	Animation duckAnim;
 
-	pugi::xml_node player_node;
+	pugi::xml_node playerNode;
 	SDL_RendererFlip flip;
 
 	float deltaTime = 0;
 	Uint32 lastTime = 0;
 	Uint32 currTime = 0;
 
-	PLAYER_STATE state = FALLING;
+	PlayerState state = FALLING;
 
 
 	bool doubleJump;

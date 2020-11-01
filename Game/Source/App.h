@@ -103,8 +103,8 @@ private:
 
 	mutable bool		saveRequest;
 	bool				loadRequest;
-	SString			load_game;
-	mutable SString	save_game;
+	SString			loadGame;
+	mutable SString	saveGame;
 
 	List<Module *> modules;
 

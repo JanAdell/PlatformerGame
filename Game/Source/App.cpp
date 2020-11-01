@@ -319,7 +319,7 @@ bool App::LoadGameNow()
 
 	if (result != NULL)
 	{
-		LOG("Loading new Game State from %s...", load_game.GetString());
+		LOG("Loading new Game State from %s...", loadGame.GetString());
 
 		root = data.child("game_state");
 		ListItem<Module*>* item = modules.start;
@@ -337,7 +337,7 @@ bool App::LoadGameNow()
 			LOG("...loading process interrupted with error on module %s", (item != NULL) ? item->data->name.GetString() : "unknown");
 	}
 	else
-		LOG("Could not parse game state xml file %s. pugi error: %s", load_game.GetString(), result.description());
+		LOG("Could not parse game state xml file %s. pugi error: %s", loadGame.GetString(), result.description());
 	loadRequest = false;
 	return ret;
 }

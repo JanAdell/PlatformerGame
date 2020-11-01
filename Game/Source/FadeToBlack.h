@@ -3,7 +3,7 @@
 
 
 #include "Module.h"
-#include "SDL/include/SDL_rect.h"
+#include "SDL/include/SDL_Rect.h"
 
 class FadeToBlack : public Module
 {
@@ -20,18 +20,18 @@ public:
 	bool Fading() const;
 private:
 
-	enum fade_step
+	enum FadeStep
 	{
-		none,
-		fade_to_black,
-		fade_from_black
-	} current_step = fade_step::none;
+		NONE,
+		FADE_TO_BLACK,
+		FADE_FROM_BLACK
+	} currentStep = FadeStep::NONE;
 
-	Uint32 start_time = 0;
-	Uint32 total_time = 0;
+	Uint32 startTime = 0;
+	Uint32 totalTime = 0;
 	SDL_Rect screen;
-	Module* to_enable = nullptr;
-	Module* to_disable = nullptr;
+	Module* toEnable = nullptr;
+	Module* toDisable = nullptr;
 };
 
 #endif

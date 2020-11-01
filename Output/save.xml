@@ -5,15 +5,15 @@
 	<textures />
 	<audio />
 	<scene>
-		<lvl_stats level="1" />
+		<lvl_stats level="2" />
 	</scene>
 	<map />
 	<player>
-		<position x="823.950134" y="1519.53967" />
+		<position x="254.700073" y="1007.61963" />
 	</player>
 	<:anonymous />
 	<FadeToBlack />
 	<renderer>
-		<camera x="-217" y="-989" />
+		<camera x="0" y="-523" />
 	</renderer>
 </game_state>

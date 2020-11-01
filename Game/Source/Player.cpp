@@ -21,12 +21,12 @@ Player::Player() : Module()
 	
 }
 
-bool Player::Awake(pugi::xml_node& player_node)
+bool Player::Awake(pugi::xml_node& playerNode)
 {
-	this->player_node = player_node;
-	//pugi::xml_node node = player_node.child("animation");
+	this->playerNode = playerNode;
+	//pugi::xml_node node = playerNode.child("animation");
 	//idleAnim = new Animation();
-	for (pugi::xml_node node = player_node.child("animation"); node; node = node.next_sibling("animation"))
+	for (pugi::xml_node node = playerNode.child("animation"); node; node = node.next_sibling("animation"))
 	{
 
 		for (pugi::xml_node node_iterator = node.child("frame"); node_iterator; node_iterator = node_iterator.next_sibling("frame")) {
@@ -71,9 +71,9 @@ bool Player::Awake(pugi::xml_node& player_node)
 
 	}
 
-	if (app->scene->Lvl == 1)
+	if (app->scene->lvl == 1)
 	{
-		pugi::xml_node data = player_node.child("positionLvl1");
+		pugi::xml_node data = playerNode.child("positionLvl1");
 		position.x = data.attribute("x").as_int();
 		position.y = data.attribute("y").as_int();
 		size.x = data.attribute("w").as_int();
@@ -82,7 +82,7 @@ bool Player::Awake(pugi::xml_node& player_node)
 
 	else
 	{
-		pugi::xml_node data = player_node.child("positionLvl2");
+		pugi::xml_node data = playerNode.child("positionLvl2");
 		position.x = data.attribute("x").as_int();
 		position.y = data.attribute("y").as_int();
 		size.x = data.attribute("w").as_int();
@@ -96,21 +96,21 @@ bool Player::Awake(pugi::xml_node& player_node)
 bool Player::Start()
 {
 	characterTex = app->tex->Load("Assets/textures/player.png");
-	if (app->scene->Lvl == 1) {
-		pugi::xml_node node = player_node.child("positionLvl1");
-		position.x = spawn_pos.x;
-		position.y = spawn_pos.y;
+	if (app->scene->lvl == 1) {
+		pugi::xml_node node = playerNode.child("positionLvl1");
+		position.x = spawnPos.x;
+		position.y = spawnPos.y;
 		size.x = node.attribute("w").as_int();
 		size.y = node.attribute("h").as_int();
-		collider_player = app->collisions->AddCollider({ node.attribute("x").as_int(),node.attribute("y").as_int() ,node.attribute("w").as_int() ,node.attribute("h").as_int() }, COLLIDER_TYPE::COLLIDER_PLAYER, this);
+		colliderPlayer = app->collisions->AddCollider({ node.attribute("x").as_int(),node.attribute("y").as_int() ,node.attribute("w").as_int() ,node.attribute("h").as_int() }, COLLIDER_TYPE::COLLIDER_PLAYER, this);
 	}
-	if (app->scene->Lvl == 2) {
-		pugi::xml_node node = player_node.child("positionLvl2");
-		position.x = spawn_pos.x;
-		position.y = spawn_pos.y;
+	if (app->scene->lvl == 2) {
+		pugi::xml_node node = playerNode.child("positionLvl2");
+		position.x = spawnPos.x;
+		position.y = spawnPos.y;
 		size.x = node.attribute("w").as_int();
 		size.y = node.attribute("h").as_int();
-		collider_player = app->collisions->AddCollider({ node.attribute("x").as_int(),node.attribute("y").as_int() ,node.attribute("w").as_int() ,node.attribute("h").as_int() }, COLLIDER_TYPE::COLLIDER_PLAYER, this);
+		colliderPlayer = app->collisions->AddCollider({ node.attribute("x").as_int(),node.attribute("y").as_int() ,node.attribute("w").as_int() ,node.attribute("h").as_int() }, COLLIDER_TYPE::COLLIDER_PLAYER, this);
 	}
 	cont = 0;
 
@@ -188,9 +188,9 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 	if (col1->type == COLLIDER_TYPE::COLLIDER || col2->type == COLLIDER_TYPE::COLLIDER)
 	{
 		//vertical collisions
-		if (collider_player->rect.x < col1->rect.x + col1->rect.w  && collider_player->rect.x + collider_player->rect.w > col1->rect.x || collider_player->rect.x < col2->rect.x + col2->rect.w  && collider_player->rect.x + collider_player->rect.w > col2->rect.x )
+		if (colliderPlayer->rect.x < col1->rect.x + col1->rect.w  && colliderPlayer->rect.x + colliderPlayer->rect.w > col1->rect.x || colliderPlayer->rect.x < col2->rect.x + col2->rect.w  && colliderPlayer->rect.x + colliderPlayer->rect.w > col2->rect.x )
 		{
-			if (collider_player->rect.y + collider_player->rect.h > col1->rect.y && collider_player->rect.y < col1->rect.y && state != PLAYER_STATE::JUMPING && state != PLAYER_STATE::RUNNING || collider_player->rect.y + collider_player->rect.h > col2->rect.y && collider_player->rect.y < col2->rect.y && state != PLAYER_STATE::JUMPING && state != PLAYER_STATE::RUNNING)
+			if (colliderPlayer->rect.y + colliderPlayer->rect.h > col1->rect.y && colliderPlayer->rect.y < col1->rect.y && state != PlayerState::JUMPING && state != PlayerState::RUNNING || colliderPlayer->rect.y + colliderPlayer->rect.h > col2->rect.y && colliderPlayer->rect.y < col2->rect.y && state != PlayerState::JUMPING && state != PlayerState::RUNNING)
 			{
 				state = IDLE;
 				speed.y = 0;
@@ -208,7 +208,7 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 				
 			}
 
-			else if (collider_player->rect.y < col1->rect.y + col1->rect.h && collider_player->rect.y + collider_player->rect.h > col1->rect.y + col1->rect.h || collider_player->rect.y < col2->rect.y + col2->rect.h && collider_player->rect.y + collider_player->rect.h > col2->rect.y + col2->rect.h)
+			else if (colliderPlayer->rect.y < col1->rect.y + col1->rect.h && colliderPlayer->rect.y + colliderPlayer->rect.h > col1->rect.y + col1->rect.h || colliderPlayer->rect.y < col2->rect.y + col2->rect.h && colliderPlayer->rect.y + colliderPlayer->rect.h > col2->rect.y + col2->rect.h)
 			{
 				state = FALLING;
 				speed.y = 0;
@@ -218,18 +218,18 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 		}
 
 		//horitzontal collisions
-		if (collider_player->rect.y < col1->rect.y + col1->rect.h - 5 && collider_player->rect.y + collider_player->rect.h > col1->rect.y + 5 || collider_player->rect.y < col2->rect.y + col2->rect.h - 5 && collider_player->rect.y + collider_player->rect.h > col2->rect.y + 5)
+		if (colliderPlayer->rect.y < col1->rect.y + col1->rect.h - 5 && colliderPlayer->rect.y + colliderPlayer->rect.h > col1->rect.y + 5 || colliderPlayer->rect.y < col2->rect.y + col2->rect.h - 5 && colliderPlayer->rect.y + colliderPlayer->rect.h > col2->rect.y + 5)
 		{
 
 			//LEFT
-			if (collider_player->rect.x < col1->rect.x + col1->rect.w && collider_player->rect.x + collider_player->rect.w > col1->rect.x + col1->rect.w || collider_player->rect.x < col2->rect.x + col2->rect.w && collider_player->rect.x + collider_player->rect.w > col2->rect.x + col2->rect.w)
+			if (colliderPlayer->rect.x < col1->rect.x + col1->rect.w && colliderPlayer->rect.x + colliderPlayer->rect.w > col1->rect.x + col1->rect.w || colliderPlayer->rect.x < col2->rect.x + col2->rect.w && colliderPlayer->rect.x + colliderPlayer->rect.w > col2->rect.x + col2->rect.w)
 			{
 				speed.x = moveSpeed;
 				doubleJump = true;
 			}
 
 			//RIGHT
-			else if (collider_player->rect.x + collider_player->rect.w > col1->rect.x && collider_player->rect.x < col1->rect.x || collider_player->rect.x + collider_player->rect.w > col2->rect.x && collider_player->rect.x < col2->rect.x)
+			else if (colliderPlayer->rect.x + colliderPlayer->rect.w > col1->rect.x && colliderPlayer->rect.x < col1->rect.x || colliderPlayer->rect.x + colliderPlayer->rect.w > col2->rect.x && colliderPlayer->rect.x < col2->rect.x)
 			{	
 				speed.x = -moveSpeed;
 				doubleJump = true;
@@ -244,11 +244,11 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 				acceleration.x = 0;
 				speed.y = 0;
 				acceleration.y = 0;
-				if(app->scene->Lvl == 1)
+				if(app->scene->lvl == 1)
 				
 					app->scene->LoadLevel2();
 
-				else if (app->scene->Lvl == 2)
+				else if (app->scene->lvl == 2)
 					app->scene->LoadLevel1();
 			}
 			else if (col1->type == COLLIDER_TYPE::COLLIDER_DAMAGE || col2->type == COLLIDER_TYPE::COLLIDER_DAMAGE)
@@ -294,8 +294,8 @@ bool Player::Update(float dt)
 		
 		case DEAD:
 						
-			position.x = spawn_pos.x;
-			position.y = spawn_pos.y;				
+			position.x = spawnPos.x;
+			position.y = spawnPos.y;				
 			break;
 		
 	}
@@ -313,7 +313,7 @@ bool Player::Update(float dt)
 	position.x = position.x + speed.x * deltaTime;
 	position.y = position.y + speed.y * deltaTime;
 
-	collider_player->SetPos(position.x + 2, position.y);
+	colliderPlayer->SetPos(position.x + 2, position.y);
 	
 	
 	state = FALLING;
@@ -333,8 +333,8 @@ bool Player::PostUpdate()
 bool Player::CleanUp()
 {
 	app->tex->UnLoad(characterTex);
-	if(collider_player != nullptr)
-		collider_player->to_delete = true;
+	if(colliderPlayer != nullptr)
+		colliderPlayer->to_delete = true;
 
 	return true;
 }

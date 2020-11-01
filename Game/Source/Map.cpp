@@ -10,7 +10,7 @@
 #include "Scene.h"
 #include <math.h>
 
-Map::Map() : Module(), map_loaded(false)
+Map::Map() : Module(), mapLoaded(false)
 {
 	name.create("map");
 }
@@ -32,7 +32,7 @@ bool Map::Awake(pugi::xml_node& config)
 
 void Map::Draw()
 {
-	if (map_loaded == false)
+	if (mapLoaded == false)
 		return;
 
 	ListItem<MapLayer*>* layer = this->data.layers.start;
@@ -82,13 +82,13 @@ iPoint Map::MapToWorld(int x, int y) const
 
 	if (data.type == MAPTYPE_ORTHOGONAL)
 	{
-		ret.x = x * data.tile_width;
-		ret.y = y * data.tile_height;
+		ret.x = x * data.tileWidth;
+		ret.y = y * data.tileHeight;
 	}
 	else if (data.type == MAPTYPE_ISOMETRIC)
 	{
-		ret.x = (x - y) * (data.tile_width * 0.5f);
-		ret.y = (x + y) * (data.tile_height * 0.5f);
+		ret.x = (x - y) * (data.tileWidth * 0.5f);
+		ret.y = (x + y) * (data.tileHeight * 0.5f);
 	}
 	else
 	{
@@ -105,14 +105,14 @@ iPoint Map::WorldToMap(int x, int y) const
 
 	if (data.type == MAPTYPE_ORTHOGONAL)
 	{
-		ret.x = x / data.tile_width;
-		ret.y = y / data.tile_height;
+		ret.x = x / data.tileWidth;
+		ret.y = y / data.tileHeight;
 	}
 	else if (data.type == MAPTYPE_ISOMETRIC)
 	{
 
-		float half_width = data.tile_width * 0.5f;
-		float half_height = data.tile_height * 0.5f;
+		float half_width = data.tileWidth * 0.5f;
+		float half_height = data.tileHeight * 0.5f;
 		ret.x = int((x / half_width + y / half_height) / 2);
 		ret.y = int((y / half_height - (x / half_width)) / 2);
 	}
@@ -129,10 +129,10 @@ SDL_Rect TileSet::GetTileRect(int id) const
 {
 	int relative_id = id - firstgid;
 	SDL_Rect rect;
-	rect.w = tile_width;
-	rect.h = tile_height;
-	rect.x = margin + ((rect.w + spacing) * (relative_id % num_tiles_width));
-	rect.y = margin + ((rect.h + spacing) * (relative_id / num_tiles_width));
+	rect.w = tileWidth;
+	rect.h = tileHeight;
+	rect.x = margin + ((rect.w + spacing) * (relative_id % numTilesWidth));
+	rect.y = margin + ((rect.h + spacing) * (relative_id / numTilesWidth));
 	return rect;
 }
 
@@ -165,7 +165,7 @@ bool Map::CleanUp()
 
 
 	// Clean up the pugui tree
-	map_file.reset();
+	mapFile.reset();
 
 	return true;
 }
@@ -176,7 +176,7 @@ bool Map::Load(const char* file_name)
 	bool ret = true;
 	SString tmp("%s%s", folder.GetString(), file_name);
 
-	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());
+	pugi::xml_parse_result result = mapFile.load_file(tmp.GetString());
 
 	if (result == NULL)
 	{
@@ -192,7 +192,7 @@ bool Map::Load(const char* file_name)
 
 	// Load all tilesets info ----------------------------------------------
 	pugi::xml_node tileset;
-	for (tileset = map_file.child("map").child("tileset"); tileset && ret; tileset = tileset.next_sibling("tileset"))
+	for (tileset = mapFile.child("map").child("tileset"); tileset && ret; tileset = tileset.next_sibling("tileset"))
 	{
 		TileSet* set = new TileSet();
 
@@ -211,7 +211,7 @@ bool Map::Load(const char* file_name)
 
 	// Load layer info ----------------------------------------------
 	pugi::xml_node layer;
-	for (layer = map_file.child("map").child("layer"); layer && ret; layer = layer.next_sibling("layer"))
+	for (layer = mapFile.child("map").child("layer"); layer && ret; layer = layer.next_sibling("layer"))
 	{
 
 		MapLayer* lay = new MapLayer();
@@ -225,7 +225,7 @@ bool Map::Load(const char* file_name)
 		
 
 	pugi::xml_node object;
-	for (object = map_file.child("map").child("objectgroup"); object && ret; object = object.next_sibling("objectgroup"))
+	for (object = mapFile.child("map").child("objectgroup"); object && ret; object = object.next_sibling("objectgroup"))
 	{
 		ret = LoadObjects(object);
 
@@ -235,7 +235,7 @@ bool Map::Load(const char* file_name)
 	{
 		LOG("Successfully parsed map XML file: %s", file_name);
 		LOG("width: %d height: %d", data.width, data.height);
-		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
+		LOG("tileWidth: %d tileHeight: %d", data.tileWidth, data.tileHeight);
 
 		ListItem<TileSet*>* item = data.tilesets.start;
 		while (item != NULL)
@@ -243,7 +243,7 @@ bool Map::Load(const char* file_name)
 			TileSet* s = item->data;
 			LOG("Tileset ----");
 			LOG("name: %s firstgid: %d", s->name.GetString(), s->firstgid);
-			LOG("tile width: %d tile height: %d", s->tile_width, s->tile_height);
+			LOG("tile width: %d tile height: %d", s->tileWidth, s->tileHeight);
 			LOG("spacing: %d margin: %d", s->spacing, s->margin);
 			item = item->next;
 		}
@@ -259,7 +259,7 @@ bool Map::Load(const char* file_name)
 		}
 	}
 
-	map_loaded = ret;
+	mapLoaded = ret;
 
 	return ret;
 }
@@ -268,7 +268,7 @@ bool Map::Load(const char* file_name)
 bool Map::LoadMap()
 {
 	bool ret = true;
-	pugi::xml_node map = map_file.child("map");
+	pugi::xml_node map = mapFile.child("map");
 
 	if (map == NULL)
 	{
@@ -279,14 +279,14 @@ bool Map::LoadMap()
 	{
 		data.width = map.attribute("width").as_int();
 		data.height = map.attribute("height").as_int();
-		data.tile_width = map.attribute("tilewidth").as_int();
-		data.tile_height = map.attribute("tileheight").as_int();
+		data.tileWidth = map.attribute("tilewidth").as_int();
+		data.tileHeight = map.attribute("tileheight").as_int();
 		SString bg_color(map.attribute("backgroundcolor").as_string());
 
-		data.background_color.r = 0;
-		data.background_color.g = 0;
-		data.background_color.b = 0;
-		data.background_color.a = 0;
+		data.backgroundColor.r = 0;
+		data.backgroundColor.g = 0;
+		data.backgroundColor.b = 0;
+		data.backgroundColor.a = 0;
 
 		if (bg_color.Length() > 0)
 		{
@@ -298,13 +298,13 @@ bool Map::LoadMap()
 			int v = 0;
 
 			sscanf_s(red.GetString(), "%x", &v);
-			if (v >= 0 && v <= 255) data.background_color.r = v;
+			if (v >= 0 && v <= 255) data.backgroundColor.r = v;
 
 			sscanf_s(green.GetString(), "%x", &v);
-			if (v >= 0 && v <= 255) data.background_color.g = v;
+			if (v >= 0 && v <= 255) data.backgroundColor.g = v;
 
 			sscanf_s(blue.GetString(), "%x", &v);
-			if (v >= 0 && v <= 255) data.background_color.b = v;
+			if (v >= 0 && v <= 255) data.backgroundColor.b = v;
 		}
 
 		SString orientation(map.attribute("orientation").as_string());
@@ -335,21 +335,21 @@ bool Map::LoadTilesetDetails(pugi::xml_node& tileset_data, TileSet* set)
 	bool ret = true;
 	set->name.create(tileset_data.attribute("name").as_string());
 	set->firstgid = tileset_data.attribute("firstgid").as_int();
-	set->tile_width = tileset_data.attribute("tilewidth").as_int();
-	set->tile_height = tileset_data.attribute("tileheight").as_int();
+	set->tileWidth = tileset_data.attribute("tilewidth").as_int();
+	set->tileHeight = tileset_data.attribute("tileheight").as_int();
 	set->margin = tileset_data.attribute("margin").as_int();
 	set->spacing = tileset_data.attribute("spacing").as_int();
 	pugi::xml_node offset = tileset_data.child("tileoffset");
 
 	if (offset != NULL)
 	{
-		set->offset_x = offset.attribute("x").as_int();
-		set->offset_y = offset.attribute("y").as_int();
+		set->offsetX = offset.attribute("x").as_int();
+		set->offsetY = offset.attribute("y").as_int();
 	}
 	else
 	{
-		set->offset_x = 0;
-		set->offset_y = 0;
+		set->offsetX = 0;
+		set->offsetY = 0;
 	}
 
 	return ret;
@@ -370,22 +370,22 @@ bool Map::LoadTilesetImage(pugi::xml_node& tileset_data, TileSet* set)
 		set->texture = app->tex->Load(PATH(folder.GetString(), image.attribute("source").as_string()));
 		int w, h;
 		SDL_QueryTexture(set->texture, NULL, NULL, &w, &h);
-		set->tex_width = image.attribute("width").as_int();
+		set->texWidth = image.attribute("width").as_int();
 
-		if (set->tex_width <= 0)
+		if (set->texWidth <= 0)
 		{
-			set->tex_width = w;
+			set->texWidth = w;
 		}
 
-		set->tex_height = image.attribute("height").as_int();
+		set->texHeight = image.attribute("height").as_int();
 
-		if (set->tex_height <= 0)
+		if (set->texHeight <= 0)
 		{
-			set->tex_height = h;
+			set->texHeight = h;
 		}
 
-		set->num_tiles_width = set->tex_width / set->tile_width;
-		set->num_tiles_height = set->tex_height / set->tile_height;
+		set->numTilesWidth = set->texWidth / set->tileWidth;
+		set->numTilesHeight = set->texHeight / set->tileHeight;
 	}
 
 	return ret;
@@ -457,8 +457,8 @@ bool Map::LoadObjects(pugi::xml_node& data)
 	{
 		for (pugi::xml_node obj = data.child("object"); obj && ret; obj = obj.next_sibling("object"))
 		{
-			app->player->spawn_pos.x = obj.attribute("x").as_int();
-			app->player->spawn_pos.y = obj.attribute("y").as_int();
+			app->player->spawnPos.x = obj.attribute("x").as_int();
+			app->player->spawnPos.y = obj.attribute("y").as_int();
 		}
 	}
 
