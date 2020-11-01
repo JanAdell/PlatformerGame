@@ -30,6 +30,10 @@ Simply try to reach the end of the level though jumping. Some colliders might fe
 * Wall Jump (when colliding against a vertical wall jump can be performed again).
 > Wall Jumping can sometimes feel strange due to collision feedback, we reccommend letting the character collide clearly and then fall a bit off the wall so a double jump can be performed comfortably again.
 
+## Bugs
+
+* If God Mode is activated while jumping the player will still have gravity applied. Deactivating it and reactivating on solid ground will fix it.
+
 ## Controls
 
 * A Key - Left Horizontal Movement
