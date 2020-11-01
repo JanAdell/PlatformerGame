@@ -96,13 +96,22 @@ bool Player::Awake(pugi::xml_node& player_node)
 bool Player::Start()
 {
 	characterTex = app->tex->Load("Assets/textures/player.png");
-	pugi::xml_node node = player_node.child("positionLvl1");
-	position.x = node.attribute("x").as_int();
-	position.y = node.attribute("y").as_int();
-	size.x = node.attribute("w").as_int();
-	size.y = node.attribute("h").as_int();
-	collider_player = app->collisions->AddCollider({ node.attribute("x").as_int(),node.attribute("y").as_int() ,node.attribute("w").as_int() ,node.attribute("h").as_int() }, COLLIDER_TYPE::COLLIDER_PLAYER, this);
-
+	if (app->scene->Lvl == 1) {
+		pugi::xml_node node = player_node.child("positionLvl1");
+		position.x = node.attribute("x").as_int();
+		position.y = node.attribute("y").as_int();
+		size.x = node.attribute("w").as_int();
+		size.y = node.attribute("h").as_int();
+		collider_player = app->collisions->AddCollider({ node.attribute("x").as_int(),node.attribute("y").as_int() ,node.attribute("w").as_int() ,node.attribute("h").as_int() }, COLLIDER_TYPE::COLLIDER_PLAYER, this);
+	}
+	if (app->scene->Lvl == 2) {
+		pugi::xml_node node = player_node.child("positionLvl2");
+		position.x = node.attribute("x").as_int();
+		position.y = node.attribute("y").as_int();
+		size.x = node.attribute("w").as_int();
+		size.y = node.attribute("h").as_int();
+		collider_player = app->collisions->AddCollider({ node.attribute("x").as_int(),node.attribute("y").as_int() ,node.attribute("w").as_int() ,node.attribute("h").as_int() }, COLLIDER_TYPE::COLLIDER_PLAYER, this);
+	}
 	cont = 0;
 
 	return true;
@@ -190,7 +199,6 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 			{
 				state = FALLING;
 				speed.y = 0;
-				doubleJump = true;
 				
 			
 			}
@@ -204,12 +212,14 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 			if (collider_player->rect.x < col1->rect.x + col1->rect.w && collider_player->rect.x + collider_player->rect.w > col1->rect.x + col1->rect.w || collider_player->rect.x < col2->rect.x + col2->rect.w && collider_player->rect.x + collider_player->rect.w > col2->rect.x + col2->rect.w)
 			{
 				speed.x = moveSpeed;
+				doubleJump = true;
 			}
 
 			//RIGHT
 			else if (collider_player->rect.x + collider_player->rect.w > col1->rect.x && collider_player->rect.x < col1->rect.x || collider_player->rect.x + collider_player->rect.w > col2->rect.x && collider_player->rect.x < col2->rect.x)
 			{	
 				speed.x = -moveSpeed;
+				doubleJump = true;
 			}
 		}
 
@@ -217,7 +227,11 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 		
 			else if (col1->type == COLLIDER_TYPE::NEXTLVL || col2->type == COLLIDER_TYPE::NEXTLVL)
 			{
-				app->scene->LoadLevel2();
+				if(app->scene->Lvl == 1)
+					app->scene->LoadLevel2();
+
+				if (app->scene->Lvl == 2)
+					app->scene->LoadLevel1();
 			}
 			else if (col1->type == COLLIDER_TYPE::COLLIDER_DAMAGE || col2->type == COLLIDER_TYPE::COLLIDER_DAMAGE)
 			{
@@ -258,9 +272,20 @@ bool Player::Update(float dt)
 			break;
 		
 		case DEAD:
-			pugi::xml_node node = player_node.child("positionLvl1");
-			position.x = node.attribute("x").as_int();
-			position.y = node.attribute("y").as_int();
+
+			if (app->scene->Lvl == 1)
+			{
+				pugi::xml_node node = player_node.child("positionLvl1");
+				position.x = node.attribute("x").as_int();
+				position.y = node.attribute("y").as_int();
+			}
+			else if (app->scene->Lvl == 2)
+			{
+				pugi::xml_node node = player_node.child("positionLvl2");
+				position.x = node.attribute("x").as_int();
+				position.y = node.attribute("y").as_int();
+			}
+
 			break;
 
 	}
