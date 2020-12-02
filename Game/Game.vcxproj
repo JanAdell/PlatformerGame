@@ -89,6 +89,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FlyingEnemy.cpp" />
+    <ClCompile Include="GroundEnemy.cpp" />
+    <ClCompile Include="Pathfinding.cpp" />
     <ClCompile Include="Source\Collisions.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
     <ClCompile Include="Source\FadeToBlack.cpp" />
@@ -102,6 +105,9 @@
     <ClCompile Include="Source\Render.cpp" />
     <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\Window.cpp" />
+    <ClInclude Include="FlyingEnemy.h" />
+    <ClInclude Include="GroundEnemy.h" />
+    <ClInclude Include="Pathfinding.h" />
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\Collisions.h" />
     <ClInclude Include="Source\EntityManager.h" />
