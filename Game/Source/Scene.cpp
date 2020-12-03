@@ -67,6 +67,12 @@ bool Scene::Update(float dt)
 		app->player->position.y = app->player->spawnPos.y;
 	}
 
+	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+	{
+		app->player->position.x = app->player->checkpointPos.x;
+		app->player->position.y = app->player->checkpointPos.y;
+	}
+
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		app->LoadGame();
 

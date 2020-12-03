@@ -238,23 +238,29 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 
 	}
 			
-			if (col1->type == COLLIDER_TYPE::NEXTLVL || col2->type == COLLIDER_TYPE::NEXTLVL)
-			{
-				speed.x = 0;
-				acceleration.x = 0;
-				speed.y = 0;
-				acceleration.y = 0;
-				if(app->scene->lvl == 1)
-				
-					app->scene->LoadLevel2();
+	if (col1->type == COLLIDER_TYPE::NEXTLVL || col2->type == COLLIDER_TYPE::NEXTLVL)
+	{
+		speed.x = 0;
+		acceleration.x = 0;
+		speed.y = 0;
+		acceleration.y = 0;
+		if (app->scene->lvl == 1)
+			app->scene->LoadLevel2();
 
-				else if (app->scene->lvl == 2)
-					app->scene->LoadLevel1();
-			}
-			else if (col1->type == COLLIDER_TYPE::COLLIDER_DAMAGE || col2->type == COLLIDER_TYPE::COLLIDER_DAMAGE)
-			{
-				state = DEAD;
-			}
+		else if (app->scene->lvl == 2)
+			app->scene->LoadLevel1();
+	}
+
+	else if (col1->type == COLLIDER_TYPE::COLLIDER_DAMAGE || col2->type == COLLIDER_TYPE::COLLIDER_DAMAGE)
+	{
+		state = DEAD;
+	}
+	
+	else if (col1->type == COLLIDER_TYPE::CHECKPOINT || col2->type == COLLIDER_TYPE::CHECKPOINT)
+	{
+		app->SaveGame();
+		checkpoint;
+	}
 	
 }
 

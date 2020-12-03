@@ -462,6 +462,16 @@ bool Map::LoadObjects(pugi::xml_node& data)
 		}
 	}
 
+	else if (name == "Checkpoint")
+	{
+		for (pugi::xml_node obj = data.child("object"); obj && ret; obj = obj.next_sibling("object"))
+		{
+			app->player->checkpointPos.x = obj.attribute("x").as_int();
+			app->player->checkpointPos.y = obj.attribute("y").as_int();
+			app->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::CHECKPOINT);
+		}
+	}
+
 
 	return ret;
 }

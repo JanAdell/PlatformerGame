@@ -56,10 +56,12 @@ public:
 	bool firstUpdate = true;
 	//Collider* colliderPlayer = nullptr;
 	fPoint spawnPos;
+	fPoint checkpointPos;
+	bool checkpoint = false;
 
 private:
 	float moveSpeed = 30;
-	float contpeed = -25;
+	//float contpeed = -25;
 
 	iPoint size;
 	iPoint offset;

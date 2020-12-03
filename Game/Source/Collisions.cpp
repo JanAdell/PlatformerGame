@@ -14,21 +14,31 @@ Collisions::Collisions()
 	matrix[COLLIDER][NEXTLVL] = false;
 	matrix[COLLIDER][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER][COLLIDER_DAMAGE] = false;
+	matrix[COLLIDER][CHECKPOINT] = false;
 
 	matrix[COLLIDER_PLAYER][COLLIDER] = true;
 	matrix[COLLIDER_PLAYER][NEXTLVL] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_DAMAGE] = true;
+	matrix[COLLIDER_PLAYER][CHECKPOINT] = true;
 
 	matrix[NEXTLVL][COLLIDER] = false;
 	matrix[NEXTLVL][NEXTLVL] = false;
 	matrix[NEXTLVL][COLLIDER_PLAYER] = true;
 	matrix[NEXTLVL][COLLIDER_DAMAGE] = false;
+	matrix[NEXTLVL][CHECKPOINT] = false;
 
 	matrix[COLLIDER_DAMAGE][COLLIDER] = false;
 	matrix[COLLIDER_DAMAGE][NEXTLVL] = false;
 	matrix[COLLIDER_DAMAGE][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_DAMAGE][COLLIDER_DAMAGE] = false;
+	matrix[COLLIDER_DAMAGE][CHECKPOINT] = false;
+
+	matrix[CHECKPOINT][COLLIDER] = false;
+	matrix[CHECKPOINT][NEXTLVL] = false;
+	matrix[CHECKPOINT][COLLIDER_PLAYER] = true;
+	matrix[CHECKPOINT][COLLIDER_DAMAGE] = false;
+	matrix[CHECKPOINT][CHECKPOINT] = false;
 }
 
 
@@ -120,6 +130,9 @@ void Collisions::DebugDraw()
 			break;
 		case COLLIDER_DAMAGE:
 			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 0, alpha);
+			break;
+		case CHECKPOINT:
+			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 255, alpha);
 			break;
 		}
 	}
