@@ -67,7 +67,7 @@ bool Scene::Update(float dt)
 		app->player->position.y = app->player->spawnPos.y;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN && intro == false)
 	{
 		app->player->position.x = app->player->checkpointPos.x;
 		app->player->position.y = app->player->checkpointPos.y;
@@ -131,6 +131,7 @@ void Scene::LoadLevel()
 
 void Scene::LoadLevel1()
 {
+	intro = false;
 	app->god_mode = false;
 	lvl = 1;
 	app->collisions->CleanUp();
@@ -143,6 +144,7 @@ void Scene::LoadLevel1()
 
 void Scene::LoadLevel2()
 {
+	intro = false;
 	app->god_mode = false;
 	lvl = 2;
 	app->collisions->CleanUp();
