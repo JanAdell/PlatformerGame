@@ -8,7 +8,6 @@
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Input.cpp" />
     <ClCompile Include="Source\Audio.cpp" />
-    <ClCompile Include="Source\App.cpp" />
     <ClCompile Include="Source\Log.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -20,13 +19,11 @@
     <ClCompile Include="Source\Collisions.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
     <ClCompile Include="Source\FadeToBlack.cpp" />
-    <ClCompile Include="Pathfinding.cpp" />
-    <ClCompile Include="FlyingEnemy.cpp">
-      <Filter>Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="GroundEnemy.cpp">
-      <Filter>Entities</Filter>
-    </ClCompile>
+    <ClCompile Include="Source\App.cpp" />
+    <ClCompile Include="Source\FlyingEnemy.cpp" />
+    <ClCompile Include="Source\GroundEnemy.cpp" />
+    <ClCompile Include="Source\Pathfinding.cpp" />
+    <ClCompile Include="Source\Entity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -67,13 +64,10 @@
     <ClInclude Include="Source\EntityManager.h" />
     <ClInclude Include="Source\FadeToBlack.h" />
     <ClInclude Include="Source\Animation.h" />
-    <ClInclude Include="Pathfinding.h" />
-    <ClInclude Include="FlyingEnemy.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="GroundEnemy.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
+    <ClInclude Include="Source\FlyingEnemy.h" />
+    <ClInclude Include="Source\GroundEnemy.h" />
+    <ClInclude Include="Source\Pathfinding.h" />
+    <ClInclude Include="Source\Entity.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

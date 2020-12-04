@@ -15,7 +15,9 @@ class Scene;
 class Map;
 class FadeToBlack;
 class Player;
+class EntityManager;
 class Collisions;
+class Pathfinding;
 
 class App
 {
@@ -88,6 +90,7 @@ public:
 	Map* map;
 	FadeToBlack* fade;
 	Player* player;
+	EntityManager* entityManager;
 	Collisions* collisions;
 	
 public:

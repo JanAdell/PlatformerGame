@@ -8,7 +8,9 @@
 #include "Map.h"
 #include "FadeToBlack.h"
 #include "Player.h"
+#include "EntityManager.h"
 #include "Collisions.h"
+//#include "Pathfinding.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -32,6 +34,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	map = new Map();
 	fade = new FadeToBlack();
 	player = new Player();
+	entityManager = new EntityManager();
 	collisions = new Collisions();
 
 	// Ordered for awake / Start / Update
@@ -42,6 +45,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(scene);
 	AddModule(map);
+	AddModule(entityManager);
 	AddModule(player);
 	AddModule(collisions);
 	AddModule(fade);
