@@ -10,7 +10,7 @@
 #include "Player.h"
 #include "EntityManager.h"
 #include "Collisions.h"
-//#include "Pathfinding.h"
+#include "Pathfinding.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -36,6 +36,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	player = new Player();
 	entityManager = new EntityManager();
 	collisions = new Collisions();
+	pathfinding = new Pathfinding();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -47,6 +48,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(entityManager);
 	AddModule(player);
+	AddModule(pathfinding);
 	AddModule(collisions);
 	AddModule(fade);
 

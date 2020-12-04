@@ -92,6 +92,7 @@ public:
 	Player* player;
 	EntityManager* entityManager;
 	Collisions* collisions;
+	Pathfinding* pathfinding;
 	
 public:
 
