@@ -73,25 +73,25 @@ bool Enemy::Save(pugi::xml_node& node) const
 
 void Enemy::OnCollision(Collider* col1)
 {
-	if (col1->type == COLLIDER_TYPE::COLLIDER_WALL)
+	if (col1->type == COLLIDER_TYPE::COLLIDER)
 	{
-		iPoint enemy_pos = App->map->WorldToMap(position.x, position.y);
-		iPoint objective = App->map->WorldToMap(col1->rect.x, col1->rect.y);
+		iPoint enemy_pos = app->map->WorldToMap(position.x, position.y);
+		iPoint objective = app->map->WorldToMap(col1->rect.x, col1->rect.y);
 		fPoint direction(enemy_pos.x - objective.x, enemy_pos.y - objective.y);
 
 		//vertical collisions
 		if (collider->rect.x < col1->rect.x + col1->rect.w - 5 && collider->rect.x + collider->rect.w > col1->rect.x + 5)
 		{
-			position.y -= gravity * App->GetDT();
+			position.y -= gravity; //this needs to be multiplied by DT
 
 		}
 
 		//horitzontal collisions
 		if (collider->rect.y < col1->rect.y + col1->rect.h - 5 && collider->rect.y + collider->rect.h > col1->rect.y + 5)
 		{
-			position.x += speed.x * direction.x * App->GetDT();
+			position.x += speed.x * direction.x; //this needs to be multiplied by DT
+		
 		}
-
 	}
 
 	if (col1->type == COLLIDER_TYPE::COLLIDER_PLAYER)
