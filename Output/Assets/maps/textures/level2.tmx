@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="63" height="63" tilewidth="32" tileheight="32" infinite="0" nextlayerid="16" nextobjectid="324">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="63" height="63" tilewidth="32" tileheight="32" infinite="0" nextlayerid="16" nextobjectid="327">
  <tileset firstgid="1" name="warped_caves_spritesheet32x32" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="180" columns="18">
   <image source="warped_caves_spritesheet32x32.png" width="595" height="331"/>
   <terraintypes>
@@ -37899,8 +37899,8 @@
    <tile gid="92"/>
    <tile gid="38"/>
    <tile gid="106"/>
-   <tile gid="135"/>
-   <tile gid="57"/>
+   <tile gid="38"/>
+   <tile gid="39"/>
    <tile/>
    <tile gid="73"/>
    <tile gid="20"/>
@@ -37962,10 +37962,10 @@
    <tile gid="38"/>
    <tile gid="92"/>
    <tile gid="38"/>
-   <tile gid="177"/>
-   <tile gid="131"/>
-   <tile gid="41"/>
-   <tile gid="173"/>
+   <tile gid="92"/>
+   <tile gid="39"/>
+   <tile/>
+   <tile gid="155"/>
    <tile gid="92"/>
    <tile gid="38"/>
    <tile gid="106"/>
@@ -37975,8 +37975,8 @@
    <tile gid="92"/>
    <tile gid="106"/>
    <tile gid="106"/>
-   <tile gid="171"/>
-   <tile gid="21"/>
+   <tile gid="39"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -38026,9 +38026,9 @@
    <tile gid="92"/>
    <tile gid="92"/>
    <tile gid="106"/>
-   <tile gid="92"/>
-   <tile gid="38"/>
-   <tile gid="38"/>
+   <tile gid="107"/>
+   <tile/>
+   <tile gid="91"/>
    <tile gid="106"/>
    <tile gid="106"/>
    <tile gid="38"/>
@@ -38038,8 +38038,8 @@
    <tile gid="106"/>
    <tile gid="106"/>
    <tile gid="92"/>
-   <tile gid="106"/>
-   <tile gid="177"/>
+   <tile gid="171"/>
+   <tile gid="172"/>
    <tile gid="89"/>
    <tile/>
    <tile/>
@@ -38089,9 +38089,9 @@
    <tile gid="92"/>
    <tile gid="92"/>
    <tile gid="92"/>
-   <tile gid="92"/>
-   <tile gid="38"/>
-   <tile gid="106"/>
+   <tile gid="93"/>
+   <tile/>
+   <tile gid="161"/>
    <tile gid="92"/>
    <tile gid="38"/>
    <tile gid="38"/>
@@ -38152,9 +38152,9 @@
    <tile gid="92"/>
    <tile gid="14"/>
    <tile gid="38"/>
-   <tile gid="106"/>
-   <tile gid="106"/>
-   <tile gid="106"/>
+   <tile gid="93"/>
+   <tile/>
+   <tile gid="155"/>
    <tile gid="92"/>
    <tile gid="38"/>
    <tile gid="135"/>
@@ -38215,9 +38215,9 @@
    <tile gid="106"/>
    <tile gid="38"/>
    <tile gid="106"/>
-   <tile gid="141"/>
-   <tile gid="142"/>
-   <tile gid="136"/>
+   <tile gid="159"/>
+   <tile/>
+   <tile gid="123"/>
    <tile gid="56"/>
    <tile gid="110"/>
    <tile gid="125"/>
@@ -39918,12 +39918,12 @@
   <object id="233" x="444.417" y="825.25" width="45.8333" height="111.5"/>
   <object id="234" x="373.75" y="795.917" width="140.5" height="114.167"/>
   <object id="235" x="61.75" y="790.583" width="348.5" height="86.8333"/>
-  <object id="236" x="36.4167" y="841.25" width="135.167" height="194.833"/>
-  <object id="237" x="94.4167" y="829.25" width="104.5" height="142.833"/>
+  <object id="236" x="36.4167" y="841.25" width="135.167" height="384.166"/>
+  <object id="237" x="94.4167" y="829.25" width="109.5" height="146.833"/>
   <object id="238" x="125.75" y="860.583" width="104.5" height="49.5"/>
-  <object id="239" x="247.083" y="1045.25" width="303.833" height="251.5"/>
-  <object id="240" x="439.75" y="1118.58" width="179.167" height="304.167"/>
-  <object id="241" x="-47.2197" y="1199.25" width="536.803" height="350.833"/>
+  <object id="239" x="244.418" y="1044.59" width="310.498" height="120.548"/>
+  <object id="240" x="467.083" y="1105.58" width="151.834" height="317.167"/>
+  <object id="241" x="243.447" y="1264.58" width="246.136" height="285.5"/>
   <object id="242" x="325.083" y="1370.58" width="259.167" height="108.833"/>
   <object id="243" x="266.417" y="1501.25" width="159.833" height="78.1667"/>
   <object id="244" x="57.75" y="1543.25" width="176.5" height="134.167"/>
@@ -39940,8 +39940,6 @@
   <object id="256" x="1363.58" y="826.917" width="152" height="150.5"/>
   <object id="257" x="1783.58" y="408.25" width="179.667" height="155"/>
   <object id="258" x="1846.58" y="343.417" width="161.667" height="129.833"/>
-  <object id="259" x="31.4167" y="1076.58" width="218.5" height="180"/>
-  <object id="260" x="40.25" y="1019.25" width="110.5" height="81"/>
   <object id="261" x="487.75" y="664.25" width="194.5" height="113.5"/>
   <object id="262" x="563.25" y="660.75" width="151" height="91"/>
   <object id="263" x="480.75" y="750.25" width="104.5" height="95"/>
@@ -39950,7 +39948,7 @@
   <object id="266" x="38.4167" y="501.917" width="444.5" height="328.167"/>
   <object id="267" x="101.083" y="52.5833" width="226.5" height="183.5"/>
   <object id="269" x="1843.25" y="1572.75" width="118.5" height="70.5"/>
-  <object id="272" x="1186.81" y="724.159" width="145.591" height="14.3485"/>
+  <object id="272" x="1189.81" y="724.159" width="145.591" height="14.3485"/>
   <object id="273" x="870.75" y="1011.83" width="144.625" height="14.1667"/>
   <object id="274" x="1191" y="1619.54" width="144" height="14.1667"/>
   <object id="275" x="1607.5" y="1875.92" width="111" height="14.1667"/>
@@ -39986,6 +39984,9 @@
   <object id="317" x="1571.89" y="1041.2" width="127.227" height="60.1364"/>
   <object id="318" x="1365.75" y="1008.75" width="234" height="60"/>
   <object id="319" x="1437.75" y="960.25" width="77.5" height="52.5"/>
+  <object id="324" x="404.917" y="1236.42" width="98.1667" height="52.5"/>
+  <object id="325" x="244.437" y="1121.09" width="73.9572" height="74.481"/>
+  <object id="326" x="-1.75" y="1199.75" width="79.5" height="124.5"/>
  </objectgroup>
  <objectgroup color="#aa0000" id="12" name="ColliderDmg">
   <properties>
