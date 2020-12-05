@@ -85,8 +85,8 @@
        <frame x="97" y="116" w="20" h="34"/>
        <frame x="118" y="119" w="25" h="24"/>
      </animation>
-      <positionLvl1 x = "410" y = "430" w ="10" h = "40"/>
-      <positionLvl2 x = "250" y = "1675" w ="10" h = "40"/>
+      <positionLvl1 x = "410" y = "410" w ="10" h = "40"/>
+      <positionLvl2 x = "250" y = "1650" w ="10" h = "40"/>
       <speed x = "2" y = "2"/>
     </player>
 

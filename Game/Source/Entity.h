@@ -63,6 +63,7 @@ public:
 	float gravity;
 
 	ENTITY_TYPE type = ENTITY_TYPE::NO_ENTITY;
+	EntityState states = EntityState::UNKNOWN;
 	SDL_RendererFlip flip = (SDL_RendererFlip)SDL_FLIP_NONE;
 	float anim_speed;
 	Animation anim_idle;

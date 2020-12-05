@@ -164,7 +164,6 @@ bool Map::CleanUp()
 	}
 	data.layers.clear();
 
-
 	// Clean up the pugui tree
 	mapFile.reset();
 
@@ -473,6 +472,17 @@ bool Map::LoadObjects(pugi::xml_node& data)
 			//app->player->checkpointPos.y = obj.attribute("y").as_int();
 			app->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::CHECKPOINT);
 		}
+	}
+
+	else if (name == "GroundEnemy")
+	{
+		for (pugi::xml_node obj = data.child("object"); obj && ret; obj = obj.next_sibling("object"))
+			app->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, ENTITY_TYPE::GROUND_ENEMY);
+	}
+	else if (name == "FlyingEnemy")
+	{
+		for (pugi::xml_node obj = data.child("object"); obj && ret; obj = obj.next_sibling("object"))
+			app->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, ENTITY_TYPE::FLYING_ENEMY);
 	}
 
 
