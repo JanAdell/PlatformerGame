@@ -3,7 +3,7 @@
 #include "Collisions.h"
 #include "Render.h"
 #include "Player.h"
-//#include "FlyingEnemy.h"
+#include "FlyingEnemy.h"
 #include "GroundEnemy.h"
 #include "Log.h"
 
