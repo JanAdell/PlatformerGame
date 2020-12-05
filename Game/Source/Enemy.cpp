@@ -4,7 +4,7 @@
 
 Enemy::Enemy(const fPoint position, const char* name, ENTITY_TYPE type) : Entity(position, name, type)
 {
-	current_animation = &anim_idle;
+	currentAnim = &anim_idle;
 
 	pugi::xml_document config_file;
 	pugi::xml_node ret;
@@ -21,14 +21,14 @@ Enemy::~Enemy()
 
 }
 
-bool Enemy::Update(float dt)
+void Enemy::Update(float dt)
 {
-	return true;
+	
 }
 
 void Enemy::PushBack()
 {
-	for (ListItem<EntitiesAnim*>* animation = data.animations.start; animation != nullptr; animation = animation->next)
+	/*for (ListItem<EntitiesAnim*>* animation = data.animations.start; animation != nullptr; animation = animation->next)
 	{
 		ListItem<SDL_Rect*>* frames_item;
 		switch (animation->data->states)
@@ -51,7 +51,7 @@ void Enemy::PushBack()
 		default:
 			break;
 		}
-	}
+	}*/
 	anim_dying.loop = false;
 }
 
@@ -71,7 +71,7 @@ bool Enemy::Save(pugi::xml_node& node) const
 	return true;
 }
 
-void Enemy::OnCollision(Collider* col1)
+void Enemy::OnCollision(Collider* col1, Collider* col2)
 {
 	if (col1->type == COLLIDER_TYPE::COLLIDER)
 	{

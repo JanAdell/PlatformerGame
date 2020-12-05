@@ -45,7 +45,7 @@ Collisions::Collisions()
 Collisions::~Collisions()
 {}
 
-bool Collisions::PreUpdate()
+bool Collisions::PreUpdate(float dt)
 {
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{

@@ -8,6 +8,7 @@
 #include "Window.h"
 #include "Collisions.h"
 #include "Scene.h"
+#include "EntityManager.h"
 #include <math.h>
 
 Map::Map() : Module(), mapLoaded(false)
@@ -455,19 +456,22 @@ bool Map::LoadObjects(pugi::xml_node& data)
 
 	else if (name == "Spawn")
 	{
-		for (pugi::xml_node obj = data.child("object"); obj && ret; obj = obj.next_sibling("object"))
-		{
-			app->player->spawnPos.x = obj.attribute("x").as_int();
-			app->player->spawnPos.y = obj.attribute("y").as_int();
-		}
+		fPoint spawnPoint;
+		pugi::xml_node obj = data.child("object");
+		spawnPoint.x = obj.attribute("x").as_int();
+		spawnPoint.y = obj.attribute("y").as_int();
+		app->entityManager->player = app->entityManager->CreateEntity(spawnPoint, ENTITY_TYPE::PLAYER);
+				
+		//app->player->spawnPos.y = obj.attribute("y").as_int();
+		
 	}
 
 	else if (name == "Checkpoint")
 	{
 		for (pugi::xml_node obj = data.child("object"); obj && ret; obj = obj.next_sibling("object"))
 		{
-			app->player->checkpointPos.x = obj.attribute("x").as_int();
-			app->player->checkpointPos.y = obj.attribute("y").as_int();
+			//app->player->checkpointPos.x = obj.attribute("x").as_int();
+			//app->player->checkpointPos.y = obj.attribute("y").as_int();
 			app->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::CHECKPOINT);
 		}
 	}

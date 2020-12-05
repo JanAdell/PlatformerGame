@@ -49,7 +49,7 @@ public:
 	Collisions();
 	~Collisions();
 
-	bool PreUpdate() override;
+	bool PreUpdate(float dt) override;
 	bool Update(float dt) override;
 	bool CleanUp() override;
 

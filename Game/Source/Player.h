@@ -1,12 +1,9 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 
-#include "Module.h"
-#include "Point.h"
 #include "Animation.h"
-#include "Collisions.h"
-#include "SDL_mixer/include/SDL_mixer.h"
-#include "SDL/include/SDL_render.h"
+#include "Entity.h"
+
 //#pragma comment(lib, "SDL_mixer/libx86/SDL2_mixer.lib")
 
 struct SDL_Texture;
@@ -24,22 +21,23 @@ enum PlayerState
 	MAX_STATES
 };
 
-class Player : public Module
+class Player : public Entity
 {
 public:
-	Player();
+	Player(const fPoint& position);
+	~Player();
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
 	// Called before the first frame
-	bool Start();
+	bool Start() override;
 	// Called each loop iteration
-	bool PreUpdate();
+	void PreUpdate(float dt) override;
 	// Called each loop iteration
-	bool Update(float dt);
+	void Update(float dt);
 	// Called each loop iteration
-	bool PostUpdate();
+	void PostUpdate(float dt);
 	// Called before quitting
-	bool CleanUp();
+	void CleanUp();
 
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
@@ -65,12 +63,8 @@ private:
 
 	iPoint size;
 	iPoint offset;
-	fPoint speed;
 	fPoint acceleration;
-
-
-	SDL_Texture* characterTex;
-	Animation* currentAnim = nullptr;
+			
 	Animation idleAnim;
 	Animation jumpAnim;
 	Animation runAnim;

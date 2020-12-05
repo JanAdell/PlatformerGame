@@ -7,7 +7,6 @@
 #include "Scene.h"
 #include "Map.h"
 #include "FadeToBlack.h"
-#include "Player.h"
 #include "EntityManager.h"
 #include "Collisions.h"
 #include "Pathfinding.h"
@@ -33,7 +32,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new Scene();
 	map = new Map();
 	fade = new FadeToBlack();
-	player = new Player();
 	entityManager = new EntityManager();
 	collisions = new Collisions();
 	pathfinding = new Pathfinding();
@@ -46,9 +44,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(scene);
 	AddModule(map);
-	AddModule(entityManager);
-	AddModule(player);
 	AddModule(pathfinding);
+	AddModule(entityManager);
 	AddModule(collisions);
 	AddModule(fade);
 
@@ -199,7 +196,7 @@ bool App::PreUpdate()
 			continue;
 		}
 
-		ret = item->data->PreUpdate();
+		ret = item->data->PreUpdate(dt);
 	}
 
 	return ret;
@@ -242,7 +239,7 @@ bool App::PostUpdate()
 			continue;
 		}
 
-		ret = item->data->PostUpdate();
+		ret = item->data->PostUpdate(dt);
 	}
 
 	return ret;

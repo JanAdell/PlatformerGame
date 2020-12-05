@@ -8,8 +8,10 @@
 #include "Scene.h"
 #include "Player.h"
 #include "FadetoBlack.h"
+#include "EntityManager.h"
 #include "Defs.h"
 #include "Log.h"
+#include "Collisions.h"
 
 Scene::Scene() : Module()
 {
@@ -39,7 +41,7 @@ bool Scene::Start()
 }
 
 // Called each loop iteration
-bool Scene::PreUpdate()
+bool Scene::PreUpdate(float dt)
 {
 	return true;
 }
@@ -63,14 +65,14 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
-		app->player->position.x = app->player->spawnPos.x;
-		app->player->position.y = app->player->spawnPos.y;
+		app->entityManager->player->position.x = dynamic_cast<Player*>(app->entityManager->player)->spawnPos.x;
+		app->entityManager->player->position.y = dynamic_cast<Player*>(app->entityManager->player)->spawnPos.y;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN && intro == false)
 	{
-		app->player->position.x = app->player->checkpointPos.x;
-		app->player->position.y = app->player->checkpointPos.y;
+		app->entityManager->player->position.x = dynamic_cast<Player*>(app->entityManager->player)->checkpointPos.x;
+		app->entityManager->player->position.y = dynamic_cast<Player*>(app->entityManager->player)->checkpointPos.y;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
@@ -89,7 +91,7 @@ bool Scene::Update(float dt)
 }
 
 // Called each loop iteration
-bool Scene::PostUpdate()
+bool Scene::PostUpdate(float dt)
 {
 	bool ret = true;
 
@@ -110,11 +112,11 @@ bool Scene::CleanUp()
 void Scene::LoadLevel()
 {
 	app->god_mode = false;
-	app->player->CleanUp();
+	app->entityManager->player->CleanUp();
 	app->fade->FadeTo();
 	app->map->CleanUp();
 	app->fade->FadeTo();
-	app->player->Start();
+	app->entityManager->player->Start();
 	if (lvl == 1)
 	{
 		app->map->Load("level1.tmx");
@@ -135,10 +137,10 @@ void Scene::LoadLevel1()
 	app->god_mode = false;
 	lvl = 1;
 	app->collisions->CleanUp();
-	app->player->CleanUp();
+	app->entityManager->player->CleanUp();
 	app->map->CleanUp();
 	app->map->Load("level1.tmx");
-	app->player->Start();
+	app->entityManager->player->Start();
 	app->audio->PlayMusic("Assets/audio/music/lvl1bgm.ogg");
 }
 
@@ -148,24 +150,24 @@ void Scene::LoadLevel2()
 	app->god_mode = false;
 	lvl = 2;
 	app->collisions->CleanUp();
-	app->player->CleanUp();
+	app->entityManager->player->CleanUp();
 	//app->fade->FadeTo();
 	app->map->CleanUp();
 	//app->fade->FadeTo();
 	app->map->Load("level2.tmx");
-	app->player->Start();
+	app->entityManager->player->Start();
 	app->audio->PlayMusic("Assets/audio/music/lvl2bgm.ogg");
 }
 
 void Scene::LoadIntro()
 {
 	intro;
-	//app->player->CleanUp();
+	//app->entityManager->player->CleanUp();
 	//app->fade->FadeTo();
 	app->map->CleanUp();
 	//app->fade->FadeTo();
 	app->map->Load("intro.tmx");
-	app->player->Start();
+	app->entityManager->player->Start();
 	app->audio->PlayMusic("Assets/audio/music/lvl2bgm.ogg");
 }
 

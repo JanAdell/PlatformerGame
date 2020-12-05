@@ -89,7 +89,7 @@ public:
 	Scene* scene;
 	Map* map;
 	FadeToBlack* fade;
-	Player* player;
+	//Player* player;
 	EntityManager* entityManager;
 	Collisions* collisions;
 	Pathfinding* pathfinding;

@@ -1,7 +1,10 @@
 #include "App.h"
 #include "Window.h"
 #include "Render.h"
+
+#include "EntityManager.h"
 #include "Player.h"
+#include "Collisions.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -66,7 +69,7 @@ bool Render::Start()
 }
 
 // Called each loop iteration
-bool Render::PreUpdate()
+bool Render::PreUpdate(float dt)
 {
 	SDL_RenderClear(renderer);
 	CameraPos();
@@ -79,7 +82,7 @@ bool Render::Update(float dt)
 	return true;
 }
 
-bool Render::PostUpdate()
+bool Render::PostUpdate(float dt)
 {
 	
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
@@ -132,8 +135,10 @@ bool Render::IsOnCamera(const int& x, const int& y, const int& w, const int& h, 
 
 void Render::CameraPos()
 {
+	if (app->entityManager->player == nullptr)
+		return;
 	uint scale = app->win->GetScale();
-	SDL_Rect rect = { app->player->colliderPlayer->rect.x * scale ,app->player->colliderPlayer->rect.y * scale ,app->player->colliderPlayer->rect.w * scale ,app->player->colliderPlayer->rect.h * scale };
+	SDL_Rect rect = { dynamic_cast<Player*>(app->entityManager->player)->colliderPlayer->rect.x * scale ,dynamic_cast<Player*>(app->entityManager->player)->colliderPlayer->rect.y * scale ,dynamic_cast<Player*>(app->entityManager->player)->colliderPlayer->rect.w * scale ,dynamic_cast<Player*>(app->entityManager->player)->colliderPlayer->rect.h * scale };
 	SDL_Rect cam = { -camera.x * scale ,-camera.y * scale ,camera.w * scale ,camera.h * scale };
 
 	if (cam.x + cam.w - (float)CAMERA_MARGE_XL < rect.x + rect.w)

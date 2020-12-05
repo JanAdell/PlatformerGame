@@ -21,7 +21,7 @@ public:
 	~Enemy();
 
 public:
-	bool Update(float dt);
+	void Update(float dt) override;
 
 public:
 	//void LoadProperties(pugi::xml_node&);
@@ -29,7 +29,7 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
-	void OnCollision(Collider*) override;
+	void OnCollision(Collider* c1, Collider* c2) override;
 
 public:
 	EnemyState state = EnemyState::IDLE;

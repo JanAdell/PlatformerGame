@@ -9,16 +9,23 @@
 #include "Animation.h"
 #include "Collisions.h"
 #include "Window.h"
+#include "Entity.h"
+
 #include "Map.h"
 #include "SString.h"
 
 #define GRAVITY 1.0f
 //#define COLLIDER_OFFSET -25
 
-Player::Player() : Module()
+Player::Player(const fPoint& position) : Entity(position, "player", ENTITY_TYPE::PLAYER)
 {
 	name.create("player");
 	
+}
+
+Player::~Player()
+{
+
 }
 
 bool Player::Awake(pugi::xml_node& playerNode)
@@ -102,7 +109,7 @@ bool Player::Start()
 		position.y = spawnPos.y;
 		size.x = node.attribute("w").as_int();
 		size.y = node.attribute("h").as_int();
-		colliderPlayer = app->collisions->AddCollider({ node.attribute("x").as_int(),node.attribute("y").as_int() ,node.attribute("w").as_int() ,node.attribute("h").as_int() }, COLLIDER_TYPE::COLLIDER_PLAYER, this);
+		colliderPlayer = app->collisions->AddCollider({ node.attribute("x").as_int(),node.attribute("y").as_int() ,node.attribute("w").as_int() ,node.attribute("h").as_int() }, COLLIDER_TYPE::COLLIDER_PLAYER, (Module*)app->entityManager);
 	}
 	if (app->scene->lvl == 2) {
 		pugi::xml_node node = playerNode.child("positionLvl2");
@@ -110,14 +117,14 @@ bool Player::Start()
 		position.y = spawnPos.y;
 		size.x = node.attribute("w").as_int();
 		size.y = node.attribute("h").as_int();
-		colliderPlayer = app->collisions->AddCollider({ node.attribute("x").as_int(),node.attribute("y").as_int() ,node.attribute("w").as_int() ,node.attribute("h").as_int() }, COLLIDER_TYPE::COLLIDER_PLAYER, this);
+		colliderPlayer = app->collisions->AddCollider({ node.attribute("x").as_int(),node.attribute("y").as_int() ,node.attribute("w").as_int() ,node.attribute("h").as_int() }, COLLIDER_TYPE::COLLIDER_PLAYER, (Module*)app->entityManager);
 	}
 	cont = 0;
 
 	return true;
 }
 
-bool Player::PreUpdate()
+void Player::PreUpdate(float dt)
 {
 	currentAnim = &idleAnim;
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
@@ -176,10 +183,9 @@ bool Player::PreUpdate()
 	{
 		currentAnim = &deathAnim;
 	}
-
 	
 
-	return true;
+	
 }
 
 void Player::OnCollision(Collider* col1, Collider* col2)
@@ -264,7 +270,7 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 	
 }
 
-bool Player::Update(float dt)
+void Player::Update(float dt)
 {
 	
 	deltaTime = SDL_GetTicks() - lastTime;
@@ -326,23 +332,22 @@ bool Player::Update(float dt)
 	
 	speed.x = 0;
 
-	return true;
+	
 }
 
-bool Player::PostUpdate()
+void Player::PostUpdate(float dt)
 {
 	app->render->DrawTexture(characterTex, (int)position.x, (int)position.y, &currentAnim->GetCurrentFrame(), 1.0f, flip);
-
-	return true;
+		
 }
 
-bool Player::CleanUp()
+void Player::CleanUp()
 {
 	app->tex->UnLoad(characterTex);
 	if(colliderPlayer != nullptr)
 		colliderPlayer->to_delete = true;
 
-	return true;
+	
 }
 
 bool Player::Load(pugi::xml_node& data)

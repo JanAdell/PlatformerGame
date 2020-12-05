@@ -64,10 +64,9 @@ bool EntityManager::PreUpdate(float dt)
 bool EntityManager::Update(float dt)
 {
 	bool ret = true;
-	app->entityManager->player;
 	for (ListItem<Entity*>* entityItem = entities.start; entityItem != nullptr; entityItem = entityItem->next)
 	{
-		entityItem->data->Move(dt);
+		entityItem->data->Update(dt);
 	}
 	return ret;
 }
@@ -104,13 +103,10 @@ Entity* EntityManager::CreateEntity(const fPoint& position, ENTITY_TYPE type)
 	Entity* entity = nullptr;
 	switch (type)
 	{
-	// Pending to move Player into entity, as well as declaring pickups and enemies properly
-	/*case ENTITY_TYPE::NO_ENTITY:
-		break;
 	case ENTITY_TYPE::PLAYER:
 		entity = new Player(position);
 		break;
-	case ENTITY_TYPE::FLYING_ENEMY:
+	/*case ENTITY_TYPE::FLYING_ENEMY:
 		entity = new FlyingEnemy(position);
 		break;
 	case ENTITY_TYPE::GROUND_ENEMY:
@@ -118,6 +114,7 @@ Entity* EntityManager::CreateEntity(const fPoint& position, ENTITY_TYPE type)
 		break;*/
 	default:
 		break;
+	
 	}
 	if (entity != nullptr)
 		entities.add(entity);
@@ -136,11 +133,11 @@ void EntityManager::OnCollision(Collider* col1, Collider* col2)
 		{
 			if (col1->type == COLLIDER_TYPE::COLLIDER_PLAYER && entityItem->data->type == ENTITY_TYPE::PLAYER)
 			{
-				entityItem->data->OnCollision(col2);
+				entityItem->data->OnCollision(col1, col2);
 			}
 			if (col1->type == COLLIDER_TYPE::COLLIDER_ENEMY && (entityItem->data->type == ENTITY_TYPE::FLYING_ENEMY || entityItem->data->type == ENTITY_TYPE::GROUND_ENEMY))
 			{
-				entityItem->data->OnCollision(col2);
+				entityItem->data->OnCollision(col1, col2);
 			}
 		}
 	}
