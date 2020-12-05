@@ -10,15 +10,15 @@
 	<map />
 	<pathfinding />
 	<entities>
-		<position x="457.01001" y="630.625061" />
+		<position x="764.950317" y="631.609741" />
 		<enemy_stats type="4" gravity="0" position_x="1148" position_y="615" />
 		<enemy_stats type="4" gravity="0" position_x="509" position_y="331" />
-		<enemy_stats type="3" gravity="0" position_x="-214748256" position_y="-214747856" />
+		<enemy_stats type="3" gravity="0" position_x="-214747568" position_y="-214747856" />
 		<enemy_stats type="3" gravity="0" position_x="-214748256" position_y="-214747920" />
 	</entities>
 	<:anonymous />
 	<FadeToBlack />
 	<renderer>
-		<camera x="0" y="-100" />
+		<camera x="0" y="-101" />
 	</renderer>
 </game_state>

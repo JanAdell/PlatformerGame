@@ -19,7 +19,7 @@ GroundEnemy::~GroundEnemy()
 bool GroundEnemy::Start()
 {
 	characterTex = app->tex->Load("Assets/textures/crabwalk.png");
-	collider = app->collisions->AddCollider({ (int)position.x + offset.x,(int)position.y + offset.y, size.x, size.y }, COLLIDER_TYPE::COLLIDER_DAMAGE, (Module*)app->entityManager);
+	collider = app->collisions->AddCollider({ (int)position.x + offset.x,(int)position.y + offset.y, size.x, size.y }, COLLIDER_TYPE::COLLIDER_ENEMY, (Module*)app->entityManager);
 	currentAnim = &enemyWalk;
 	return true;
 }
@@ -28,8 +28,7 @@ bool GroundEnemy::Start()
 
 void GroundEnemy::Update(float dt)
 {
-	/*if (state == EnemyState::IDLE)
-	{
+	
 		fPoint direction;
 		iPoint enemy_pos = app->map->WorldToMap(position.x + offset.x, position.y + offset.y);
 		if (position.DistanceManhattan(app->entityManager->player->position) <= search)
@@ -100,8 +99,8 @@ void GroundEnemy::Update(float dt)
 			currentAnim = &anim_idle;
 		}
 		collider->SetPos((int)position.x + offset.x, (int)position.y + offset.y);
-	}
-	else if (state == EnemyState::DEAD)
+	
+	/*else if (state == EnemyState::DEAD)
 	{
 		currentAnim->speed = 0.0f;
 		to_delete = true;
