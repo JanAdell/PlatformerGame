@@ -52,8 +52,7 @@ public:
 public:
 	SString name;
 	Collider* collider = nullptr;
-	pugi::xml_document	entity_data_file;
-
+	
 	fPoint position;
 	fPoint spawnPos;
 	fPoint speed;
@@ -77,6 +76,8 @@ public:
 	Animation runAnim;
 	Animation deathAnim;
 	Animation duckAnim;
+	Animation enemyFly;
+	Animation enemyWalk;
 
 	pugi::xml_node entNode;
 };

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="63" height="63" tilewidth="32" tileheight="32" infinite="0" nextlayerid="16" nextobjectid="327">
+<map version="1.2" tiledversion="1.2.5" orientation="orthogonal" renderorder="right-down" width="63" height="63" tilewidth="32" tileheight="32" infinite="0" nextlayerid="19" nextobjectid="343">
  <tileset firstgid="1" name="warped_caves_spritesheet32x32" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="180" columns="18">
   <image source="warped_caves_spritesheet32x32.png" width="595" height="331"/>
   <terraintypes>
@@ -39850,6 +39850,30 @@
    <tile gid="38"/>
   </data>
  </layer>
+ <objectgroup id="17" name="FlyingEnemySpawn">
+  <object id="332" x="902.667" y="860" width="50.6667" height="41.3333"/>
+  <object id="333" x="1654.67" y="234.667" width="50.6667" height="58.6667"/>
+  <object id="334" x="1332" y="1442.67" width="42.6667" height="46.6667"/>
+  <object id="335" x="1716" y="1752" width="44" height="44"/>
+  <object id="336" x="636.364" y="324.242" width="45.4545" height="36.3636"/>
+ </objectgroup>
+ <objectgroup id="18" name="AmmoSpawn">
+  <properties>
+   <property name="AmmoSpawn" type="bool" value="true"/>
+  </properties>
+  <object id="338" x="190.909" y="381.818" width="42.4242" height="33.3333"/>
+  <object id="339" x="333.333" y="1224.24" width="36.3636" height="27.2727"/>
+  <object id="340" x="1118.18" y="1827.27" width="39.3939" height="30.303"/>
+  <object id="341" x="1406.06" y="251.515" width="36.3636" height="42.4242"/>
+  <object id="342" x="1672.73" y="554.545"/>
+ </objectgroup>
+ <objectgroup id="16" name="GroundEnemySpawn">
+  <object id="327" x="266.667" y="1001.33" width="54.6667" height="26.6667"/>
+  <object id="328" x="848" y="1228" width="57.3333" height="29.3333"/>
+  <object id="329" x="709.333" y="549.333" width="73.3333" height="30.6667"/>
+  <object id="330" x="1218.67" y="330.667" width="54.6667" height="29.3333"/>
+  <object id="331" x="1406.67" y="1646.67" width="50.6667" height="25.3333"/>
+ </objectgroup>
  <objectgroup color="#00aa00" id="11" name="Colliders">
   <properties>
    <property name="Collision" type="bool" value="true"/>

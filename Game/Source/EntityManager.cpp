@@ -18,15 +18,13 @@ EntityManager::~EntityManager()
 
 bool EntityManager::Awake(pugi::xml_node& info)
 {
-	LOG("Loading TSX files");
 	bool ret = true;
 
-	// TSX of each enemy
 	pugi::xml_node node = info.child("entity");
-	for (int i = 0; node; node = node.next_sibling()) {
+	/*for (int i = 0; node; node = node.next_sibling()) {
 		queue[i].tsx_file.create(node.attribute("file").as_string());
 		++i;
-	}
+	}*/
 
 	return ret;
 }
@@ -106,12 +104,12 @@ Entity* EntityManager::CreateEntity(const fPoint& position, ENTITY_TYPE type)
 	case ENTITY_TYPE::PLAYER:
 		entity = new Player(position);
 		break;
-	/*case ENTITY_TYPE::FLYING_ENEMY:
+	case ENTITY_TYPE::FLYING_ENEMY:
 		entity = new FlyingEnemy(position);
 		break;
 	case ENTITY_TYPE::GROUND_ENEMY:
 		entity = new GroundEnemy(position);
-		break;*/
+		break;
 	default:
 		break;
 	

@@ -12,7 +12,7 @@ Enemy::Enemy(const fPoint position, const char* name, ENTITY_TYPE type) : Entity
 	pugi::xml_parse_result result = config_file.load_file("config.xml");
 
 	ret = config_file.child("config").child("entities").child("GroundEnemy");
-	search = ret.child("path").attribute("search").as_int();
+	search = 120;
 	path_speed = ret.child("path").attribute("speed").as_float();
 }
 

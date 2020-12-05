@@ -5,16 +5,20 @@
 	<textures />
 	<audio />
 	<scene>
-		<lvl_stats level="2" />
+		<lvl_stats level="1" />
 	</scene>
 	<map />
 	<pathfinding />
 	<entities>
-		<position x="1505.15625" y="225.998383" />
+		<position x="457.01001" y="630.625061" />
+		<enemy_stats type="4" gravity="0" position_x="1148" position_y="615" />
+		<enemy_stats type="4" gravity="0" position_x="509" position_y="331" />
+		<enemy_stats type="3" gravity="0" position_x="-214748256" position_y="-214747856" />
+		<enemy_stats type="3" gravity="0" position_x="-214748256" position_y="-214747920" />
 	</entities>
 	<:anonymous />
 	<FadeToBlack />
 	<renderer>
-		<camera x="-564" y="192" />
+		<camera x="0" y="-100" />
 	</renderer>
 </game_state>

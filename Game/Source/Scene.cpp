@@ -136,8 +136,8 @@ void Scene::LoadLevel1()
 	intro = false;
 	app->god_mode = false;
 	lvl = 1;
-	app->collisions->CleanUp();
 	app->entityManager->CleanUp();
+	app->collisions->CleanUp();
 	app->map->CleanUp();
 	app->map->Load("level1.tmx");
 	app->entityManager->player->Start();
@@ -149,8 +149,8 @@ void Scene::LoadLevel2()
 	intro = false;
 	app->god_mode = false;
 	lvl = 2;
-	app->collisions->CleanUp();
 	app->entityManager->CleanUp();
+	app->collisions->CleanUp();
 	//app->fade->FadeTo();
 	app->map->CleanUp();
 	//app->fade->FadeTo();

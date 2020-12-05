@@ -98,13 +98,14 @@
         <frame x="95" y="35" w="28" h="28"/>
         <frame x="144" y="35" w="28" h="28"/>
       </animation>
+     
       <animation name="walk" speed="0.05f" loop="true">
-        <frame x="0" y="63" w="30" h="30"/>
-        <frame x="50" y="63" w="30" h="30"/>
-        <frame x="98" y="63" w="30" h="30"/>
-        <frame x="144" y="63" w="30" h="30"/>
+        <frame x="0" y="0" w="200" h="200"/>
+       
       </animation>
-      </GroundEnemy>
+      <positionLvl1 w ="28" h ="28"/>
+      <speed x="2" y="2"/>
+     </GroundEnemy>
     
     <FlyingEnemy>
       <folder path="Assets/textures/enemies.png" ></folder>
@@ -114,6 +115,8 @@
         <frame x="60" y="3" w="30" h="30"/>
         <frame x="85" y="5" w="30" h="30"/>
       </animation>
+      <speed x="2" y="2"/>
+      <positionLvl1 w ="30" h ="30"/>
     </FlyingEnemy>
     
   </entities>

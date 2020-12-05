@@ -11,8 +11,10 @@ public:
 	bool Start() override;
 	void PreUpdate(float dt)override {};
 	void Update(float dt) override;
-	void Draw();
+	void Draw()override;
 	void CleanUp();
+
+	void OnCollision(Collider* col1, Collider* col2);
 
 private:
 	bool go_right = true;

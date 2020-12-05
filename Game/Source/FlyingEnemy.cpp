@@ -1,14 +1,14 @@
-#include "app.h"
+#include "App.h"
 #include "FlyingEnemy.h"
 #include "Collisions.h"
 #include "Render.h"
 #include "Map.h"
+#include "Pathfinding.h"
 #include "EntityManager.h"
 
 FlyingEnemy::FlyingEnemy(const fPoint position) : Enemy(position, "FlyingEnemy", ENTITY_TYPE::FLYING_ENEMY)
 {
 	name.create("FlyingEnemy");
-
 	AwakeEntity(entNode);
 }
 
@@ -19,8 +19,9 @@ FlyingEnemy::~FlyingEnemy()
 bool FlyingEnemy::Start()
 {
 	characterTex = app->tex->Load("Assets/textures/octopus.png");
-	collider = app->collisions->AddCollider({ (int)position.x + offset.x,(int)position.y + offset.y, size.x, size.y }, COLLIDER_TYPE::COLLIDER_ENEMY, (Module*)app->entityManager);
+	collider = app->collisions->AddCollider({ (int)position.x + offset.x,(int)position.y + offset.y, size.x, size.y }, COLLIDER_TYPE::COLLIDER_DAMAGE, (Module*)app->entityManager);
 	move_radius = 150;
+	currentAnim = &enemyFly;
 	return true;
 }
 
@@ -28,8 +29,7 @@ bool FlyingEnemy::Start()
 
 void FlyingEnemy::Update(float dt)
 {
-	if (state == EnemyState::IDLE)
-	{
+	
 		fPoint direction;
 		iPoint enemy_pos = app->map->WorldToMap(position.x + offset.x, position.y + offset.y);
 		if (position.DistanceManhattan(app->entityManager->player->position) <= search)
@@ -47,8 +47,8 @@ void FlyingEnemy::Update(float dt)
 					fPoint next_node(enemy_path->At(0)->x, enemy_path->At(0)->y);
 
 					direction.create(next_node.x - enemy_pos.x, next_node.y - enemy_pos.y);
-					direction.x *= path_speed;
-					direction.y *= path_speed;
+					direction.x *= speed.x;
+					direction.y *= speed.y;
 				}
 			}
 			if (direction.x > 0)
@@ -87,17 +87,17 @@ void FlyingEnemy::Update(float dt)
 
 				if (initial_pos.y < position.y || !app->pathfinding->IsWalkable(cell_up))
 				{
-					objective.create(enemy_pos.x - path_speed, enemy_pos.y);
+					objective.create(enemy_pos.x - speed.x, enemy_pos.y);
 				}
 				else if (initial_pos.y > position.y || !app->pathfinding->IsWalkable(cell_down))
 				{
-					objective.create(enemy_pos.x + path_speed, enemy_pos.y);
+					objective.create(enemy_pos.x + speed.x, enemy_pos.y);
 				}
 			}
 			if (go_right)
-				objective.create(enemy_pos.x + path_speed, enemy_pos.y);
+				objective.create(enemy_pos.x + speed.x, enemy_pos.y);
 			else
-				objective.create(enemy_pos.x - path_speed, enemy_pos.y);
+				objective.create(enemy_pos.x - speed.x, enemy_pos.y);
 
 
 			if (objective.x != 0)
@@ -105,18 +105,19 @@ void FlyingEnemy::Update(float dt)
 				direction.create(objective.x - enemy_pos.x, objective.y - enemy_pos.y);
 			}
 		}
-		position.x += direction.x * speed.x * dt;
-		position.y += direction.y * speed.y * dt;
-		collider->SetPos((int)position.x + offset.x, (int)position.y + offset.y);
-	}
-	else if (state == EnemyState::DEAD)
+		position.x += direction.x * speed.x;// *dt;
+		position.y += direction.y * speed.y;// *dt;
+		if(collider != nullptr)
+			collider->SetPos((int)position.x + offset.x, (int)position.y + offset.y);
+	
+	/*else if (state == EnemyState::DEAD)
 	{
-		position.y += gravity * dt;
+		position.y += gravity; // *dt;
 		flip = SDL_RendererFlip::SDL_FLIP_VERTICAL;
 		currentAnim->speed = 0.0f;
 		if (!app->render->IsOnCamera(position.x, position.y, size.x, size.y, 0.0f))
 			to_delete = true;
-	}
+	}*/
 }
 
 void FlyingEnemy::Draw()
@@ -131,4 +132,10 @@ void FlyingEnemy::CleanUp()
 	if (collider != nullptr)
 		collider->to_delete = true;
 	currentAnim = nullptr;
+}
+
+void FlyingEnemy::OnCollision(Collider* col1, Collider* col2) 
+{
+	if (col1->type == COLLIDER_TYPE::COLLIDER || col2->type == COLLIDER_TYPE::COLLIDER)
+		go_right = !go_right;
 }

@@ -26,10 +26,14 @@ Entity::Entity(const fPoint& position, const char* name, ENTITY_TYPE type) :posi
 		entNode = ret.child("player");
 
 		break;
-	/*case ENTITY_TYPE::FLYING_ENEMY:
+	case ENTITY_TYPE::FLYING_ENEMY:
+		entNode = ret.child("FlyingEnemy");
+
 		break;
 	case ENTITY_TYPE::GROUND_ENEMY:
-		break;*/
+		entNode = ret.child("GroundEnemy");
+		
+		break;
 	default:
 		break;
 	}
@@ -58,6 +62,9 @@ void Entity::AwakeEntity(pugi::xml_node& playerNode)
 	size.x = playerNode.child("positionLvl1").attribute("w").as_int();
 	size.y = playerNode.child("positionLvl1").attribute("h").as_int();
 	
+	speed.x = playerNode.child("speed").attribute("x").as_int();
+	speed.y = playerNode.child("speed").attribute("y").as_int();
+
 	if (app->scene->lvl == 1) {
 		pugi::xml_node node = playerNode.child("positionLvl1");
 		spawnPos.x = playerNode.child("positionLvl1").attribute("x").as_int();
@@ -111,6 +118,18 @@ void Entity::AwakeEntity(pugi::xml_node& playerNode)
 				deathAnim.PushBack(frame);
 				deathAnim.speed = node.attribute("speed").as_float();
 				deathAnim.loop = node.attribute("loop").as_bool();
+			}
+			else if (name == "fly")
+			{
+				enemyFly.PushBack(frame);
+				enemyFly.speed = node.attribute("speed").as_float();
+				enemyFly.loop = node.attribute("loop").as_bool();
+			}
+			else if (name == "walk")
+			{
+				enemyWalk.PushBack(frame);
+				enemyWalk.speed = node.attribute("speed").as_float();
+				enemyWalk.loop = node.attribute("loop").as_bool();
 			}
 		}
 

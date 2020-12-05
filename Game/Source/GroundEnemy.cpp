@@ -9,9 +9,7 @@
 GroundEnemy::GroundEnemy(const fPoint position) : Enemy(position, "GroundEnemy", ENTITY_TYPE::GROUND_ENEMY)
 {
 	name.create("GroundEnemy");
-
 	AwakeEntity(entNode);
-	
 }
 
 GroundEnemy::~GroundEnemy()
@@ -20,16 +18,17 @@ GroundEnemy::~GroundEnemy()
 
 bool GroundEnemy::Start()
 {
-	characterTex = app->tex->Load("Assets/textures/crab_walk.png");
-	collider = app->collisions->AddCollider({ (int)position.x + offset.x,(int)position.y + offset.y, size.x, size.y }, COLLIDER_TYPE::COLLIDER_ENEMY, (Module*)app->entityManager);
-	return false;
+	characterTex = app->tex->Load("Assets/textures/crabwalk.png");
+	collider = app->collisions->AddCollider({ (int)position.x + offset.x,(int)position.y + offset.y, size.x, size.y }, COLLIDER_TYPE::COLLIDER_DAMAGE, (Module*)app->entityManager);
+	currentAnim = &enemyWalk;
+	return true;
 }
 
 
 
 void GroundEnemy::Update(float dt)
 {
-	if (state == EnemyState::IDLE)
+	/*if (state == EnemyState::IDLE)
 	{
 		fPoint direction;
 		iPoint enemy_pos = app->map->WorldToMap(position.x + offset.x, position.y + offset.y);
@@ -106,7 +105,7 @@ void GroundEnemy::Update(float dt)
 	{
 		currentAnim->speed = 0.0f;
 		to_delete = true;
-	}
+	}*/
 }
 
 void GroundEnemy::Draw()
