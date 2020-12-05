@@ -19,7 +19,7 @@ FlyingEnemy::~FlyingEnemy()
 bool FlyingEnemy::Start()
 {
 	characterTex = app->tex->Load("Assets/textures/octopus.png");
-	collider = app->collisions->AddCollider({ (int)position.x + offset.x,(int)position.y + offset.y, size.x, size.y }, COLLIDER_TYPE::COLLIDER_ENEMY, (Module*)app->entityManager);
+	collider = app->collisions->AddCollider({ (int)position.x + offset.x,(int)position.y + offset.y, size.x, size.y }, COLLIDER_TYPE::COLLIDER_DAMAGE, (Module*)app->entityManager);
 	move_radius = 150;
 	currentAnim = &enemyFly;
 	return true;

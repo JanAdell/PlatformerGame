@@ -3,8 +3,6 @@
 #include "Render.h"
 #include "Collisions.h"
 #include "Player.h"
-#include "Pathfinding.h"
-#include "Enemy.h"
 
 
 Collisions::Collisions()
@@ -17,56 +15,30 @@ Collisions::Collisions()
 	matrix[COLLIDER][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER][COLLIDER_DAMAGE] = false;
 	matrix[COLLIDER][CHECKPOINT] = false;
-	matrix[COLLIDER][COLLIDER_PICKUP] = false;
-	matrix[COLLIDER][COLLIDER_ENEMY] = true;
 
 	matrix[COLLIDER_PLAYER][COLLIDER] = true;
 	matrix[COLLIDER_PLAYER][NEXTLVL] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_DAMAGE] = true;
 	matrix[COLLIDER_PLAYER][CHECKPOINT] = true;
-	matrix[COLLIDER_PLAYER][COLLIDER_PICKUP] = true;
-	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
 
 	matrix[NEXTLVL][COLLIDER] = false;
 	matrix[NEXTLVL][NEXTLVL] = false;
 	matrix[NEXTLVL][COLLIDER_PLAYER] = true;
 	matrix[NEXTLVL][COLLIDER_DAMAGE] = false;
 	matrix[NEXTLVL][CHECKPOINT] = false;
-	matrix[NEXTLVL][COLLIDER_PICKUP] = false;
-	matrix[NEXTLVL][COLLIDER_ENEMY] = false;
 
 	matrix[COLLIDER_DAMAGE][COLLIDER] = false;
 	matrix[COLLIDER_DAMAGE][NEXTLVL] = false;
 	matrix[COLLIDER_DAMAGE][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_DAMAGE][COLLIDER_DAMAGE] = false;
 	matrix[COLLIDER_DAMAGE][CHECKPOINT] = false;
-	matrix[COLLIDER_DAMAGE][COLLIDER_PICKUP] = false;
-	matrix[COLLIDER_DAMAGE][COLLIDER_ENEMY] = false;
 
 	matrix[CHECKPOINT][COLLIDER] = false;
 	matrix[CHECKPOINT][NEXTLVL] = false;
 	matrix[CHECKPOINT][COLLIDER_PLAYER] = true;
 	matrix[CHECKPOINT][COLLIDER_DAMAGE] = false;
 	matrix[CHECKPOINT][CHECKPOINT] = false;
-	matrix[CHECKPOINT][COLLIDER_PICKUP] = false;
-	matrix[CHECKPOINT][COLLIDER_ENEMY] = false;
-
-	matrix[COLLIDER_PICKUP][COLLIDER] = false;
-	matrix[COLLIDER_PICKUP][NEXTLVL] = false;
-	matrix[COLLIDER_PICKUP][COLLIDER_PLAYER] = true;
-	matrix[COLLIDER_PICKUP][COLLIDER_DAMAGE] = false;
-	matrix[COLLIDER_PICKUP][CHECKPOINT] = false;
-	matrix[COLLIDER_PICKUP][COLLIDER_PICKUP] = false;
-	matrix[COLLIDER_PICKUP][COLLIDER_ENEMY] = false;
-
-	matrix[COLLIDER_ENEMY][COLLIDER] = true;
-	matrix[COLLIDER_ENEMY][NEXTLVL] = false;
-	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = true;
-	matrix[COLLIDER_ENEMY][COLLIDER_DAMAGE] = false;
-	matrix[COLLIDER_ENEMY][CHECKPOINT] = false;
-	matrix[COLLIDER_ENEMY][COLLIDER_PICKUP] = false;
-	matrix[COLLIDER_ENEMY][COLLIDER_ENEMY] = false;
 }
 
 
@@ -134,11 +106,7 @@ bool Collisions::Update(float dt)
 void Collisions::DebugDraw()
 {
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
-	{
 		debug = !debug;
-		//app->pathfinding->DrawPath();
-	}
-		
 
 	if (debug == false)
 		return;
@@ -165,9 +133,6 @@ void Collisions::DebugDraw()
 			break;
 		case CHECKPOINT:
 			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 255, alpha);
-			break;
-		case COLLIDER_ENEMY:
-			app->render->DrawRectangle(colliders[i]->rect, 200, 200, 200, alpha);
 			break;
 		}
 	}
