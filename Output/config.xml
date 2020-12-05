@@ -85,13 +85,36 @@
        <frame x="97" y="116" w="20" h="34"/>
        <frame x="118" y="119" w="25" h="24"/>
      </animation>
-      <positionLvl1 x = "410" y = "410" w ="10" h = "40"/>
-      <positionLvl2 x = "250" y = "1650" w ="10" h = "40"/>
+      <positionLvl1 x = "410" y = "430" w ="10" h = "40"/>
+      <positionLvl2 x = "250" y = "1675" w ="10" h = "40"/>
       <speed x = "2" y = "2"/>
     </player>
 
-    <GroundEnemy></GroundEnemy>
-    <FlyingEnemy></FlyingEnemy>
+    <GroundEnemy>
+      <folder path="Assets/textures/enemies.png" ></folder>
+      <animation name="idle" speed="0.05f" loop="true">
+        <frame x="0" y="35" w="28" h="28"/>
+        <frame x="48" y="35" w="28" h="28"/>
+        <frame x="95" y="35" w="28" h="28"/>
+        <frame x="144" y="35" w="28" h="28"/>
+      </animation>
+      <animation name="walk" speed="0.05f" loop="true">
+        <frame x="0" y="63" w="30" h="30"/>
+        <frame x="50" y="63" w="30" h="30"/>
+        <frame x="98" y="63" w="30" h="30"/>
+        <frame x="144" y="63" w="30" h="30"/>
+      </animation>
+      </GroundEnemy>
+    
+    <FlyingEnemy>
+      <folder path="Assets/textures/enemies.png" ></folder>
+      <animation name="fly" speed="0.05f" loop="true">
+        <frame x="5" y="6" w="30" h="30"/>
+        <frame x="34" y="4" w="30" h="30"/>
+        <frame x="60" y="3" w="30" h="30"/>
+        <frame x="85" y="5" w="30" h="30"/>
+      </animation>
+    </FlyingEnemy>
     
   </entities>
     
