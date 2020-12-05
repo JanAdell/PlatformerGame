@@ -26,34 +26,6 @@ void Enemy::Update(float dt)
 	
 }
 
-void Enemy::PushBack()
-{
-	/*for (ListItem<EntitiesAnim*>* animation = data.animations.start; animation != nullptr; animation = animation->next)
-	{
-		ListItem<SDL_Rect*>* frames_item;
-		switch (animation->data->states)
-		{
-		case EntityState::IDLE:
-			for (frames_item = animation->data->frames.start; frames_item != nullptr; frames_item = frames_item->next)
-				anim_idle.PushBack(*(frames_item)->data);
-			anim_idle.speed = animation->data->speed;
-			break;
-		case EntityState::WALKING:
-			for (frames_item = animation->data->frames.start; frames_item != nullptr; frames_item = frames_item->next)
-				anim_walking.PushBack(*(frames_item)->data);
-			anim_walking.speed = animation->data->speed;
-			break;
-		case EntityState::DEAD:
-			for (frames_item = animation->data->frames.start; frames_item != nullptr; frames_item = frames_item->next)
-				anim_dying.PushBack(*(frames_item)->data);
-			anim_dying.speed = animation->data->speed;
-			break;
-		default:
-			break;
-		}
-	}*/
-	anim_dying.loop = false;
-}
 
 bool Enemy::Load(pugi::xml_node& node)
 {
@@ -98,7 +70,7 @@ void Enemy::OnCollision(Collider* col1, Collider* col2)
 	{
 		if (collider->rect.y < col1->rect.y + col1->rect.h && collider->rect.y + collider->rect.h > col1->rect.y + col1->rect.h)
 		{
-			state = EnemyState::DEAD;
+			
 			collider->to_delete = true;
 		}
 		else
