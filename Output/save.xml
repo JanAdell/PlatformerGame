@@ -5,15 +5,17 @@
 	<textures />
 	<audio />
 	<scene>
-		<lvl_stats level="2" />
+		<lvl_stats level="1" />
 	</scene>
 	<map />
-	<player>
-		<position x="254.700073" y="1007.61963" />
-	</player>
+	<pathfinding />
+	<entities>
+		<position x="3741.54541" y="14241.0684" y="578.310425" />
+		<position x="1665.35559" />
+	</entities>
 	<:anonymous />
 	<FadeToBlack />
 	<renderer>
-		<camera x="0" y="-523" />
+		<camera x="-724" y="-131" />
 	</renderer>
 </game_state>

@@ -27,7 +27,7 @@ public:
 	Player(const fPoint& position);
 	~Player();
 	// Called before render is available
-	bool Awake(pugi::xml_node&);
+	
 	// Called before the first frame
 	bool Start() override;
 	// Called each loop iteration
@@ -43,44 +43,23 @@ public:
 	bool Save(pugi::xml_node&) const;
 
 	void OnCollision(Collider* c1, Collider* c2);
-	Collider* colliderPlayer;
-
-	bool IsStanding();
-	fPoint position;
-
+		
 	fPoint GetPos() const;
 	fPoint GetSpeed() const;
 
 	bool firstUpdate = true;
-	//Collider* colliderPlayer = nullptr;
-	fPoint spawnPos;
 	fPoint checkpointPos;
 	bool checkpoint = false;
 
 private:
 	float moveSpeed = 30;
-	//float contpeed = -25;
-
-	iPoint size;
-	iPoint offset;
-	fPoint acceleration;
 			
-	Animation idleAnim;
-	Animation jumpAnim;
-	Animation runAnim;
-	Animation deathAnim;
-	Animation duckAnim;
-
-	pugi::xml_node playerNode;
-	SDL_RendererFlip flip;
-
 	float deltaTime = 0;
 	Uint32 lastTime = 0;
 	Uint32 currTime = 0;
 
 	PlayerState state = FALLING;
-
-
+	pugi::xml_node playerNode;
 	bool doubleJump;
 	int cont = 0;
 	bool solidGround;

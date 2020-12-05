@@ -21,6 +21,7 @@ Player::Player(const fPoint& position) : Entity(position, "player", ENTITY_TYPE:
 {
 	name.create("player");
 	
+	AwakeEntity(entNode);
 }
 
 Player::~Player()
@@ -28,97 +29,12 @@ Player::~Player()
 
 }
 
-bool Player::Awake(pugi::xml_node& playerNode)
-{
-	this->playerNode = playerNode;
-	//pugi::xml_node node = playerNode.child("animation");
-	//idleAnim = new Animation();
-	for (pugi::xml_node node = playerNode.child("animation"); node; node = node.next_sibling("animation"))
-	{
-
-		for (pugi::xml_node node_iterator = node.child("frame"); node_iterator; node_iterator = node_iterator.next_sibling("frame")) {
-			SDL_Rect frame;
-			frame.x = node_iterator.attribute("x").as_int();
-			frame.y = node_iterator.attribute("y").as_int();
-			frame.w = node_iterator.attribute("w").as_int();
-			frame.h = node_iterator.attribute("h").as_int();
-
-			SString name = node.attribute("name").as_string();
-			if (name == "idle")
-			{
-				idleAnim.PushBack(frame);
-				idleAnim.speed = node.attribute("speed").as_float();
-				idleAnim.loop = node.attribute("loop").as_bool();
-			}
-			else if (name == "jump")
-			{
-				jumpAnim.PushBack(frame);
-				jumpAnim.speed = node.attribute("speed").as_float();
-				jumpAnim.loop = node.attribute("loop").as_bool();
-			}
-			else if (name == "run")
-			{
-				runAnim.PushBack(frame);
-				runAnim.speed = node.attribute("speed").as_float();
-				runAnim.loop = node.attribute("loop").as_bool();
-			}
-			else if (name == "duck")
-			{
-				duckAnim.PushBack(frame);
-				duckAnim.speed = node.attribute("speed").as_float();
-				duckAnim.loop = node.attribute("loop").as_bool();
-			}
-			else if (name == "hurt")
-			{
-				deathAnim.PushBack(frame);
-				deathAnim.speed = node.attribute("speed").as_float();
-				deathAnim.loop = node.attribute("loop").as_bool();
-			}
-		}
-
-	}
-
-	if (app->scene->lvl == 1)
-	{
-		pugi::xml_node data = playerNode.child("positionLvl1");
-		position.x = data.attribute("x").as_int();
-		position.y = data.attribute("y").as_int();
-		size.x = data.attribute("w").as_int();
-		size.y = data.attribute("h").as_int();
-	}
-
-	else
-	{
-		pugi::xml_node data = playerNode.child("positionLvl2");
-		position.x = data.attribute("x").as_int();
-		position.y = data.attribute("y").as_int();
-		size.x = data.attribute("w").as_int();
-		size.y = data.attribute("h").as_int();
-	}
-	
-	return true;
-}
-
 
 bool Player::Start()
 {
 	characterTex = app->tex->Load("Assets/textures/player.png");
-	if (app->scene->lvl == 1) {
-		pugi::xml_node node = playerNode.child("positionLvl1");
-		position.x = spawnPos.x;
-		position.y = spawnPos.y;
-		size.x = node.attribute("w").as_int();
-		size.y = node.attribute("h").as_int();
-		colliderPlayer = app->collisions->AddCollider({ node.attribute("x").as_int(),node.attribute("y").as_int() ,node.attribute("w").as_int() ,node.attribute("h").as_int() }, COLLIDER_TYPE::COLLIDER_PLAYER, (Module*)app->entityManager);
-	}
-	if (app->scene->lvl == 2) {
-		pugi::xml_node node = playerNode.child("positionLvl2");
-		position.x = spawnPos.x;
-		position.y = spawnPos.y;
-		size.x = node.attribute("w").as_int();
-		size.y = node.attribute("h").as_int();
-		colliderPlayer = app->collisions->AddCollider({ node.attribute("x").as_int(),node.attribute("y").as_int() ,node.attribute("w").as_int() ,node.attribute("h").as_int() }, COLLIDER_TYPE::COLLIDER_PLAYER, (Module*)app->entityManager);
-	}
+	collider = app->collisions->AddCollider({ (int)position.x, (int)position.y ,size.x ,size.y }, COLLIDER_TYPE::COLLIDER_PLAYER, (Module*)app->entityManager);
+		
 	cont = 0;
 
 	return true;
@@ -194,9 +110,9 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 	if (col1->type == COLLIDER_TYPE::COLLIDER || col2->type == COLLIDER_TYPE::COLLIDER)
 	{
 		//vertical collisions
-		if (colliderPlayer->rect.x < col1->rect.x + col1->rect.w  && colliderPlayer->rect.x + colliderPlayer->rect.w > col1->rect.x || colliderPlayer->rect.x < col2->rect.x + col2->rect.w  && colliderPlayer->rect.x + colliderPlayer->rect.w > col2->rect.x )
+		if (collider->rect.x < col1->rect.x + col1->rect.w  && collider->rect.x + collider->rect.w > col1->rect.x || collider->rect.x < col2->rect.x + col2->rect.w  && collider->rect.x + collider->rect.w > col2->rect.x )
 		{
-			if (colliderPlayer->rect.y + colliderPlayer->rect.h > col1->rect.y && colliderPlayer->rect.y < col1->rect.y && state != PlayerState::JUMPING && state != PlayerState::RUNNING || colliderPlayer->rect.y + colliderPlayer->rect.h > col2->rect.y && colliderPlayer->rect.y < col2->rect.y && state != PlayerState::JUMPING && state != PlayerState::RUNNING)
+			if (collider->rect.y + collider->rect.h > col1->rect.y && collider->rect.y < col1->rect.y && state != PlayerState::JUMPING && state != PlayerState::RUNNING || collider->rect.y + collider->rect.h > col2->rect.y && collider->rect.y < col2->rect.y && state != PlayerState::JUMPING && state != PlayerState::RUNNING)
 			{
 				state = IDLE;
 				speed.y = 0;
@@ -214,7 +130,7 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 				
 			}
 
-			else if (colliderPlayer->rect.y < col1->rect.y + col1->rect.h && colliderPlayer->rect.y + colliderPlayer->rect.h > col1->rect.y + col1->rect.h || colliderPlayer->rect.y < col2->rect.y + col2->rect.h && colliderPlayer->rect.y + colliderPlayer->rect.h > col2->rect.y + col2->rect.h)
+			else if (collider->rect.y < col1->rect.y + col1->rect.h && collider->rect.y + collider->rect.h > col1->rect.y + col1->rect.h || collider->rect.y < col2->rect.y + col2->rect.h && collider->rect.y + collider->rect.h > col2->rect.y + col2->rect.h)
 			{
 				state = FALLING;
 				speed.y = 0;
@@ -224,18 +140,18 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 		}
 
 		//horitzontal collisions
-		if (colliderPlayer->rect.y < col1->rect.y + col1->rect.h - 5 && colliderPlayer->rect.y + colliderPlayer->rect.h > col1->rect.y + 5 || colliderPlayer->rect.y < col2->rect.y + col2->rect.h - 5 && colliderPlayer->rect.y + colliderPlayer->rect.h > col2->rect.y + 5)
+		if (collider->rect.y < col1->rect.y + col1->rect.h - 5 && collider->rect.y + collider->rect.h > col1->rect.y + 5 || collider->rect.y < col2->rect.y + col2->rect.h - 5 && collider->rect.y + collider->rect.h > col2->rect.y + 5)
 		{
 
 			//LEFT
-			if (colliderPlayer->rect.x < col1->rect.x + col1->rect.w && colliderPlayer->rect.x + colliderPlayer->rect.w > col1->rect.x + col1->rect.w || colliderPlayer->rect.x < col2->rect.x + col2->rect.w && colliderPlayer->rect.x + colliderPlayer->rect.w > col2->rect.x + col2->rect.w)
+			if (collider->rect.x < col1->rect.x + col1->rect.w && collider->rect.x + collider->rect.w > col1->rect.x + col1->rect.w || collider->rect.x < col2->rect.x + col2->rect.w && collider->rect.x + collider->rect.w > col2->rect.x + col2->rect.w)
 			{
 				speed.x = moveSpeed;
 				doubleJump = true;
 			}
 
 			//RIGHT
-			else if (colliderPlayer->rect.x + colliderPlayer->rect.w > col1->rect.x && colliderPlayer->rect.x < col1->rect.x || colliderPlayer->rect.x + colliderPlayer->rect.w > col2->rect.x && colliderPlayer->rect.x < col2->rect.x)
+			else if (collider->rect.x + collider->rect.w > col1->rect.x && collider->rect.x < col1->rect.x || collider->rect.x + collider->rect.w > col2->rect.x && collider->rect.x < col2->rect.x)
 			{	
 				speed.x = -moveSpeed;
 				doubleJump = true;
@@ -325,7 +241,7 @@ void Player::Update(float dt)
 	position.x = position.x + speed.x * deltaTime;
 	position.y = position.y + speed.y * deltaTime;
 
-	colliderPlayer->SetPos(position.x + 2, position.y);
+	collider->SetPos(position.x + 2, position.y);
 	
 	
 	state = FALLING;
@@ -337,17 +253,15 @@ void Player::Update(float dt)
 
 void Player::PostUpdate(float dt)
 {
-	app->render->DrawTexture(characterTex, (int)position.x, (int)position.y, &currentAnim->GetCurrentFrame(), 1.0f, flip);
-		
+			
 }
 
 void Player::CleanUp()
 {
 	app->tex->UnLoad(characterTex);
-	if(colliderPlayer != nullptr)
-		colliderPlayer->to_delete = true;
-
-	
+	if(collider != nullptr)
+		collider->to_delete = true;
+		
 }
 
 bool Player::Load(pugi::xml_node& data)

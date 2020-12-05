@@ -45,6 +45,9 @@ public:
 	virtual void OnCollision(Collider* c1, Collider* c2) = 0;
 	virtual bool Load(pugi::xml_node&) { return true; };
 	virtual bool Save(pugi::xml_node&) const { return true; };
+
+	virtual void AwakeEntity(pugi::xml_node&);
+
 	
 public:
 	SString name;
@@ -52,9 +55,11 @@ public:
 	pugi::xml_document	entity_data_file;
 
 	fPoint position;
+	fPoint spawnPos;
 	fPoint speed;
 	iPoint size;
 	iPoint offset;
+	fPoint acceleration;
 	float gravity;
 
 	ENTITY_TYPE type = ENTITY_TYPE::NO_ENTITY;
@@ -65,6 +70,14 @@ public:
 	bool to_delete = false;
 
 	SDL_Texture* characterTex = nullptr;
+		
+	Animation idleAnim;
+	Animation jumpAnim;
+	Animation runAnim;
+	Animation deathAnim;
+	Animation duckAnim;
+
+	pugi::xml_node entNode;
 };
 
 #endif

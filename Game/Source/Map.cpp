@@ -461,8 +461,7 @@ bool Map::LoadObjects(pugi::xml_node& data)
 		spawnPoint.x = obj.attribute("x").as_int();
 		spawnPoint.y = obj.attribute("y").as_int();
 		app->entityManager->player = app->entityManager->CreateEntity(spawnPoint, ENTITY_TYPE::PLAYER);
-				
-		//app->player->spawnPos.y = obj.attribute("y").as_int();
+						
 		
 	}
 
