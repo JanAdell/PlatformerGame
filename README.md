@@ -50,7 +50,7 @@ Simply try to reach the end of the level though jumping. Some colliders might fe
 * F4 - Teleport to last checkpoint
 * F5 - Save
 * F6 - Load
-* F9 - View colliders and logic
+* F9 - View colliders, pathfinding and logic
 * F10 - God Mode
 * F11 - Activate/deactivate Framerate cap to 30
 > Movement in God Mode is performed with the WASD keys. God Mode deactivates once the level changes.
