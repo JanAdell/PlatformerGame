@@ -23,6 +23,10 @@ Simply try to reach the end of the level though jumping. Some colliders might fe
 * **Map Loading** from TMX:
   * Colliders taken from object groups defined in Tiled.
   * Spawn positions for the player defined in Tiled as an object and loaded into the game through tmx.
+* **Entity Loading** from XML:
+  * Both animations, speed, size and position are taken from there.
+* **Enemy Pathfinding**: Enemies approach the player at a certain distance.
+ 
   
  ### Gameplay Related
   
@@ -52,7 +56,7 @@ Simply try to reach the end of the level though jumping. Some colliders might fe
 * F6 - Load
 * F9 - View colliders, pathfinding and logic
 * F10 - God Mode
-* F11 - Activate/deactivate Framerate cap to 30
+* F11 - Activate/deactivate Framerate cap (30 FPS)
 > Movement in God Mode is performed with the WASD keys. God Mode deactivates once the level changes.
 
 ## Developers
@@ -66,6 +70,8 @@ Simply try to reach the end of the level though jumping. Some colliders might fe
 ## Future Implementations
 
 * Charged jump from any surface in any direction, using mouse coords as target/base.
+* Fixes to entities so enemies cant go through walls.
+* Fixes to colliders so it becomes more comfortable to play.
 
 ## Found and Fixed bugs
 
