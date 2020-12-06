@@ -71,8 +71,8 @@ public:
 	EntityType type = EntityType::NO_ENTITY;
 	EntityState states = EntityState::UNKNOWN;
 	SDL_RendererFlip flip = (SDL_RendererFlip)SDL_FLIP_NONE;
-	float anim_speed;
-	Animation anim_idle;
+	float animSpeed;
+	Animation animIdle;
 	Animation* currentAnim = nullptr;
 	bool toDelete = false;
 
