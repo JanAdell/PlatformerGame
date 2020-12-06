@@ -113,6 +113,29 @@
       <positionLvl1 w ="30" h ="30"/>
       <speed x="3" y="3"/>
     </FlyingEnemy>
+
+    <Bullet>
+      <folder path="Assets/textures/shot.png" />
+      <animation name="shot" speed="0.3f" loop="true">
+        <frame x="0" y="0" w="12" h="4"/>
+      </animation>
+      <positionLvl1 w ="12" h ="4"/>
+      <speed x="7" y="7"/>
+    </Bullet>
+
+    <Pickup>
+      <folder path="Assets/textures/powerup.png" />
+      <animation name="pickup" speed="0.3f" loop="true">
+        <frame x="6" y="8" w="11" h="8"/>
+        <frame x="28" y="6" w="12" h="10"/>
+        <frame x="49" y="4" w="14" h="13"/>
+        <frame x="71" y="2" w="14" h="14"/>
+        <frame x="100" y="8" w="7" h="7"/>
+        <frame x="121" y="7" w="12" h="9"/>
+        <frame x="144" y="6" w="12" h="14"/>
+      </animation>
+      <positionLvl1 w ="14" h ="14"/>
+    </Pickup>
     
   </entities>
     
