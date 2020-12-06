@@ -5380,7 +5380,6 @@
   </data>
  </layer>
  <objectgroup id="5" name="Spawn">
-  <object id="1014" x="448" y="553" width="30" height="25"/>
   <object id="1016" x="464" y="507" width="37" height="52"/>
  </objectgroup>
  <objectgroup color="#00aa00" id="4" name="Colliders">
@@ -5396,16 +5395,5 @@
   <object id="1009" x="-11.333" y="-113.333" width="396" height="1151.33"/>
   <object id="1011" x="1386.67" y="-176.667" width="373.333" height="1202"/>
   <object id="1013" x="138.665" y="222" width="1442.67" height="128"/>
- </objectgroup>
- <objectgroup id="10" name="AmmoSpawn">
-  <object id="1024" x="788.96" y="614.302" width="68" height="33"/>
-  <object id="1032" x="910" y="578" width="37" height="22"/>
-  <object id="1033" x="1082" y="595" width="76" height="42"/>
-  <object id="1034" x="835" y="629"/>
-  <object id="1035" x="977" y="627"/>
-  <object id="1036" x="1099" y="549"/>
-  <object id="1037" x="1266" y="580" height="1"/>
-  <object id="1038" x="1245" y="645"/>
-  <object id="1039" x="1216" y="578"/>
  </objectgroup>
 </map>

@@ -10,15 +10,16 @@
 	<map />
 	<pathfinding />
 	<entities>
-		<position x="650.518494" y="629.810059" />
-		<enemy_stats type="4" gravity="1.77510923e+28" position_x="1148" position_y="615" />
-		<enemy_stats type="4" gravity="1.77510923e+28" position_x="509" position_y="331" />
-		<enemy_stats type="3" gravity="1.77510923e+28" position_x="1215" position_y="499" />
-		<enemy_stats type="3" gravity="1.77510923e+28" position_x="930" position_y="429" />
+		<enemy_stats type="4" gravity="0" position_x="852" position_y="1052" />
+		<enemy_stats type="4" gravity="0" position_x="753" position_y="1538" />
+		<enemy_stats type="4" gravity="0" position_x="1811" position_y="1031" />
+		<enemy_stats type="3" gravity="0" position_x="1708" position_y="832" />
+		<enemy_stats type="3" gravity="0" position_x="1614" position_y="1288" />
+		<position x="1668.46143" y="653.239502" />
 	</entities>
 	<:anonymous />
 	<FadeToBlack />
 	<renderer>
-		<camera x="-80" y="-100" />
+		<camera x="-723" y="-123" />
 	</renderer>
 </game_state>
