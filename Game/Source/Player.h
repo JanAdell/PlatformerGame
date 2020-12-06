@@ -50,6 +50,8 @@ public:
 	bool firstUpdate = true;
 	bool checkpoint = false;
 
+	int hp = 3;
+
 private:
 	float moveSpeed = 30;
 			

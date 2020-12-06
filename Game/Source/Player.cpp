@@ -193,6 +193,11 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 
 		checkpoint = true;
 	}
+
+	else if (col1->type == COLLIDER_TYPE::COLLIDER_PICKUP || col2->type == COLLIDER_TYPE::COLLIDER_PICKUP)
+	{
+		
+	}
 	
 }
 
