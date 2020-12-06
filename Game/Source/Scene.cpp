@@ -111,6 +111,7 @@ bool Scene::CleanUp()
 
 void Scene::LoadLevel()
 {
+	app->entityManager->player->checkpoint = false;
 	app->god_mode = false;
 	app->entityManager->player->CleanUp();
 	app->fade->FadeTo();

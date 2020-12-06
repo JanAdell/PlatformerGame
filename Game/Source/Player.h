@@ -48,7 +48,7 @@ public:
 	fPoint GetSpeed() const;
 
 	bool firstUpdate = true;
-
+	bool checkpoint = false;
 
 private:
 	float moveSpeed = 30;
