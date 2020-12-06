@@ -4,6 +4,7 @@
 #include "App.h"
 #include "Point.h"
 #include "Textures.h"
+#include "Audio.h"
 #include "Animation.h"
 #include "SDL_image/include/SDL_image.h"
 
@@ -62,7 +63,8 @@ public:
 	fPoint acceleration;
 	float gravity;
 	bool checkpoint = false;
-
+	int checkpointFx;
+	
 	ENTITY_TYPE type = ENTITY_TYPE::NO_ENTITY;
 	EntityState states = EntityState::UNKNOWN;
 	SDL_RendererFlip flip = (SDL_RendererFlip)SDL_FLIP_NONE;
@@ -72,6 +74,7 @@ public:
 	bool to_delete = false;
 
 	SDL_Texture* characterTex = nullptr;
+	
 		
 	Animation idleAnim;
 	Animation jumpAnim;

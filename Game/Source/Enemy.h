@@ -39,6 +39,7 @@ public:
 
 	int search;
 	float path_speed;
+	int enemyDeath;
 
 	const DynArray<iPoint>* enemy_path;
 

@@ -9,6 +9,7 @@
 #include "Animation.h"
 #include "Collisions.h"
 #include "Window.h"
+#include "Audio.h"
 #include "Entity.h"
 
 #include "Map.h"
@@ -33,8 +34,8 @@ Player::~Player()
 bool Player::Start()
 {
 	characterTex = app->tex->Load("Assets/textures/player.png");
+	checkpointFx = app->audio->LoadFx("Assets/audio/fx/checkpoint.ogg");
 	collider = app->collisions->AddCollider({ (int)position.x, (int)position.y ,size.x ,size.y }, COLLIDER_TYPE::COLLIDER_PLAYER, (Module*)app->entityManager);
-		
 	cont = 0;
 	
 	return true;
@@ -104,7 +105,6 @@ void Player::PreUpdate(float dt)
 	{
 		currentAnim = &deathAnim;
 	}
-	
 
 	
 }
@@ -191,17 +191,25 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 
 	else if (col1->type == COLLIDER_TYPE::COLLIDER_ENEMY || col2->type == COLLIDER_TYPE::COLLIDER_ENEMY)
 	{
-		state = DEAD;
+
 	}
 	
 	else if (col1->type == COLLIDER_TYPE::CHECKPOINT || col2->type == COLLIDER_TYPE::CHECKPOINT)
 	{
-		app->SaveGame();
+		if (checkpoint == false)
+		{
+			app->audio->PlayFx(checkpointFx);
+			app->SaveGame();
+			checkpointPos.x = position.x;
+			checkpointPos.y = position.y;
+			checkpoint = true;
+		}
+		else
+		{
+			app->SaveGame();
+		}
 
-		checkpointPos.x = position.x;
-		checkpointPos.y = position.y;
-
-		checkpoint = true;
+		//checkpoint = true;
 	}
 
 	else if (col1->type == COLLIDER_TYPE::COLLIDER_PICKUP || col2->type == COLLIDER_TYPE::COLLIDER_PICKUP)
@@ -215,7 +223,6 @@ void Player::Update(float dt)
 {
 	
 	deltaTime = app->dtMove;
-				
 		
 	switch (state) 
 	{

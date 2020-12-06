@@ -16,6 +16,8 @@ Enemy::Enemy(const fPoint position, const char* name, ENTITY_TYPE type) : Entity
 	ret = config_file.child("config").child("entities").child("GroundEnemy");
 	search = 300;
 	path_speed = ret.child("path").attribute("speed").as_float();
+
+	enemyDeath = app->audio->LoadFx("Assets/audio/fx/enemy_death.ogg");
 }
 
 Enemy::~Enemy()
@@ -78,7 +80,7 @@ void Enemy::OnCollision(Collider* col1, Collider* col2)
 	{
 		if (collider->rect.y < col1->rect.y + col1->rect.h && collider->rect.y + collider->rect.h > col1->rect.y + col1->rect.h)
 		{
-			
+			app->audio->PlayFx(enemyDeath);
 			to_delete = true;
 		}
 		else
