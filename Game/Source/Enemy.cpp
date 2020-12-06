@@ -1,6 +1,8 @@
 #include "Enemy.h"
 #include "Collisions.h"
 #include "Map.h"
+#include "FlyingEnemy.h"
+#include "GroundEnemy.h"
 
 Enemy::Enemy(const fPoint position, const char* name, ENTITY_TYPE type) : Entity(position, name, type)
 {
@@ -43,6 +45,7 @@ bool Enemy::Save(pugi::xml_node& node) const
 	return true;
 }
 
+
 void Enemy::OnCollision(Collider* col1, Collider* col2)
 {
 	if (col1->type == COLLIDER_TYPE::COLLIDER || col2->type == COLLIDER_TYPE::COLLIDER)
@@ -61,8 +64,13 @@ void Enemy::OnCollision(Collider* col1, Collider* col2)
 		//horitzontal collisions
 		if (collider->rect.y < col1->rect.y + col1->rect.h - 5 && collider->rect.y + collider->rect.h > col1->rect.y + 5)
 		{
+			if (type == ENTITY_TYPE::FLYING_ENEMY) {
+				dynamic_cast<FlyingEnemy*>(this)->ChangeDir();
+			}
+			else if (type == ENTITY_TYPE::GROUND_ENEMY) {
+				dynamic_cast<GroundEnemy*>(this)->ChangeDir();
+			}
 			position.x += speed.x * direction.x; //this needs to be multiplied by DT
-		
 		}
 	}
 
@@ -71,7 +79,7 @@ void Enemy::OnCollision(Collider* col1, Collider* col2)
 		if (collider->rect.y < col1->rect.y + col1->rect.h && collider->rect.y + collider->rect.h > col1->rect.y + col1->rect.h)
 		{
 			
-			collider->to_delete = true;
+			to_delete = true;
 		}
 		else
 		{

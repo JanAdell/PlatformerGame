@@ -35,7 +35,7 @@ void FlyingEnemy::Update(float dt)
 		if (position.DistanceManhattan(app->entityManager->player->position) <= search)
 		{
 			iPoint player_pos = app->map->WorldToMap(app->entityManager->player->position.x + app->entityManager->player->size.x / 2, app->entityManager->player->position.y + app->entityManager->player->size.y);
-
+			player_pos.y -= 1;
 			int a = app->pathfinding->CreatePath(enemy_pos, player_pos, ENTITY_TYPE::FLYING_ENEMY);
 			if (a != -1 && app->entityManager->player)
 			{
@@ -76,12 +76,12 @@ void FlyingEnemy::Update(float dt)
 			{
 				if (initial_pos.x < position.x || !app->pathfinding->IsWalkable(cell_right))
 				{
-					go_right = false;
+					
 					flip = SDL_RendererFlip::SDL_FLIP_HORIZONTAL;
 				}
 				else if (initial_pos.x > position.x || !app->pathfinding->IsWalkable(cell_left))
 				{
-					go_right = true;
+					
 					flip = SDL_RendererFlip::SDL_FLIP_NONE;
 				}
 
@@ -95,16 +95,16 @@ void FlyingEnemy::Update(float dt)
 				}
 			}
 			if (go_right)
-				objective.create(enemy_pos.x + speed.x, enemy_pos.y);
+				objective.create(enemy_pos.x + 1, enemy_pos.y);
 			else
-				objective.create(enemy_pos.x - speed.x, enemy_pos.y);
+				objective.create(enemy_pos.x - 1, enemy_pos.y);
 
 
 			if (objective.x != 0)
 			{
 				direction.create(objective.x - enemy_pos.x, objective.y - enemy_pos.y);
-				position.x += direction.x * speed.x;// *dt;
- 				position.y += direction.y * speed.y;// *dt;
+				position.x += direction.x * speed.x * app->dtMove;
+ 				position.y += direction.y * speed.y * app->dtMove;
 			}
 		}
 		
@@ -117,6 +117,11 @@ void FlyingEnemy::Draw()
 {
 	if (currentAnim != nullptr)
 		app->render->DrawTexture(characterTex, (int)position.x, (int)position.y, &currentAnim->GetCurrentFrame(), 1.0F, flip);
+}
+
+void FlyingEnemy::ChangeDir()
+{
+	go_right = !go_right;
 }
 
 void FlyingEnemy::CleanUp()

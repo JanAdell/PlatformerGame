@@ -5,6 +5,7 @@
 #include "Pathfinding.h"
 #include "EntityManager.h"
 #include "Map.h"
+#include "App.h"
 
 GroundEnemy::GroundEnemy(const fPoint position) : Enemy(position, "GroundEnemy", ENTITY_TYPE::GROUND_ENEMY)
 {
@@ -34,7 +35,7 @@ void GroundEnemy::Update(float dt)
 		if (position.DistanceManhattan(app->entityManager->player->position) <= search)
 		{
 			iPoint player_pos = app->map->WorldToMap(app->entityManager->player->position.x + app->entityManager->player->size.x / 2, app->entityManager->player->position.y + app->entityManager->player->size.y);
-
+			player_pos.y -= 1;
 
 			if (app->pathfinding->CreatePath(enemy_pos, player_pos, ENTITY_TYPE::GROUND_ENEMY) != -1 && app->entityManager->player)
 			{
@@ -46,6 +47,8 @@ void GroundEnemy::Update(float dt)
 					fPoint next_node(enemy_path->At(0)->x, enemy_path->At(0)->y);
 
 					direction.create(next_node.x - enemy_pos.x, next_node.y - enemy_pos.y);
+					position.x += direction.x * speed.x;
+					
 				}
 			}
 		}
@@ -62,10 +65,10 @@ void GroundEnemy::Update(float dt)
 
 			//go right
 			if (app->pathfinding->IsWalkable(cell) || !app->pathfinding->IsWalkable(cell1))
-				go_right = false;
+				ChangeDir();
 			//go left
 			else if (app->pathfinding->IsWalkable(cell2) || !app->pathfinding->IsWalkable(cell3))
-				go_right = true;
+				ChangeDir();
 
 			if (go_right)
 				objective.create(enemy_pos.x + speed.x, enemy_pos.y);
@@ -76,13 +79,12 @@ void GroundEnemy::Update(float dt)
 			if (objective.x != 0)
 			{
 				direction.create(objective.x - enemy_pos.x, objective.y - enemy_pos.y);
-
+				position.y += gravity *app->dtMove;
+				position.x += direction.x * speed.x*app->dtMove;
 			}
 		}
 
-
-		position.y += gravity * dt;
-		position.x += direction.x * speed.x * dt;
+		
 
 		if (direction.x > 0)
 		{
@@ -106,6 +108,11 @@ void GroundEnemy::Draw()
 {
 	if (currentAnim != nullptr)
 		app->render->DrawTexture(characterTex, (int)position.x, (int)position.y, &currentAnim->GetCurrentFrame(), 1.0f, flip);
+}
+
+void GroundEnemy::ChangeDir()
+{
+	go_right = !go_right;
 }
 
 void GroundEnemy::CleanUp()

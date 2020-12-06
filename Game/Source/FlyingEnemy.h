@@ -12,6 +12,7 @@ public:
 	void PreUpdate(float dt)override {};
 	void Update(float dt) override;
 	void Draw()override;
+	void ChangeDir();
 	void CleanUp();
 
 	
