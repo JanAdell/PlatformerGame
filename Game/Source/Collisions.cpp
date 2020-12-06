@@ -28,7 +28,7 @@ Collisions::Collisions()
 	matrix[COLLIDER_PLAYER][CHECKPOINT] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_PICKUP] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
-	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_BULLET] = false;
 
 	matrix[NEXTLVL][COLLIDER] = false;
 	matrix[NEXTLVL][NEXTLVL] = false;
@@ -37,6 +37,7 @@ Collisions::Collisions()
 	matrix[NEXTLVL][CHECKPOINT] = false;
 	matrix[NEXTLVL][COLLIDER_PICKUP] = false;
 	matrix[NEXTLVL][COLLIDER_ENEMY] = false;
+	matrix[NEXTLVL][COLLIDER_BULLET] = false;
 
 	matrix[COLLIDER_DAMAGE][COLLIDER] = false;
 	matrix[COLLIDER_DAMAGE][NEXTLVL] = false;
@@ -45,6 +46,7 @@ Collisions::Collisions()
 	matrix[COLLIDER_DAMAGE][CHECKPOINT] = false;
 	matrix[COLLIDER_DAMAGE][COLLIDER_PICKUP] = false;
 	matrix[COLLIDER_DAMAGE][COLLIDER_ENEMY] = false;
+	matrix[COLLIDER_DAMAGE][COLLIDER_BULLET] = false;
 
 	matrix[CHECKPOINT][COLLIDER] = false;
 	matrix[CHECKPOINT][NEXTLVL] = false;
@@ -53,6 +55,7 @@ Collisions::Collisions()
 	matrix[CHECKPOINT][CHECKPOINT] = false;
 	matrix[CHECKPOINT][COLLIDER_PICKUP] = false;
 	matrix[CHECKPOINT][COLLIDER_ENEMY] = false;
+	matrix[CHECKPOINT][COLLIDER_BULLET] = false;
 
 	matrix[COLLIDER_PICKUP][COLLIDER] = false;
 	matrix[COLLIDER_PICKUP][NEXTLVL] = false;
@@ -61,6 +64,7 @@ Collisions::Collisions()
 	matrix[COLLIDER_PICKUP][CHECKPOINT] = false;
 	matrix[COLLIDER_PICKUP][COLLIDER_PICKUP] = false;
 	matrix[COLLIDER_PICKUP][COLLIDER_ENEMY] = false;
+	matrix[COLLIDER_PICKUP][COLLIDER_BULLET] = false;
 
 	matrix[COLLIDER_ENEMY][COLLIDER] = true;
 	matrix[COLLIDER_ENEMY][NEXTLVL] = false;
@@ -69,6 +73,16 @@ Collisions::Collisions()
 	matrix[COLLIDER_ENEMY][CHECKPOINT] = false;
 	matrix[COLLIDER_ENEMY][COLLIDER_PICKUP] = false;
 	matrix[COLLIDER_ENEMY][COLLIDER_ENEMY] = false;
+	matrix[COLLIDER_ENEMY][COLLIDER_BULLET] = true;
+
+	matrix[COLLIDER_BULLET][COLLIDER] = true;
+	matrix[COLLIDER_BULLET][NEXTLVL] = false;
+	matrix[COLLIDER_BULLET][COLLIDER_PLAYER] = false;
+	matrix[COLLIDER_BULLET][COLLIDER_DAMAGE] = false;
+	matrix[COLLIDER_BULLET][CHECKPOINT] = false;
+	matrix[COLLIDER_BULLET][COLLIDER_PICKUP] = false;
+	matrix[COLLIDER_BULLET][COLLIDER_ENEMY] = true;
+	matrix[COLLIDER_BULLET][COLLIDER_BULLET] = false;
 }
 
 
@@ -171,7 +185,11 @@ void Collisions::DebugDraw()
 		case COLLIDER_ENEMY:
 			app->render->DrawRectangle(colliders[i]->rect, 200, 200, 200, alpha);
 			break;
+		case COLLIDER_BULLET:
+			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 200, alpha);
+			break;
 		}
+
 	}
 }
 

@@ -31,7 +31,7 @@ void GroundEnemy::Update(float dt)
 	
 		fPoint direction;
 		iPoint enemy_pos = app->map->WorldToMap(position.x + offset.x, position.y + offset.y);
-		enemy_pos.y -= 1;
+		//enemy_pos.y -= 1;
 		if (position.DistanceManhattan(app->entityManager->player->position) <= search)
 		{
 			iPoint player_pos = app->map->WorldToMap(app->entityManager->player->position.x + app->entityManager->player->size.x / 2, app->entityManager->player->position.y + app->entityManager->player->size.y);

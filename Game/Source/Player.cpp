@@ -107,6 +107,22 @@ void Player::PreUpdate(float dt)
 		currentAnim = &deathAnim;
 	}
 
+	/*if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && app->god_mode)
+	{
+		bullet = app->collisions->AddCollider({ (int)position.x, (int)position.y ,5 ,5 }, COLLIDER_TYPE::COLLIDER_BULLET);
+	}
+	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && app->god_mode)
+	{
+		bullet = app->collisions->AddCollider({ (int)position.x, (int)position.y ,5 ,5 }, COLLIDER_TYPE::COLLIDER_BULLET);
+	}
+	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT && app->god_mode)
+	{
+		bullet = app->collisions->AddCollider({ (int)position.x, (int)position.y ,5 ,5 }, COLLIDER_TYPE::COLLIDER_BULLET);
+	}
+	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && app->god_mode)
+	{
+		bullet = app->collisions->AddCollider({ (int)position.x, (int)position.y ,5 ,5 }, COLLIDER_TYPE::COLLIDER_BULLET);
+	}*/
 	
 }
 

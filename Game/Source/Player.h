@@ -3,6 +3,7 @@
 
 #include "Animation.h"
 #include "Entity.h"
+#include "Collisions.h"
 
 
 //#pragma comment(lib, "SDL_mixer/libx86/SDL2_mixer.lib")
@@ -53,7 +54,6 @@ public:
 
 	int hp;
 	float hitCd;
-
 	int ammo;
 	
 

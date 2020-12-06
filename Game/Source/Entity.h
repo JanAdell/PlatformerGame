@@ -25,9 +25,10 @@ enum class ENTITY_TYPE
 {
 	NO_ENTITY,
 	PLAYER,
-	PLATFORM,
+	PICKUP,
 	FLYING_ENEMY,
 	GROUND_ENEMY,
+	BULLET,
 };
 
 class Entity

@@ -5,6 +5,7 @@
 
 #include "Module.h"
 
+
 enum COLLIDER_TYPE
 {
 	COLLIDER_NONE = -1,
