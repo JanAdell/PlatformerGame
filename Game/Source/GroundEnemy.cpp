@@ -5,7 +5,6 @@
 #include "Pathfinding.h"
 #include "EntityManager.h"
 #include "Map.h"
-#include "App.h"
 
 GroundEnemy::GroundEnemy(const fPoint position) : Enemy(position, "GroundEnemy", ENTITY_TYPE::GROUND_ENEMY)
 {
@@ -41,12 +40,14 @@ void GroundEnemy::Update(float dt)
 			if (app->pathfinding->CreatePath(enemy_pos, player_pos, ENTITY_TYPE::GROUND_ENEMY) != -1 && app->entityManager->player)
 			{
 				enemy_path = app->pathfinding->GetLastPath();
+				
+				if (app->collisions->debug)
 				app->pathfinding->DrawPath(enemy_path);
 
 				if (enemy_path->Count() > 0)
 				{
 					fPoint next_node(enemy_path->At(0)->x, enemy_path->At(0)->y);
-					
+
 					direction.create(next_node.x - enemy_pos.x, next_node.y - enemy_pos.y);
 					position.x += direction.x * speed.x;
 					
@@ -89,17 +90,12 @@ void GroundEnemy::Update(float dt)
 
 		if (direction.x > 0)
 		{
-			currentAnim = &anim_walking;
-			flip = SDL_RendererFlip::SDL_FLIP_NONE;
+			flip = SDL_RendererFlip::SDL_FLIP_HORIZONTAL;
+
 		}
 		else if (direction.x < 0)
 		{
-			currentAnim = &anim_walking;
-			flip = SDL_RendererFlip::SDL_FLIP_HORIZONTAL;
-		}
-		else
-		{
-			currentAnim = &anim_idle;
+			flip = SDL_RendererFlip::SDL_FLIP_NONE;
 		}
 		collider->SetPos((int)position.x + offset.x, (int)position.y + offset.y);
 		
@@ -108,7 +104,7 @@ void GroundEnemy::Update(float dt)
 void GroundEnemy::Draw()
 {
 	if (currentAnim != nullptr)
-		app->render->DrawTexture(characterTex, (int)position.x, (int)position.y, &currentAnim->GetCurrentFrame(), 1.0f, flip);
+		app->render->DrawTexture(characterTex, (int)position.x, (int)position.y, &currentAnim->GetCurrentFrame(), 1.0F, flip);
 }
 
 void GroundEnemy::ChangeDir()

@@ -92,7 +92,7 @@
 
     <GroundEnemy>
       <folder path="Assets/textures/crabwalk.png" />
-      <animation name="walk" speed="0.03f" loop="true">
+      <animation name="walk" speed="0.3f" loop="true">
         <frame x="9" y="4" w="27" h="28"/>
         <frame x="59" y="2" w="26" h="29"/>
         <frame x="107" y="4" w="25" h="28"/>
