@@ -99,6 +99,7 @@ public:
 public:
 
 	bool god_mode = false;
+	bool pause = false;
 
 private:
 
@@ -123,6 +124,8 @@ private:
 
 	uint frames;
 	float dt;
+	float lastTime;
+	
 };
 
 extern App* app;

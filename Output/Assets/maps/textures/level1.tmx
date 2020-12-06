@@ -41977,6 +41977,7 @@
  </layer>
  <layer id="9" name="Platforms" width="83" height="63">
   <properties>
+   <property name="Navigation" type="float" value="1"/>
    <property name="Parallax" type="float" value="1"/>
   </properties>
   <data>
@@ -47213,6 +47214,7 @@
  </layer>
  <layer id="10" name="Ground" width="83" height="63">
   <properties>
+   <property name="Navigation" type="int" value="1"/>
    <property name="Parallax" type="float" value="1"/>
   </properties>
   <data>

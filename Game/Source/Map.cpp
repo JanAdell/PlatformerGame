@@ -399,6 +399,7 @@ bool Map::LoadLayer(pugi::xml_node& data, MapLayer* layer)
 	layer->width = data.attribute("width").as_int();
 	layer->height = data.attribute("height").as_int();
 	layer->parallax = data.child("properties").child("property").attribute("value").as_float();
+	LoadProperties(data, *layer);
 	pugi::xml_node layer_data = data.child("data");
 
 
@@ -417,6 +418,30 @@ bool Map::LoadLayer(pugi::xml_node& data, MapLayer* layer)
 		for (pugi::xml_node tile = layer_data.child("tile"); tile; tile = tile.next_sibling("tile"))
 		{
 			layer->data[i++] = tile.attribute("gid").as_int(0);
+		}
+	}
+
+	return ret;
+}
+
+bool Map::LoadProperties(pugi::xml_node& node, MapLayer& layer)
+{
+	bool ret = false;
+
+	pugi::xml_node data = node.child("properties");
+
+	if (data != NULL)
+	{
+		pugi::xml_node prop;
+
+		for (prop = data.child("property"); prop; prop = prop.next_sibling("property"))
+		{
+			Properties::Property* p = new Properties::Property();
+
+			p->name = prop.attribute("name").as_string();
+			p->value = prop.attribute("value").as_int();
+					
+			layer.properties.list.add(p);
 		}
 	}
 
@@ -477,15 +502,63 @@ bool Map::LoadObjects(pugi::xml_node& data)
 	else if (name == "GroundEnemySpawn")
 	{
 		for (pugi::xml_node obj = data.child("object"); obj && ret; obj = obj.next_sibling("object"))
-			app->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, ENTITY_TYPE::GROUND_ENEMY);
+			app->entityManager->groundenemy = app->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, ENTITY_TYPE::GROUND_ENEMY);
 	}
 	else if (name == "FlyingEnemySpawn")
 	{
 		for (pugi::xml_node obj = data.child("object"); obj && ret; obj = obj.next_sibling("object"))
-			app->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, ENTITY_TYPE::FLYING_ENEMY);
+			app->entityManager->flyingenemy = app->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, ENTITY_TYPE::FLYING_ENEMY);
 	}
 
 
 	return ret;
+}
+
+bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
+{
+	bool ret = false;
+	ListItem<MapLayer*>* item;
+	item = data.layers.start;
+
+	for (item = data.layers.start; item != NULL; item = item->next)
+	{
+		MapLayer* layer = item->data;
+
+		if (layer->properties.Get("Navigation", 0) == 0)
+			continue;
+
+		uchar* map = new uchar[layer->width * layer->height];
+		memset(map, 1, layer->width * layer->height);
+
+		for (int y = 0; y < layer->width * layer->height; ++y)
+		{
+			if (layer->data[y] == NULL)
+				map[y] = 1;
+			else
+				map[y] = 0;
+		}
+
+		*buffer = map;
+		width = data.width;
+		height = data.height;
+		ret = true;
+
+		break;
+	}
+	return ret;
+}
+
+int Properties::Get(const char* name, int default_value) const
+{
+	ListItem<Property*>* item = list.start;
+
+	while (item)
+	{
+		if (item->data->name == name)
+			return item->data->value;
+		item = item->next;
+	}
+
+	return default_value;
 }
 

@@ -167,6 +167,11 @@ bool App::LoadConfig()
 // ---------------------------------------------
 void App::PrepareUpdate()
 {
+	dt = SDL_GetTicks() - lastTime;
+	dt /= 100;
+	lastTime = SDL_GetTicks();
+	if (pause == true)
+		dt = 0;
 }
 
 // ---------------------------------------------

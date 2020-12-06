@@ -44,6 +44,8 @@ private:
 public:
 	EntityData queue[15];
 	Entity* player = nullptr;
+	Entity* flyingenemy = nullptr;
+	Entity* groundenemy = nullptr;
 };
 
 

@@ -14,7 +14,7 @@
 #include "Map.h"
 #include "SString.h"
 
-#define GRAVITY 1.0f
+#define GRAVITY 2.0f
 //#define COLLIDER_OFFSET -25
 
 Player::Player(const fPoint& position) : Entity(position, "player", ENTITY_TYPE::PLAYER)
@@ -36,54 +36,59 @@ bool Player::Start()
 	collider = app->collisions->AddCollider({ (int)position.x, (int)position.y ,size.x ,size.y }, COLLIDER_TYPE::COLLIDER_PLAYER, (Module*)app->entityManager);
 		
 	cont = 0;
-
+	
 	return true;
 }
 
 void Player::PreUpdate(float dt)
 {
 	currentAnim = &idleAnim;
+	
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		flip = SDL_FLIP_HORIZONTAL;
 		speed.x = -moveSpeed;
 		currentAnim = &runAnim;
-		
+		app->pause = false;
 	}
 	else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_UP) {
 		currentAnim = &runAnim;
 		speed.x = 0;
+		app->pause = false;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_S)== KEY_REPEAT && !app->god_mode)
 	{
 		currentAnim = &duckAnim;
+		app->pause = false;
 	}
 	
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		flip = SDL_FLIP_NONE;
 		speed.x = moveSpeed;
 		currentAnim = &runAnim;
-		
+		app->pause = false;
 	}
 	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP) {
 		speed.x = 0;
+		app->pause = false;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && app->god_mode)
 	{
 		position.y -= 5;
-		
+		app->pause = false;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && app->god_mode)
 	{
 		position.y += 5;
-		
+		app->pause = false;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && state != JUMPING && doubleJump == true)
 	{
 		speed.y = -100;
+		app->pause = false;
 		cont++;
 		state = JUMPING;
 		
@@ -183,6 +188,11 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 	{
 		state = DEAD;
 	}
+
+	else if (col1->type == COLLIDER_TYPE::COLLIDER_ENEMY || col2->type == COLLIDER_TYPE::COLLIDER_ENEMY)
+	{
+		state = DEAD;
+	}
 	
 	else if (col1->type == COLLIDER_TYPE::CHECKPOINT || col2->type == COLLIDER_TYPE::CHECKPOINT)
 	{
@@ -204,10 +214,8 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 void Player::Update(float dt)
 {
 	
-	deltaTime = SDL_GetTicks() - lastTime;
-	deltaTime /= 200;
-	lastTime = SDL_GetTicks();
-			
+	deltaTime = app->GetDt();
+				
 		
 	switch (state) 
 	{
@@ -250,8 +258,8 @@ void Player::Update(float dt)
 		
 	}
 
-	
-	speed.y = speed.y + acceleration.y;
+	if(!app->pause)
+		speed.y = speed.y + acceleration.y;
 
 	if (speed.y >= 60) {
 		speed.y = 60;

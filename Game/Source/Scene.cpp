@@ -12,6 +12,7 @@
 #include "Defs.h"
 #include "Log.h"
 #include "Collisions.h"
+#include "Pathfinding.h"
 
 Scene::Scene() : Module()
 {
@@ -113,11 +114,11 @@ void Scene::LoadLevel()
 {
 	app->entityManager->player->checkpoint = false;
 	app->god_mode = false;
-	app->entityManager->player->CleanUp();
+	app->entityManager->CleanUp();
 	app->fade->FadeTo();
 	app->map->CleanUp();
 	app->fade->FadeTo();
-	app->entityManager->player->Start();
+	app->entityManager->Start();
 	if (lvl == 1)
 	{
 		app->map->Load("level1.tmx");
@@ -134,42 +135,54 @@ void Scene::LoadLevel()
 
 void Scene::LoadLevel1()
 {
-	intro = false;
+	app->pause = true;
 	app->god_mode = false;
 	lvl = 1;
+	intro = false;
 	app->entityManager->CleanUp();
 	app->collisions->CleanUp();
 	app->map->CleanUp();
 	app->map->Load("level1.tmx");
-	app->entityManager->player->Start();
+	app->entityManager->Start();
 	app->audio->PlayMusic("Assets/audio/music/lvl1bgm.ogg");
+	
 }
 
 void Scene::LoadLevel2()
 {
-	intro = false;
+	app->pause = true;
 	app->god_mode = false;
 	lvl = 2;
+	intro = false;
 	app->entityManager->CleanUp();
 	app->collisions->CleanUp();
 	//app->fade->FadeTo();
 	app->map->CleanUp();
 	//app->fade->FadeTo();
 	app->map->Load("level2.tmx");
-	app->entityManager->player->Start();
+	app->entityManager->Start();
 	app->audio->PlayMusic("Assets/audio/music/lvl2bgm.ogg");
+	
 }
 
 void Scene::LoadIntro()
 {
-	intro;
+	app->pause = true;
 	app->entityManager->CleanUp();
 	//app->fade->FadeTo();
 	app->map->CleanUp();
 	//app->fade->FadeTo();
-	app->map->Load("intro.tmx");
-	app->entityManager->player->Start();
+	if (app->map->Load("intro.tmx")) {
+		int w, h;
+		uchar* data = NULL;
+		if (app->map->CreateWalkabilityMap(w, h, &data))
+			app->pathfinding->SetMap(w, h, data);
+
+		RELEASE_ARRAY(data);
+	}
+	app->entityManager->Start();
 	app->audio->PlayMusic("Assets/audio/music/lvl2bgm.ogg");
+	app->pause = false;
 }
 
 bool Scene::Save(pugi::xml_node& data)const

@@ -53,7 +53,7 @@ public:
 	int hp = 3;
 
 private:
-	float moveSpeed = 30;
+	float moveSpeed = 20;
 			
 	float deltaTime = 0;
 	Uint32 lastTime = 0;

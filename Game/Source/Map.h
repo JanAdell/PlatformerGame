@@ -9,6 +9,29 @@
 
 struct Properties
 {
+	struct Property
+	{
+		SString name;
+		int value;
+	};
+
+	~Properties()
+	{
+		ListItem<Property*>* item;
+		item = list.start;
+
+		while (item != NULL)
+		{
+			RELEASE(item->data);
+			item = item->next;
+		}
+
+		list.clear();
+	}
+
+	int Get(const char* name, int default_value = 0) const;
+
+	List<Property*>	list;
 };
 
 // ----------------------------------------------------
@@ -20,6 +43,7 @@ struct MapLayer
 	uint* data;
 	Properties	properties;
 	float		parallax;
+	int			navigation;
 	MapLayer() : data(NULL)
 	{}
 
@@ -39,13 +63,13 @@ struct TileSet
 {
 	SDL_Rect GetTileRect(int id) const;
 
-	SString			name;
+	SString				name;
 	int					firstgid;
 	int					margin;
 	int					spacing;
 	int					tileWidth;
 	int					tileHeight;
-	SDL_Texture* texture;
+	SDL_Texture*		texture;
 	int					texWidth;
 	int					texHeight;
 	int					numTilesWidth;
@@ -70,8 +94,8 @@ struct MapData
 	int					tileHeight;
 	SDL_Color			backgroundColor;
 	MapTypes			type;
-	List<TileSet*>	tilesets;
-	List<MapLayer*>	layers;
+	List<TileSet*>		tilesets;
+	List<MapLayer*>		layers;
 };
 
 // ----------------------------------------------------
@@ -98,6 +122,7 @@ public:
 
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
+	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
 
 private:
 
@@ -105,7 +130,10 @@ private:
 	bool LoadTilesetDetails(pugi::xml_node& tileset_data, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_data, TileSet* set);
 	bool LoadLayer(pugi::xml_node& data, MapLayer* layer);
+	bool LoadProperties(pugi::xml_node& node, MapLayer& layer);
 	bool LoadObjects(pugi::xml_node& data);
+
+	
 
 	TileSet* GetTilesetFromTileId(int id) const;
 

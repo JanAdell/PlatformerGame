@@ -36,11 +36,11 @@ void FlyingEnemy::Update(float dt)
 		{
 			iPoint player_pos = app->map->WorldToMap(app->entityManager->player->position.x + app->entityManager->player->size.x / 2, app->entityManager->player->position.y + app->entityManager->player->size.y);
 
-
-			if (app->pathfinding->CreatePath(enemy_pos, player_pos, ENTITY_TYPE::FLYING_ENEMY) != -1 && app->entityManager->player)
+			int a = app->pathfinding->CreatePath(enemy_pos, player_pos, ENTITY_TYPE::FLYING_ENEMY);
+			if (a != -1 && app->entityManager->player)
 			{
 				enemy_path = app->pathfinding->GetLastPath();
-				app->pathfinding->DrawPath(enemy_path);
+ 				app->pathfinding->DrawPath(enemy_path);
 
 				if (enemy_path->Count() > 0)
 				{
@@ -138,4 +138,7 @@ void FlyingEnemy::OnCollision(Collider* col1, Collider* col2)
 {
 	if (col1->type == COLLIDER_TYPE::COLLIDER || col2->type == COLLIDER_TYPE::COLLIDER)
 		go_right = !go_right;
+
+	//if (col1->type == COLLIDER_TYPE::COLLIDER_PLAYER || col2->type == COLLIDER_TYPE::COLLIDER_PLAYER)
+
 }
