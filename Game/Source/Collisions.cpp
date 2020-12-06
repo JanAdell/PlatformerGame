@@ -142,6 +142,21 @@ bool Collisions::Update(float dt)
 	// To be implemented debug capabilities for painting colliders and godmode
 	DebugDraw();
 	GodMode();
+	
+	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	{
+		if (colliders[i] != nullptr)
+		{
+			if(colliders[i]->toDelete)
+			{
+				delete colliders[i];
+				colliders[i] = nullptr;
+			}
+
+		}
+
+	}
+	
 
 	return true;
 
@@ -187,6 +202,9 @@ void Collisions::DebugDraw()
 			break;
 		case COLLIDER_BULLET:
 			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 200, alpha);
+			break;
+		case COLLIDER_PICKUP:
+			app->render->DrawRectangle(colliders[i]->rect, 255, 200, 200, alpha);
 			break;
 		}
 

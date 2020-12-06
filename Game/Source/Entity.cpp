@@ -34,6 +34,14 @@ Entity::Entity(const fPoint& position, const char* name, EntityType type) :posit
 		entNode = ret.child("GroundEnemy");
 		
 		break;
+	case EntityType::PICKUP:
+		entNode = ret.child("Pick");
+
+		break;
+	case EntityType::BULLET:
+		entNode = ret.child("Bullet");
+
+		break;
 	default:
 		break;
 	}
@@ -130,6 +138,18 @@ void Entity::AwakeEntity(pugi::xml_node& playerNode)
 				enemyWalk.PushBack(frame);
 				enemyWalk.speed = node.attribute("speed").as_float();
 				enemyWalk.loop = node.attribute("loop").as_bool();
+			}
+			else if (name == "shot")
+			{
+				bulletFly.PushBack(frame);
+				bulletFly.speed = node.attribute("speed").as_float();
+				bulletFly.loop = node.attribute("loop").as_bool();
+			}
+			else if (name == "power")
+			{
+				powerUp.PushBack(frame);
+				powerUp.speed = node.attribute("speed").as_float();
+				powerUp.loop = node.attribute("loop").as_bool();
 			}
 		}
 

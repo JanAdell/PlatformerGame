@@ -86,6 +86,8 @@ public:
 	Animation duckAnim;
 	Animation enemyFly;
 	Animation enemyWalk;
+	Animation powerUp;
+	Animation bulletFly;
 
 	pugi::xml_node entNode;
 };

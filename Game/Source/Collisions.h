@@ -5,6 +5,7 @@
 
 #include "Module.h"
 
+struct SDL_Rect;
 
 enum ColliderType
 {

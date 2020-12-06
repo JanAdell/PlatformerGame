@@ -43,7 +43,7 @@ public:
 
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
-
+	bool GoRight();
 	void OnCollision(Collider* c1, Collider* c2);
 		
 	fPoint GetPos() const;
@@ -51,7 +51,7 @@ public:
 
 	bool firstUpdate = true;
 	bool checkpoint = false;
-
+	bool lastMove;
 	float hitCd;
 	
 

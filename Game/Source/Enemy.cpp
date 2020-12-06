@@ -59,7 +59,7 @@ void Enemy::OnCollision(Collider* col1, Collider* col2)
 		//vertical collisions
 		if (collider->rect.x < col1->rect.x + col1->rect.w - 5 && collider->rect.x + collider->rect.w > col1->rect.x + 5)
 		{
-			position.y -= gravity; //this needs to be multiplied by DT
+			position.y -= gravity; 
 
 		}
 
@@ -72,20 +72,25 @@ void Enemy::OnCollision(Collider* col1, Collider* col2)
 			else if (type == EntityType::GROUND_ENEMY) {
 				dynamic_cast<GroundEnemy*>(this)->ChangeDir();
 			}
-			position.x += speed.x * direction.x; //this needs to be multiplied by DT
+			position.x += speed.x * direction.x; 
 		}
 	}
 
 	if (col1->type == ColliderType::COLLIDER_PLAYER || col2->type == ColliderType::COLLIDER_PLAYER)
 	{
-		if (collider->rect.y < col1->rect.y + col1->rect.h && collider->rect.y + collider->rect.h > col1->rect.y + col1->rect.h)
-		{
-			app->audio->PlayFx(enemyDeath);
-			toDelete = true;
-		}
-		else
-		{
-			enemyPath = nullptr;
-		}
+		
+		app->audio->PlayFx(enemyDeath);
+		toDelete = true;
+			
+		
+	}
+
+	if (col1->type == ColliderType::COLLIDER_BULLET || col2->type == ColliderType::COLLIDER_BULLET)
+	{
+		
+		app->audio->PlayFx(enemyDeath);
+		toDelete = true;
+		
+		
 	}
 }

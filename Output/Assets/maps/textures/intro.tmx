@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.5" orientation="orthogonal" renderorder="right-down" width="55" height="32" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="1032">
+<map version="1.2" tiledversion="1.2.5" orientation="orthogonal" renderorder="right-down" width="55" height="32" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="1040">
  <tileset firstgid="1" name="title" tilewidth="32" tileheight="32" tilecount="880" columns="40">
   <image source="title.png" width="1280" height="720"/>
  </tileset>
@@ -1844,10 +1844,6 @@
    <tile gid="1070"/>
   </data>
  </layer>
- <objectgroup id="5" name="Spawn">
-  <object id="1014" x="448" y="553" width="30" height="25"/>
-  <object id="1016" x="464" y="507" width="37" height="52"/>
- </objectgroup>
  <layer id="2" name="Platforms" width="55" height="32">
   <properties>
    <property name="Parallax" type="float" value="1"/>
@@ -5383,10 +5379,9 @@
    <tile/>
   </data>
  </layer>
- <objectgroup id="6" name="GroundEnemySpawn">
-  <object id="1019" x="1153" y="642" width="31" height="30"/>
-  <object id="1020" x="509" y="331"/>
-  <object id="1031" x="1207" y="643" width="30" height="26"/>
+ <objectgroup id="5" name="Spawn">
+  <object id="1014" x="448" y="553" width="30" height="25"/>
+  <object id="1016" x="464" y="507" width="37" height="52"/>
  </objectgroup>
  <objectgroup color="#00aa00" id="4" name="Colliders">
   <properties>
@@ -5402,7 +5397,15 @@
   <object id="1011" x="1386.67" y="-176.667" width="373.333" height="1202"/>
   <object id="1013" x="138.665" y="222" width="1442.67" height="128"/>
  </objectgroup>
- <objectgroup id="10" name="Item">
-  <object id="1024" x="1289.96" y="290.302" width="68" height="33"/>
+ <objectgroup id="10" name="AmmoSpawn">
+  <object id="1024" x="788.96" y="614.302" width="68" height="33"/>
+  <object id="1032" x="910" y="578" width="37" height="22"/>
+  <object id="1033" x="1082" y="595" width="76" height="42"/>
+  <object id="1034" x="835" y="629"/>
+  <object id="1035" x="977" y="627"/>
+  <object id="1036" x="1099" y="549"/>
+  <object id="1037" x="1266" y="580" height="1"/>
+  <object id="1038" x="1245" y="645"/>
+  <object id="1039" x="1216" y="578"/>
  </objectgroup>
 </map>

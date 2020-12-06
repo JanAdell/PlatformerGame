@@ -510,6 +510,11 @@ bool Map::LoadObjects(pugi::xml_node& data)
 			app->entityManager->flyingEnemy = app->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, EntityType::FLYING_ENEMY);
 	}
 
+	else if (name == "AmmoSpawn")
+	{
+		for (pugi::xml_node obj = data.child("object"); obj && ret; obj = obj.next_sibling("object"))
+			app->entityManager->pickUp = app->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, EntityType::PICKUP);
+	}
 
 	return ret;
 }

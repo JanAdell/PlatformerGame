@@ -11,6 +11,7 @@
 #include "Window.h"
 #include "Audio.h"
 #include "Entity.h"
+#include "EntityManager.h"
 
 #include "Map.h"
 #include "SString.h"
@@ -51,17 +52,20 @@ void Player::PreUpdate(float dt)
 		speed.x = -moveSpeed;
 		currentAnim = &runAnim;
 		app->pause = false;
+		lastMove = false;
 	}
 	else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_UP) {
 		currentAnim = &runAnim;
 		speed.x = 0;
 		app->pause = false;
+			
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_S)== KEY_REPEAT && !app->godMode)
 	{
 		currentAnim = &duckAnim;
 		app->pause = false;
+		
 	}
 	
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
@@ -69,6 +73,7 @@ void Player::PreUpdate(float dt)
 		speed.x = moveSpeed;
 		currentAnim = &runAnim;
 		app->pause = false;
+		lastMove = true;
 	}
 	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP) {
 		speed.x = 0;
@@ -107,22 +112,12 @@ void Player::PreUpdate(float dt)
 		currentAnim = &deathAnim;
 	}
 
-	/*if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && app->godMode)
+	if (app->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && ammo > 0)
 	{
-		bullet = app->collisions->AddCollider({ (int)position.x, (int)position.y ,5 ,5 }, ColliderType::COLLIDER_BULLET);
+		app->entityManager->CreateEntity({ position.x, position.y + 10 }, EntityType::BULLET);
+		ammo--;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && app->godMode)
-	{
-		bullet = app->collisions->AddCollider({ (int)position.x, (int)position.y ,5 ,5 }, ColliderType::COLLIDER_BULLET);
-	}
-	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT && app->godMode)
-	{
-		bullet = app->collisions->AddCollider({ (int)position.x, (int)position.y ,5 ,5 }, ColliderType::COLLIDER_BULLET);
-	}
-	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && app->godMode)
-	{
-		bullet = app->collisions->AddCollider({ (int)position.x, (int)position.y ,5 ,5 }, ColliderType::COLLIDER_BULLET);
-	}*/
+	
 	
 }
 
@@ -199,6 +194,7 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 			app->scene->LoadIntro();
 		}
 	}
+	
 
 	else if (col1->type == ColliderType::COLLIDER_DAMAGE || col2->type == ColliderType::COLLIDER_DAMAGE)
 	{
@@ -344,6 +340,11 @@ bool Player::Save(pugi::xml_node& data) const
 	data.child("position").append_attribute("y") = position.y;
 
 	return ret;
+}
+
+bool Player::GoRight()
+{
+	return lastMove;
 }
 
 fPoint Player::GetPos() const

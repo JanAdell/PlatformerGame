@@ -5,6 +5,8 @@
 #include "Player.h"
 #include "FlyingEnemy.h"
 #include "GroundEnemy.h"
+#include "Pickup.h"
+#include "Bullet.h"
 #include "Log.h"
 
 EntityManager::EntityManager() : Module()
@@ -106,6 +108,12 @@ Entity* EntityManager::CreateEntity(const fPoint& position, EntityType type)
 	case EntityType::GROUND_ENEMY:
 		entity = new GroundEnemy(position);
 		break;
+	case EntityType::PICKUP:
+		entity = new Pickup(position);
+		break;
+	case EntityType::BULLET:
+		entity = new Bullet(position);
+		break;
 	default:
 		break;
 	
@@ -125,14 +133,7 @@ void EntityManager::OnCollision(Collider* col1, Collider* col2)
 	{
 		if (entityItem != nullptr && entityItem->data->collider == col1)
 		{
-			if (col1->type == ColliderType::COLLIDER_PLAYER && entityItem->data->type == EntityType::PLAYER)
-			{
-				entityItem->data->OnCollision(col1, col2);
-			}
-			if (col1->type == ColliderType::COLLIDER_ENEMY && (entityItem->data->type == EntityType::FLYING_ENEMY || entityItem->data->type == EntityType::GROUND_ENEMY))
-			{
-				entityItem->data->OnCollision(col1, col2);
-			}
+			entityItem->data->OnCollision(col1, col2);
 		}
 	}
 }

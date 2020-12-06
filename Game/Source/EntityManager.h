@@ -12,7 +12,7 @@ enum class EntityType;
 struct EntityData
 {
 	EntityType type = EntityType::NO_ENTITY;
-	SString tsxFile;
+	
 };
 
 class EntityManager : public Module
@@ -46,6 +46,8 @@ public:
 	Entity* player = nullptr;
 	Entity* flyingEnemy = nullptr;
 	Entity* groundEnemy = nullptr;
+	Entity* pickUp = nullptr;
+	Entity* bullet = nullptr;
 };
 
 
