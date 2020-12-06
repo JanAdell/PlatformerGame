@@ -219,9 +219,11 @@ void Collisions::GodMode()
 {
 	matrix[COLLIDER_PLAYER][COLLIDER_DAMAGE] = !app->god_mode;
 	matrix[COLLIDER_PLAYER][COLLIDER] = !app->god_mode;
+	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = !app->god_mode;
 
 	matrix[COLLIDER_DAMAGE][COLLIDER_PLAYER] = !app->god_mode;
 	matrix[COLLIDER][COLLIDER_PLAYER] = !app->god_mode;
+	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = !app->god_mode;
 
 	
 }

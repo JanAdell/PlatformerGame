@@ -14,7 +14,7 @@ public:
 	void Draw()override;
 	void CleanUp();
 
-	void OnCollision(Collider* col1, Collider* col2);
+	
 
 private:
 	bool go_right = true;

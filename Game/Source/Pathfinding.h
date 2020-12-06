@@ -1,5 +1,5 @@
-#ifndef __j1PATHFINDING_H__
-#define __j1PATHFINDING_H__
+#ifndef __PATHFINDING_H__
+#define __PATHFINDING_H__
 
 #include "Module.h"
 #include "Point.h"
@@ -103,4 +103,4 @@ struct PathList
 
 
 
-#endif // __j1PATHFINDING_H__
+#endif // __PATHFINDING_H__

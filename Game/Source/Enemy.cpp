@@ -45,7 +45,7 @@ bool Enemy::Save(pugi::xml_node& node) const
 
 void Enemy::OnCollision(Collider* col1, Collider* col2)
 {
-	if (col1->type == COLLIDER_TYPE::COLLIDER)
+	if (col1->type == COLLIDER_TYPE::COLLIDER || col2->type == COLLIDER_TYPE::COLLIDER)
 	{
 		iPoint enemy_pos = app->map->WorldToMap(position.x, position.y);
 		iPoint objective = app->map->WorldToMap(col1->rect.x, col1->rect.y);
@@ -66,7 +66,7 @@ void Enemy::OnCollision(Collider* col1, Collider* col2)
 		}
 	}
 
-	if (col1->type == COLLIDER_TYPE::COLLIDER_PLAYER)
+	if (col1->type == COLLIDER_TYPE::COLLIDER_PLAYER || col2->type == COLLIDER_TYPE::COLLIDER_PLAYER)
 	{
 		if (collider->rect.y < col1->rect.y + col1->rect.h && collider->rect.y + collider->rect.h > col1->rect.y + col1->rect.h)
 		{

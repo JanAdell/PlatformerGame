@@ -47,8 +47,8 @@ void FlyingEnemy::Update(float dt)
 					fPoint next_node(enemy_path->At(0)->x, enemy_path->At(0)->y);
 
 					direction.create(next_node.x - enemy_pos.x, next_node.y - enemy_pos.y);
-					direction.x *= speed.x;
-					direction.y *= speed.y;
+					position.x += direction.x * speed.x;
+					position.y += direction.y * speed.y;
 				}
 			}
 			if (direction.x > 0)
@@ -103,21 +103,14 @@ void FlyingEnemy::Update(float dt)
 			if (objective.x != 0)
 			{
 				direction.create(objective.x - enemy_pos.x, objective.y - enemy_pos.y);
+				position.x += direction.x * speed.x;// *dt;
+ 				position.y += direction.y * speed.y;// *dt;
 			}
 		}
-		position.x += direction.x * speed.x;// *dt;
-		position.y += direction.y * speed.y;// *dt;
+		
 		if(collider != nullptr)
 			collider->SetPos((int)position.x + offset.x, (int)position.y + offset.y);
-	
-	/*else if (state == EnemyState::DEAD)
-	{
-		position.y += gravity; // *dt;
-		flip = SDL_RendererFlip::SDL_FLIP_VERTICAL;
-		currentAnim->speed = 0.0f;
-		if (!app->render->IsOnCamera(position.x, position.y, size.x, size.y, 0.0f))
-			to_delete = true;
-	}*/
+		
 }
 
 void FlyingEnemy::Draw()
@@ -132,13 +125,4 @@ void FlyingEnemy::CleanUp()
 	if (collider != nullptr)
 		collider->to_delete = true;
 	currentAnim = nullptr;
-}
-
-void FlyingEnemy::OnCollision(Collider* col1, Collider* col2) 
-{
-	if (col1->type == COLLIDER_TYPE::COLLIDER || col2->type == COLLIDER_TYPE::COLLIDER)
-		go_right = !go_right;
-
-	//if (col1->type == COLLIDER_TYPE::COLLIDER_PLAYER || col2->type == COLLIDER_TYPE::COLLIDER_PLAYER)
-
 }

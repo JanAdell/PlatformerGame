@@ -68,9 +68,9 @@ void GroundEnemy::Update(float dt)
 				go_right = true;
 
 			if (go_right)
-				objective.create(enemy_pos.x + path_speed, enemy_pos.y);
+				objective.create(enemy_pos.x + speed.x, enemy_pos.y);
 			else
-				objective.create(enemy_pos.x - path_speed, enemy_pos.y);
+				objective.create(enemy_pos.x - speed.x, enemy_pos.y);
 
 
 			if (objective.x != 0)
@@ -99,12 +99,7 @@ void GroundEnemy::Update(float dt)
 			currentAnim = &anim_idle;
 		}
 		collider->SetPos((int)position.x + offset.x, (int)position.y + offset.y);
-	
-	/*else if (state == EnemyState::DEAD)
-	{
-		currentAnim->speed = 0.0f;
-		to_delete = true;
-	}*/
+		
 }
 
 void GroundEnemy::Draw()

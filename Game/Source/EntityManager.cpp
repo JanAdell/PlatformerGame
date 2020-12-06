@@ -21,11 +21,7 @@ bool EntityManager::Awake(pugi::xml_node& info)
 	bool ret = true;
 
 	pugi::xml_node node = info.child("entity");
-	/*for (int i = 0; node; node = node.next_sibling()) {
-		queue[i].tsx_file.create(node.attribute("file").as_string());
-		++i;
-	}*/
-
+	
 	return ret;
 }
 
