@@ -40,7 +40,9 @@ void FlyingEnemy::Update(float dt)
 			if (a != -1 && app->entityManager->player)
 			{
 				enemyPath = app->pathfinding->GetLastPath();
- 				app->pathfinding->DrawPath(enemyPath);
+
+				if(app->collisions->debug)
+ 					app->pathfinding->DrawPath(enemyPath);
 
 				if (enemyPath->Count() > 0)
 				{
