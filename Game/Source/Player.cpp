@@ -199,6 +199,7 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 	else if (col1->type == ColliderType::COLLIDER_DAMAGE || col2->type == ColliderType::COLLIDER_DAMAGE)
 	{
 		state = DEAD;
+		hp = 3;
 	}
 
 	else if (col1->type == ColliderType::COLLIDER_ENEMY || col2->type == ColliderType::COLLIDER_ENEMY)
@@ -210,7 +211,10 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 		}
 
 		if (hp == 0)
+		{
 			state = DEAD;
+			hp = 3;
+		}
 	}
 	
 	else if (col1->type == ColliderType::CHECKPOINT || col2->type == ColliderType::CHECKPOINT)
