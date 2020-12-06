@@ -214,7 +214,7 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 void Player::Update(float dt)
 {
 	
-	deltaTime = app->GetDt();
+	deltaTime = app->dtMove;
 				
 		
 	switch (state) 

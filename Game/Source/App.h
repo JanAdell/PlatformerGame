@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "List.h"
 #include "PugiXml/src/pugixml.hpp"
+#include "Timer.h"
 
 // Modules
 class Window;
@@ -55,6 +56,11 @@ public:
 	//void GetSaveGames();
 
 	float GetDt();
+	void SetFPScap(uint fps)
+	{
+		if (fps > 0)
+			fpsCap = 1000 / fps;
+	}
 
 private:
 
@@ -100,6 +106,7 @@ public:
 
 	bool god_mode = false;
 	bool pause = false;
+	float dtMove;
 
 private:
 
@@ -125,6 +132,16 @@ private:
 	uint frames;
 	float dt;
 	float lastTime;
+
+	bool				capFps = true;
+	uint				framesCap = 0;
+	Timer				timerFrames;
+	Timer				timerFramesSecond;
+	Timer				timerStarting;
+	Uint64				timeLastFramesSecond;
+	Uint64				timeFrameSecond = 0;
+	Uint64				frameCount = 0;
+	Uint32				fpsCap = 0;
 	
 };
 

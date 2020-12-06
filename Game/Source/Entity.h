@@ -38,7 +38,7 @@ public:
 
 	virtual bool Start() = 0;
 	virtual void PreUpdate(float dt) = 0;
-	virtual void Update(float dt)=0;
+	virtual void Update(float dt) = 0;
 	virtual void Draw();
 	virtual void CleanUp() = 0;
 

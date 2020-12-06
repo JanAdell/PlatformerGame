@@ -85,6 +85,7 @@ bool App::Awake()
 	// TODO 4: Read the title from the config file
 	title.create(configApp.child("title").child_value());
 	win->SetTitle(title.GetString());
+	fpsCap = 1000 / configApp.attribute("framerateCap").as_uint();
 
 	if(ret == true)
 	{
@@ -167,11 +168,30 @@ bool App::LoadConfig()
 // ---------------------------------------------
 void App::PrepareUpdate()
 {
-	dt = SDL_GetTicks() - lastTime;
-	dt /= 100;
-	lastTime = SDL_GetTicks();
+	if (input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+	{
+		capFps = !capFps;
+		if (capFps)
+			framesCap = 30;
+
+		else
+			framesCap = 60;
+	}
+
 	if (pause == true)
 		dt = 0;
+
+	frameCount++;
+	timeFrameSecond++;
+	dt = timerFrames.ReadSec();
+	dtMove = SDL_GetTicks() - lastTime;
+	dtMove /= 100;
+	lastTime = SDL_GetTicks();
+	
+	if (pause == true)
+		dt = 0;
+	
+	timerFrames.Start();
 }
 
 // ---------------------------------------------
@@ -183,6 +203,32 @@ void App::FinishUpdate()
 
 	if (loadRequest == true)
 		LoadGameNow();
+
+	if (timerFramesSecond.Read() > 1000)
+	{
+		timerFramesSecond.Start();
+		timeLastFramesSecond = timeFrameSecond;
+		timeFrameSecond = 0;
+	}
+
+	float averageFrames = float(frameCount) / timerStarting.ReadSec();
+	float startingSeconds = timerStarting.ReadSec();
+	Uint32  lastMsInFrames = timerFrames.Read();
+	Uint32 framesSinceLastUpdate = timeLastFramesSecond;
+	static char title[256];
+
+	if (capFps)
+		sprintf_s(title, 256, "FPS %i | Average FPS: %.2f | Last Frame MS: %02u | Cap ON | VSync OFF", framesSinceLastUpdate, averageFrames, lastMsInFrames);
+	else
+		sprintf_s(title, 256, "FPS %i | Average FPS: %.2f | Last Frame MS: %02u | Cap OFF | VSync OFF", framesSinceLastUpdate, averageFrames, lastMsInFrames);
+
+	win->SetTitle(title);
+
+	if (capFps)
+	{
+		if (fpsCap >= lastMsInFrames)
+			SDL_Delay(fpsCap - lastMsInFrames);
+	}
 }
 
 // Call modules before each loop iteration
