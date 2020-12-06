@@ -29,6 +29,7 @@ Simply try to reach the end of the level though jumping. Some colliders might fe
 * Double Jump
 * Wall Jump (when colliding against a vertical wall jump can be performed again).
 > Wall Jumping can sometimes feel strange due to collision feedback, we reccommend letting the character collide clearly and then fall a bit off the wall so a double jump can be performed comfortably again.
+* Player health and ammo can be found in the app bar alongside FPS and VSYNC.
 
 ## Bugs
 
@@ -38,6 +39,7 @@ Simply try to reach the end of the level though jumping. Some colliders might fe
 
 * A Key - Left Horizontal Movement
 * D Key - Right Horizontal Movement
+* O Key - Shoot in the direction the player is looking at
 * Spacebar - Jump
 
 ### Debug Keys
@@ -45,10 +47,12 @@ Simply try to reach the end of the level though jumping. Some colliders might fe
 * F1 - Go to first level
 * F2 - Go to second level
 * F3 - Go back to the start of current level
+* F4 - Teleport to last checkpoint
 * F5 - Save
 * F6 - Load
 * F9 - View colliders and logic
 * F10 - God Mode
+* F11 - Activate/deactivate Framerate cap to 30
 > Movement in God Mode is performed with the WASD keys. God Mode deactivates once the level changes.
 
 ## Developers
@@ -68,6 +72,10 @@ Simply try to reach the end of the level though jumping. Some colliders might fe
 * Parallax desynced from camera movement.
 * The colliders that didn't exist/we were'nt able to register, were replaced by selected areas in tiled.
 * When level changing, acceleration from the player during loading made subsequent spawn point be in the wrong position.
+* Enemies not appearing on screen.
+* Some enemies can go through colliders.
+
+
 
 ## Assets
 
@@ -76,6 +84,12 @@ Simply try to reach the end of the level though jumping. Some colliders might fe
 
 * Level 2 Music. Techno Loop by **Furious D**.
 > http://www.flashkit.com/soundfx/Instruments/Techno_l-Furious_-8051/index.php
+
+* Checkpoint Fx
+> http://freesound.org/people/GameAudio/sounds/220207/
+
+* Enemy death sound
+> https://freesound.org/people/spookymodem/sounds/249813/
 
 ## Project Repository
 
