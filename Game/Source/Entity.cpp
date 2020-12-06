@@ -3,7 +3,7 @@
 #include "Render.h"
 #include "Scene.h"
 
-Entity::Entity(const fPoint& position, const char* name, ENTITY_TYPE type) :position(position), name(name), type(type)
+Entity::Entity(const fPoint& position, const char* name, EntityType type) :position(position), name(name), type(type)
 {
 	this->position = position;
 	pugi::xml_document config_file;
@@ -20,17 +20,17 @@ Entity::Entity(const fPoint& position, const char* name, ENTITY_TYPE type) :posi
 
 	switch (type)
 	{
-	case ENTITY_TYPE::NO_ENTITY:
+	case EntityType::NO_ENTITY:
 		break;
-	case ENTITY_TYPE::PLAYER:
+	case EntityType::PLAYER:
 		entNode = ret.child("player");
 
 		break;
-	case ENTITY_TYPE::FLYING_ENEMY:
+	case EntityType::FLYING_ENEMY:
 		entNode = ret.child("FlyingEnemy");
 
 		break;
-	case ENTITY_TYPE::GROUND_ENEMY:
+	case EntityType::GROUND_ENEMY:
 		entNode = ret.child("GroundEnemy");
 		
 		break;
@@ -73,8 +73,8 @@ void Entity::AwakeEntity(pugi::xml_node& playerNode)
 	}
 	if (app->scene->lvl == 2) {
 		pugi::xml_node node = playerNode.child("positionLvl2");
-		spawnPos.x = playerNode.child("positionLvl1").attribute("x").as_int();
-		spawnPos.y = playerNode.child("positionLvl1").attribute("y").as_int();
+		spawnPos.x = playerNode.child("positionLvl2").attribute("x").as_int();
+		spawnPos.y = playerNode.child("positionLvl2").attribute("y").as_int();
 
 	}
 

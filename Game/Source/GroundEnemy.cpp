@@ -6,7 +6,7 @@
 #include "EntityManager.h"
 #include "Map.h"
 
-GroundEnemy::GroundEnemy(const fPoint position) : Enemy(position, "GroundEnemy", ENTITY_TYPE::GROUND_ENEMY)
+GroundEnemy::GroundEnemy(const fPoint position) : Enemy(position, "GroundEnemy", EntityType::GROUND_ENEMY)
 {
 	name.create("GroundEnemy");
 	AwakeEntity(entNode);
@@ -19,7 +19,7 @@ GroundEnemy::~GroundEnemy()
 bool GroundEnemy::Start()
 {
 	characterTex = app->tex->Load("Assets/textures/crabwalk.png");
-	collider = app->collisions->AddCollider({ (int)position.x + offset.x,(int)position.y + offset.y, size.x, size.y }, COLLIDER_TYPE::COLLIDER_ENEMY, (Module*)app->entityManager);
+	collider = app->collisions->AddCollider({ (int)position.x + offset.x,(int)position.y + offset.y, size.x, size.y }, ColliderType::COLLIDER_ENEMY, (Module*)app->entityManager);
 	currentAnim = &enemyWalk;
 	return true;
 }
@@ -37,16 +37,16 @@ void GroundEnemy::Update(float dt)
 			iPoint player_pos = app->map->WorldToMap(app->entityManager->player->position.x + app->entityManager->player->size.x / 2, app->entityManager->player->position.y + app->entityManager->player->size.y);
 			player_pos.y -= 1;
 
-			if (app->pathfinding->CreatePath(enemy_pos, player_pos, ENTITY_TYPE::GROUND_ENEMY) != -1 && app->entityManager->player)
+			if (app->pathfinding->CreatePath(enemy_pos, player_pos, EntityType::GROUND_ENEMY) != -1 && app->entityManager->player)
 			{
-				enemy_path = app->pathfinding->GetLastPath();
+				enemyPath = app->pathfinding->GetLastPath();
 				
 				if (app->collisions->debug)
-				app->pathfinding->DrawPath(enemy_path);
+				app->pathfinding->DrawPath(enemyPath);
 
-				if (enemy_path->Count() > 0)
+				if (enemyPath->Count() > 0)
 				{
-					fPoint next_node(enemy_path->At(0)->x, enemy_path->At(0)->y);
+					fPoint next_node(enemyPath->At(0)->x, enemyPath->At(0)->y);
 
 					direction.create(next_node.x - enemy_pos.x, next_node.y - enemy_pos.y);
 					position.x += direction.x * speed.x;
@@ -72,7 +72,7 @@ void GroundEnemy::Update(float dt)
 			else if (app->pathfinding->IsWalkable(cell2) || !app->pathfinding->IsWalkable(cell3))
 				ChangeDir();
 
-			if (go_right)
+			if (goRight)
 				objective.create(enemy_pos.x + speed.x, enemy_pos.y);
 			else
 				objective.create(enemy_pos.x - speed.x, enemy_pos.y);
@@ -109,13 +109,13 @@ void GroundEnemy::Draw()
 
 void GroundEnemy::ChangeDir()
 {
-	go_right = !go_right;
+	goRight = !goRight;
 }
 
 void GroundEnemy::CleanUp()
 {
 	app->tex->UnLoad(characterTex);
 	if (collider != nullptr)
-		collider->to_delete = true;
+		collider->toDelete = true;
 	currentAnim = nullptr;
 }

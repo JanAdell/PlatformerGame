@@ -4,9 +4,9 @@
 #include "FlyingEnemy.h"
 #include "GroundEnemy.h"
 
-Enemy::Enemy(const fPoint position, const char* name, ENTITY_TYPE type) : Entity(position, name, type)
+Enemy::Enemy(const fPoint position, const char* name, EntityType type) : Entity(position, name, type)
 {
-	currentAnim = &anim_idle;
+	currentAnim = &idleAnim;
 
 	pugi::xml_document config_file;
 	pugi::xml_node ret;
@@ -15,7 +15,7 @@ Enemy::Enemy(const fPoint position, const char* name, ENTITY_TYPE type) : Entity
 
 	ret = config_file.child("config").child("entities").child("GroundEnemy");
 	search = 300;
-	path_speed = ret.child("path").attribute("speed").as_float();
+	pathSpeed = ret.child("path").attribute("speed").as_float();
 
 	enemyDeath = app->audio->LoadFx("Assets/audio/fx/enemy_death.ogg");
 }
@@ -50,7 +50,7 @@ bool Enemy::Save(pugi::xml_node& node) const
 
 void Enemy::OnCollision(Collider* col1, Collider* col2)
 {
-	if (col1->type == COLLIDER_TYPE::COLLIDER || col2->type == COLLIDER_TYPE::COLLIDER)
+	if (col1->type == ColliderType::COLLIDER || col2->type == ColliderType::COLLIDER)
 	{
 		iPoint enemy_pos = app->map->WorldToMap(position.x, position.y);
 		iPoint objective = app->map->WorldToMap(col1->rect.x, col1->rect.y);
@@ -66,26 +66,26 @@ void Enemy::OnCollision(Collider* col1, Collider* col2)
 		//horitzontal collisions
 		if (collider->rect.y < col1->rect.y + col1->rect.h - 5 && collider->rect.y + collider->rect.h > col1->rect.y + 5)
 		{
-			if (type == ENTITY_TYPE::FLYING_ENEMY) {
+			if (type == EntityType::FLYING_ENEMY) {
 				dynamic_cast<FlyingEnemy*>(this)->ChangeDir();
 			}
-			else if (type == ENTITY_TYPE::GROUND_ENEMY) {
+			else if (type == EntityType::GROUND_ENEMY) {
 				dynamic_cast<GroundEnemy*>(this)->ChangeDir();
 			}
 			position.x += speed.x * direction.x; //this needs to be multiplied by DT
 		}
 	}
 
-	if (col1->type == COLLIDER_TYPE::COLLIDER_PLAYER || col2->type == COLLIDER_TYPE::COLLIDER_PLAYER)
+	if (col1->type == ColliderType::COLLIDER_PLAYER || col2->type == ColliderType::COLLIDER_PLAYER)
 	{
 		if (collider->rect.y < col1->rect.y + col1->rect.h && collider->rect.y + collider->rect.h > col1->rect.y + col1->rect.h)
 		{
 			app->audio->PlayFx(enemyDeath);
-			to_delete = true;
+			toDelete = true;
 		}
 		else
 		{
-			enemy_path = nullptr;
+			enemyPath = nullptr;
 		}
 	}
 }

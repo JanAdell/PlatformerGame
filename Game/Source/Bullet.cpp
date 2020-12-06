@@ -2,7 +2,7 @@
 #include "Bullet.h"
 
 
-Bullet::Bullet(const fPoint position) : Entity(position, "Bullet", ENTITY_TYPE::BULLET)
+Bullet::Bullet(const fPoint position) : Entity(position, "Bullet", EntityType::BULLET)
 {
 }
 

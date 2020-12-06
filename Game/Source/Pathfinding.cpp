@@ -6,7 +6,7 @@
 #include "Map.h"
 
 
-Pathfinding::Pathfinding() : Module(), map(NULL), last_path(DEFAULT_PATH_LENGTH), width(0), height(0)
+Pathfinding::Pathfinding() : Module(), map(NULL), lastPath(DEFAULT_PATH_LENGTH), width(0), height(0)
 {
 	name.create("pathfinding");
 }
@@ -22,7 +22,7 @@ bool Pathfinding::CleanUp()
 {
 	LOG("Freeing pathfinding library");
 
-	last_path.Clear();
+	lastPath.Clear();
 	RELEASE_ARRAY(map);
 	return true;
 }
@@ -65,7 +65,7 @@ uchar Pathfinding::GetTileAt(const iPoint& pos) const
 // To request all tiles involved in the last generated path
 const DynArray<iPoint>* Pathfinding::GetLastPath() const
 {
-	return &last_path;
+	return &lastPath;
 }
 
 // PathList ------------------------------------------------------------------------
@@ -119,7 +119,7 @@ PathNode::PathNode(const PathNode& node) : g(node.g), h(node.h), pos(node.pos), 
 // PathNode -------------------------------------------------------------------------
 // Fills a list (PathList) of all valid adjacent pathnodes
 // ----------------------------------------------------------------------------------
-uint PathNode::FindWalkableAdjacents(PathList& list_to_fill, ENTITY_TYPE type) const
+uint PathNode::FindWalkableAdjacents(PathList& list_to_fill, EntityType type) const
 {
 	iPoint cell;
 	uint before = list_to_fill.list.count();
@@ -144,7 +144,7 @@ uint PathNode::FindWalkableAdjacents(PathList& list_to_fill, ENTITY_TYPE type) c
 	if (app->pathfinding->IsWalkable(cell))
 		list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
-	if (type == ENTITY_TYPE::FLYING_ENEMY)
+	if (type == EntityType::FLYING_ENEMY)
 	{
 		// north-west
 		cell.create(pos.x + 1, pos.y + 1);
@@ -191,10 +191,10 @@ int PathNode::CalculateF(const iPoint& destination)
 // ----------------------------------------------------------------------------------
 // Actual A* algorithm: return number of steps in the creation of the path or -1 ----
 // ----------------------------------------------------------------------------------
-int Pathfinding::CreatePath(const iPoint& origin, const iPoint& destination, ENTITY_TYPE type)
+int Pathfinding::CreatePath(const iPoint& origin, const iPoint& destination, EntityType type)
 {
 	
-	last_path.Clear();
+	lastPath.Clear();
 
 	if (IsWalkable(origin) == false || IsWalkable(destination) == false)
 		return -1;
@@ -215,11 +215,11 @@ int Pathfinding::CreatePath(const iPoint& origin, const iPoint& destination, ENT
 			const PathNode* parent = &close.list.end->data;
 			while (parent->parent)
 			{
-				last_path.PushBack(parent->pos);
+				lastPath.PushBack(parent->pos);
 				parent = parent->parent;
 			}
-			last_path.Flip();
-			return last_path.Count();
+			lastPath.Flip();
+			return lastPath.Count();
 		}
 		else
 		{

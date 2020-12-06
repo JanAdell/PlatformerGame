@@ -18,9 +18,9 @@ public:
 	
 
 private:
-	bool go_right = true;
-	float move_radius;
-	fPoint initial_pos;
+	bool goRight = true;
+	float moveRadius;
+	fPoint initialPos;
 };
 
 #endif

@@ -17,7 +17,7 @@ enum class EnemyState {
 class Enemy :public Entity
 {
 public:
-	Enemy(const fPoint position, const char* name, ENTITY_TYPE type);
+	Enemy(const fPoint position, const char* name, EntityType type);
 	~Enemy();
 
 public:
@@ -33,15 +33,15 @@ public:
 
 public:
 	EnemyState state = EnemyState::IDLE;
-	Animation anim_idle;
-	Animation anim_walking;
-	Animation anim_dying;
+	Animation idleAnim;
+	Animation walkingAnim;
+	Animation dyingAnim;
 
 	int search;
-	float path_speed;
+	float pathSpeed;
 	int enemyDeath;
 
-	const DynArray<iPoint>* enemy_path;
+	const DynArray<iPoint>* enemyPath;
 
 
 }; 

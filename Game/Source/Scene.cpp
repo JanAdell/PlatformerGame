@@ -83,7 +83,7 @@ bool Scene::Update(float dt)
 		app->SaveGame();
 
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
-		app->god_mode = !app->god_mode;
+		app->godMode = !app->godMode;
 
 	//app->render->DrawTexture(img, 380, 100);
 	app->map->Draw();
@@ -113,7 +113,7 @@ bool Scene::CleanUp()
 void Scene::LoadLevel()
 {
 	app->entityManager->player->checkpoint = false;
-	app->god_mode = false;
+	app->godMode = false;
 	app->entityManager->CleanUp();
 	app->fade->FadeTo();
 	app->map->CleanUp();
@@ -136,7 +136,7 @@ void Scene::LoadLevel()
 void Scene::LoadLevel1()
 {
 	app->pause = true;
-	app->god_mode = false;
+	app->godMode = false;
 	lvl = 1;
 	intro = false;
 	app->entityManager->CleanUp();
@@ -151,7 +151,7 @@ void Scene::LoadLevel1()
 void Scene::LoadLevel2()
 {
 	app->pause = true;
-	app->god_mode = false;
+	app->godMode = false;
 	lvl = 2;
 	intro = false;
 	app->entityManager->CleanUp();

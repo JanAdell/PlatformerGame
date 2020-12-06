@@ -1,7 +1,7 @@
 #include "Pickup.h"
 
 
-Pickup::Pickup(const fPoint position) : Entity(position, "Pickup", ENTITY_TYPE::BULLET)
+Pickup::Pickup(const fPoint position) : Entity(position, "Pickup", EntityType::BULLET)
 {
 }
 

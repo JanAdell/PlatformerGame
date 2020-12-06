@@ -105,7 +105,7 @@ public:
 	
 public:
 
-	bool god_mode = false;
+	bool godMode = false;
 	bool pause = false;
 	float dtMove;
 	

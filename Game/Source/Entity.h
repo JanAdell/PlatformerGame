@@ -21,7 +21,7 @@ enum class EntityState {
 	UNKNOWN
 };
 
-enum class ENTITY_TYPE
+enum class EntityType
 {
 	NO_ENTITY,
 	PLAYER,
@@ -35,7 +35,7 @@ class Entity
 {
 public:
 
-	Entity(const fPoint& position, const char* name, ENTITY_TYPE type);
+	Entity(const fPoint& position, const char* name, EntityType type);
 	~Entity();
 
 	virtual bool Start() = 0;
@@ -65,14 +65,16 @@ public:
 	float gravity;
 	bool checkpoint = false;
 	int checkpointFx;
+	int hp;
+	int ammo;
 	
-	ENTITY_TYPE type = ENTITY_TYPE::NO_ENTITY;
+	EntityType type = EntityType::NO_ENTITY;
 	EntityState states = EntityState::UNKNOWN;
 	SDL_RendererFlip flip = (SDL_RendererFlip)SDL_FLIP_NONE;
 	float anim_speed;
 	Animation anim_idle;
 	Animation* currentAnim = nullptr;
-	bool to_delete = false;
+	bool toDelete = false;
 
 	SDL_Texture* characterTex = nullptr;
 	

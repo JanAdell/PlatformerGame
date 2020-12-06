@@ -16,7 +16,7 @@ public:
 	void CleanUp();
 
 private:
-	bool go_right = true;
+	bool goRight = true;
 	
 }; 
 

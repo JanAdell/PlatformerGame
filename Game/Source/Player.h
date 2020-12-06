@@ -52,9 +52,7 @@ public:
 	bool firstUpdate = true;
 	bool checkpoint = false;
 
-	int hp;
 	float hitCd;
-	int ammo;
 	
 
 private:

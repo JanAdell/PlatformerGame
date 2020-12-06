@@ -93,7 +93,7 @@ bool Collisions::PreUpdate(float dt)
 {
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
-		if (colliders[i] != nullptr && colliders[i]->to_delete == true)
+		if (colliders[i] != nullptr && colliders[i]->toDelete == true)
 		{
 			delete colliders[i];
 			colliders[i] = nullptr;
@@ -211,7 +211,7 @@ bool Collisions::CleanUp()
 
 }
 
-Collider* Collisions::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, Module* callback)
+Collider* Collisions::AddCollider(SDL_Rect rect, ColliderType type, Module* callback)
 {
 	Collider* ret = nullptr;
 
@@ -237,13 +237,13 @@ bool Collider::CheckCollision(const SDL_Rect& r) const
 
 void Collisions::GodMode()
 {
-	matrix[COLLIDER_PLAYER][COLLIDER_DAMAGE] = !app->god_mode;
-	matrix[COLLIDER_PLAYER][COLLIDER] = !app->god_mode;
-	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = !app->god_mode;
+	matrix[COLLIDER_PLAYER][COLLIDER_DAMAGE] = !app->godMode;
+	matrix[COLLIDER_PLAYER][COLLIDER] = !app->godMode;
+	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = !app->godMode;
 
-	matrix[COLLIDER_DAMAGE][COLLIDER_PLAYER] = !app->god_mode;
-	matrix[COLLIDER][COLLIDER_PLAYER] = !app->god_mode;
-	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = !app->god_mode;
+	matrix[COLLIDER_DAMAGE][COLLIDER_PLAYER] = !app->godMode;
+	matrix[COLLIDER][COLLIDER_PLAYER] = !app->godMode;
+	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = !app->godMode;
 
 	
 }

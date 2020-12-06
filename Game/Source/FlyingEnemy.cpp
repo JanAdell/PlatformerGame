@@ -6,7 +6,7 @@
 #include "Pathfinding.h"
 #include "EntityManager.h"
 
-FlyingEnemy::FlyingEnemy(const fPoint position) : Enemy(position, "FlyingEnemy", ENTITY_TYPE::FLYING_ENEMY)
+FlyingEnemy::FlyingEnemy(const fPoint position) : Enemy(position, "FlyingEnemy", EntityType::FLYING_ENEMY)
 {
 	name.create("FlyingEnemy");
 	AwakeEntity(entNode);
@@ -19,8 +19,8 @@ FlyingEnemy::~FlyingEnemy()
 bool FlyingEnemy::Start()
 {
 	characterTex = app->tex->Load("Assets/textures/octopus.png");
-	collider = app->collisions->AddCollider({ (int)position.x + offset.x,(int)position.y + offset.y, size.x, size.y }, COLLIDER_TYPE::COLLIDER_ENEMY, (Module*)app->entityManager);
-	move_radius = 150;
+	collider = app->collisions->AddCollider({ (int)position.x + offset.x,(int)position.y + offset.y, size.x, size.y }, ColliderType::COLLIDER_ENEMY, (Module*)app->entityManager);
+	moveRadius = 150;
 	currentAnim = &enemyFly;
 	return true;
 }
@@ -36,15 +36,15 @@ void FlyingEnemy::Update(float dt)
 		{
 			iPoint player_pos = app->map->WorldToMap(app->entityManager->player->position.x + app->entityManager->player->size.x / 2, app->entityManager->player->position.y + app->entityManager->player->size.y);
 			player_pos.y -= 1;
-			int a = app->pathfinding->CreatePath(enemy_pos, player_pos, ENTITY_TYPE::FLYING_ENEMY);
+			int a = app->pathfinding->CreatePath(enemy_pos, player_pos, EntityType::FLYING_ENEMY);
 			if (a != -1 && app->entityManager->player)
 			{
-				enemy_path = app->pathfinding->GetLastPath();
- 				app->pathfinding->DrawPath(enemy_path);
+				enemyPath = app->pathfinding->GetLastPath();
+ 				app->pathfinding->DrawPath(enemyPath);
 
-				if (enemy_path->Count() > 0)
+				if (enemyPath->Count() > 0)
 				{
-					fPoint next_node(enemy_path->At(0)->x, enemy_path->At(0)->y);
+					fPoint next_node(enemyPath->At(0)->x, enemyPath->At(0)->y);
 
 					direction.create(next_node.x - enemy_pos.x, next_node.y - enemy_pos.y);
 					position.x += direction.x * speed.x;
@@ -72,29 +72,29 @@ void FlyingEnemy::Update(float dt)
 			iPoint cell_down(enemy_size_pos.x, enemy_size_pos.y + 2);
 			iPoint cell_up(enemy_pos.x, enemy_size_pos.y - 2);
 
-			if (position.DistanceTo(initial_pos) > move_radius)
+			if (position.DistanceTo(initialPos) > moveRadius)
 			{
-				if (initial_pos.x < position.x || !app->pathfinding->IsWalkable(cell_right))
+				if (initialPos.x < position.x || !app->pathfinding->IsWalkable(cell_right))
 				{
 					
 					flip = SDL_RendererFlip::SDL_FLIP_HORIZONTAL;
 				}
-				else if (initial_pos.x > position.x || !app->pathfinding->IsWalkable(cell_left))
+				else if (initialPos.x > position.x || !app->pathfinding->IsWalkable(cell_left))
 				{
 					
 					flip = SDL_RendererFlip::SDL_FLIP_NONE;
 				}
 
-				if (initial_pos.y < position.y || !app->pathfinding->IsWalkable(cell_up))
+				if (initialPos.y < position.y || !app->pathfinding->IsWalkable(cell_up))
 				{
 					objective.create(enemy_pos.x - speed.x, enemy_pos.y);
 				}
-				else if (initial_pos.y > position.y || !app->pathfinding->IsWalkable(cell_down))
+				else if (initialPos.y > position.y || !app->pathfinding->IsWalkable(cell_down))
 				{
 					objective.create(enemy_pos.x + speed.x, enemy_pos.y);
 				}
 			}
-			if (go_right)
+			if (goRight)
 				objective.create(enemy_pos.x + 1, enemy_pos.y);
 			else
 				objective.create(enemy_pos.x - 1, enemy_pos.y);
@@ -121,13 +121,13 @@ void FlyingEnemy::Draw()
 
 void FlyingEnemy::ChangeDir()
 {
-	go_right = !go_right;
+	goRight = !goRight;
 }
 
 void FlyingEnemy::CleanUp()
 {
 	app->tex->UnLoad(characterTex);
 	if (collider != nullptr)
-		collider->to_delete = true;
+		collider->toDelete = true;
 	currentAnim = nullptr;
 }

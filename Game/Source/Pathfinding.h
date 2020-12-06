@@ -31,7 +31,7 @@ public:
 	void SetMap(uint width, uint height, uchar* data);
 
 	// Main function to request a path from A to B
-	int CreatePath(const iPoint& origin, const iPoint& destination, ENTITY_TYPE type);
+	int CreatePath(const iPoint& origin, const iPoint& destination, EntityType type);
 
 	// To request all tiles involved in the last generated path
 	const DynArray<iPoint>* GetLastPath() const;
@@ -55,7 +55,7 @@ private:
 	// all map walkability values [0..255]
 	uchar* map;
 	// we store the created path here
-	DynArray<iPoint> last_path;
+	DynArray<iPoint> lastPath;
 };
 
 // forward declaration
@@ -72,7 +72,7 @@ struct PathNode
 	PathNode(const PathNode& node);
 
 	// Fills a list (PathList) of all valid adjacent pathnodes
-	uint FindWalkableAdjacents(PathList& list_to_fill, ENTITY_TYPE type) const;
+	uint FindWalkableAdjacents(PathList& list_to_fill, EntityType type) const;
 	// Calculates this tile score
 	int Score() const;
 	// Calculate the F for a specific destination tile

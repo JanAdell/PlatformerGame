@@ -7,12 +7,12 @@
 #include "List.h"
 #include "DynArray.h"
 
-enum class ENTITY_TYPE;
+enum class EntityType;
 
 struct EntityData
 {
-	ENTITY_TYPE type = ENTITY_TYPE::NO_ENTITY;
-	SString tsx_file;
+	EntityType type = EntityType::NO_ENTITY;
+	SString tsxFile;
 };
 
 class EntityManager : public Module
@@ -32,7 +32,7 @@ public:
 
 public:
 
-	Entity* CreateEntity(const fPoint& position, ENTITY_TYPE type);
+	Entity* CreateEntity(const fPoint& position, EntityType type);
 	void DeleteEntity(Entity* entity);
 
 	void OnCollision(Collider*, Collider*);
@@ -44,8 +44,8 @@ private:
 public:
 	EntityData queue[15];
 	Entity* player = nullptr;
-	Entity* flyingenemy = nullptr;
-	Entity* groundenemy = nullptr;
+	Entity* flyingEnemy = nullptr;
+	Entity* groundEnemy = nullptr;
 };
 
 

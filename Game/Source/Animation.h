@@ -12,23 +12,23 @@ public:
 	bool loop = true;
 	float speed = 1.0f;
 	SDL_Rect frames[MAX_FRAMES];
-	float current_frame;
+	float currentFrame;
 
 
 private:
 
-	int last_frame = 0;
+	int lastFrame = 0;
 	int loops = 0;
 
 public:
 
 	void PushBack(const SDL_Rect& rect)
 	{
-		frames[last_frame++] = rect;
+		frames[lastFrame++] = rect;
 	}
 	bool Done()
 	{
-		if (current_frame == last_frame - 1)
+		if (currentFrame == lastFrame - 1)
 		{
 			return true;
 		}
@@ -40,24 +40,24 @@ public:
 
 	int GetCurrentFrameIndex()
 	{
-		return current_frame;
+		return currentFrame;
 	}
 
 	SDL_Rect& GetCurrentFrame()
 	{
-		current_frame += speed;
-		if (current_frame >= last_frame)
+		currentFrame += speed;
+		if (currentFrame >= lastFrame)
 		{
-			current_frame = (loop) ? 0.0f : last_frame - 1;
+			currentFrame = (loop) ? 0.0f : lastFrame - 1;
 			loops++;
 		}
 
-		return frames[(int)current_frame];
+		return frames[(int)currentFrame];
 	}
 
 	void Reset()
 	{
-		current_frame = 0;
+		currentFrame = 0;
 	}
 
 	bool Finished() const

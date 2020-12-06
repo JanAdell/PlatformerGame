@@ -459,7 +459,7 @@ bool Map::LoadObjects(pugi::xml_node& data)
 	{
 		for (pugi::xml_node obj = data.child("object"); obj && ret; obj = obj.next_sibling("object"))
 		{
-			app->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER);
+			app->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, ColliderType::COLLIDER);
 
 		}
 
@@ -468,13 +468,13 @@ bool Map::LoadObjects(pugi::xml_node& data)
 	else if (name == "ColliderDmg")
 	{
 		for (pugi::xml_node obj = data.child("object"); obj && ret; obj = obj.next_sibling("object"))
-			app->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::COLLIDER_DAMAGE);
+			app->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, ColliderType::COLLIDER_DAMAGE);
 	}
 
 	else if (name == "Nextlvl")
 	{
 		for (pugi::xml_node obj = data.child("object"); obj && ret; obj = obj.next_sibling("object"))
-			app->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::NEXTLVL);
+			app->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, ColliderType::NEXTLVL);
 					
 	}
 
@@ -484,7 +484,7 @@ bool Map::LoadObjects(pugi::xml_node& data)
 		pugi::xml_node obj = data.child("object");
 		spawnPoint.x = obj.attribute("x").as_int();
 		spawnPoint.y = obj.attribute("y").as_int();
-		app->entityManager->player = app->entityManager->CreateEntity(spawnPoint, ENTITY_TYPE::PLAYER);
+		app->entityManager->player = app->entityManager->CreateEntity(spawnPoint, EntityType::PLAYER);
 						
 		
 	}
@@ -495,19 +495,19 @@ bool Map::LoadObjects(pugi::xml_node& data)
 		{
 			//app->entityManager->player->checkpointPos.x = obj.attribute("x").as_int();
 			//app->entityManager->player->checkpointPos.y = obj.attribute("y").as_int();
-			app->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, COLLIDER_TYPE::CHECKPOINT);
+			app->collisions->AddCollider({ obj.attribute("x").as_int(),obj.attribute("y").as_int() ,obj.attribute("width").as_int() ,obj.attribute("height").as_int() }, ColliderType::CHECKPOINT);
 		}
 	}
 
 	else if (name == "GroundEnemySpawn")
 	{
 		for (pugi::xml_node obj = data.child("object"); obj && ret; obj = obj.next_sibling("object"))
-			app->entityManager->groundenemy = app->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, ENTITY_TYPE::GROUND_ENEMY);
+			app->entityManager->groundEnemy = app->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, EntityType::GROUND_ENEMY);
 	}
 	else if (name == "FlyingEnemySpawn")
 	{
 		for (pugi::xml_node obj = data.child("object"); obj && ret; obj = obj.next_sibling("object"))
-			app->entityManager->flyingenemy = app->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, ENTITY_TYPE::FLYING_ENEMY);
+			app->entityManager->flyingEnemy = app->entityManager->CreateEntity({ obj.attribute("x").as_float(),obj.attribute("y").as_float() }, EntityType::FLYING_ENEMY);
 	}
 
 

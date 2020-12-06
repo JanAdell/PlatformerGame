@@ -40,7 +40,7 @@ bool EntityManager::PreUpdate(float dt)
 	ListItem<Entity*>* entityItem = entities.start;
 	while (entityItem != nullptr)
 	{
-		if (entityItem->data->to_delete == true)
+		if (entityItem->data->toDelete == true)
 		{
 			entityItem->data->CleanUp();
 			entities.del(entityItem);
@@ -92,18 +92,18 @@ bool EntityManager::CleanUp()
 	return true;
 }
 
-Entity* EntityManager::CreateEntity(const fPoint& position, ENTITY_TYPE type)
+Entity* EntityManager::CreateEntity(const fPoint& position, EntityType type)
 {
 	Entity* entity = nullptr;
 	switch (type)
 	{
-	case ENTITY_TYPE::PLAYER:
+	case EntityType::PLAYER:
 		entity = new Player(position);
 		break;
-	case ENTITY_TYPE::FLYING_ENEMY:
+	case EntityType::FLYING_ENEMY:
 		entity = new FlyingEnemy(position);
 		break;
-	case ENTITY_TYPE::GROUND_ENEMY:
+	case EntityType::GROUND_ENEMY:
 		entity = new GroundEnemy(position);
 		break;
 	default:
@@ -125,11 +125,11 @@ void EntityManager::OnCollision(Collider* col1, Collider* col2)
 	{
 		if (entityItem != nullptr && entityItem->data->collider == col1)
 		{
-			if (col1->type == COLLIDER_TYPE::COLLIDER_PLAYER && entityItem->data->type == ENTITY_TYPE::PLAYER)
+			if (col1->type == ColliderType::COLLIDER_PLAYER && entityItem->data->type == EntityType::PLAYER)
 			{
 				entityItem->data->OnCollision(col1, col2);
 			}
-			if (col1->type == COLLIDER_TYPE::COLLIDER_ENEMY && (entityItem->data->type == ENTITY_TYPE::FLYING_ENEMY || entityItem->data->type == ENTITY_TYPE::GROUND_ENEMY))
+			if (col1->type == ColliderType::COLLIDER_ENEMY && (entityItem->data->type == EntityType::FLYING_ENEMY || entityItem->data->type == EntityType::GROUND_ENEMY))
 			{
 				entityItem->data->OnCollision(col1, col2);
 			}
@@ -147,12 +147,12 @@ bool EntityManager::Load(pugi::xml_node& file)
 		if (item->data == player)
 			item->data->Load(file);
 		else
-			item->data->to_delete = true;
+			item->data->toDelete = true;
 		item = item->next;
 	}
 	for (pugi::xml_node enemy_stats = file.child("enemy_stats"); enemy_stats != nullptr; enemy_stats = enemy_stats.next_sibling("enemy_stats"))
 	{
-		Entity* ent = CreateEntity(fPoint(enemy_stats.attribute("position_x").as_float(), enemy_stats.attribute("position_y").as_float()), ENTITY_TYPE(enemy_stats.attribute("type").as_int()));
+		Entity* ent = CreateEntity(fPoint(enemy_stats.attribute("position_x").as_float(), enemy_stats.attribute("position_y").as_float()), EntityType(enemy_stats.attribute("type").as_int()));
 		ent->Start();
 	}
 	return ret;

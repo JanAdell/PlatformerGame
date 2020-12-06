@@ -18,7 +18,7 @@
 #define GRAVITY 2.0f
 //#define COLLIDER_OFFSET -25
 
-Player::Player(const fPoint& position) : Entity(position, "player", ENTITY_TYPE::PLAYER)
+Player::Player(const fPoint& position) : Entity(position, "player", EntityType::PLAYER)
 {
 	name.create("player");
 	
@@ -35,7 +35,7 @@ bool Player::Start()
 {
 	characterTex = app->tex->Load("Assets/textures/player.png");
 	checkpointFx = app->audio->LoadFx("Assets/audio/fx/checkpoint.ogg");
-	collider = app->collisions->AddCollider({ (int)position.x, (int)position.y ,size.x ,size.y }, COLLIDER_TYPE::COLLIDER_PLAYER, (Module*)app->entityManager);
+	collider = app->collisions->AddCollider({ (int)position.x, (int)position.y ,size.x ,size.y }, ColliderType::COLLIDER_PLAYER, (Module*)app->entityManager);
 	cont = 0;
 	hp = 3;
 	ammo = 10;
@@ -58,7 +58,7 @@ void Player::PreUpdate(float dt)
 		app->pause = false;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_S)== KEY_REPEAT && !app->god_mode)
+	if (app->input->GetKey(SDL_SCANCODE_S)== KEY_REPEAT && !app->godMode)
 	{
 		currentAnim = &duckAnim;
 		app->pause = false;
@@ -75,13 +75,13 @@ void Player::PreUpdate(float dt)
 		app->pause = false;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && app->god_mode)
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && app->godMode)
 	{
 		position.y -= 5;
 		app->pause = false;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && app->god_mode)
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && app->godMode)
 	{
 		position.y += 5;
 		app->pause = false;
@@ -107,21 +107,21 @@ void Player::PreUpdate(float dt)
 		currentAnim = &deathAnim;
 	}
 
-	/*if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && app->god_mode)
+	/*if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && app->godMode)
 	{
-		bullet = app->collisions->AddCollider({ (int)position.x, (int)position.y ,5 ,5 }, COLLIDER_TYPE::COLLIDER_BULLET);
+		bullet = app->collisions->AddCollider({ (int)position.x, (int)position.y ,5 ,5 }, ColliderType::COLLIDER_BULLET);
 	}
-	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && app->god_mode)
+	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && app->godMode)
 	{
-		bullet = app->collisions->AddCollider({ (int)position.x, (int)position.y ,5 ,5 }, COLLIDER_TYPE::COLLIDER_BULLET);
+		bullet = app->collisions->AddCollider({ (int)position.x, (int)position.y ,5 ,5 }, ColliderType::COLLIDER_BULLET);
 	}
-	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT && app->god_mode)
+	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT && app->godMode)
 	{
-		bullet = app->collisions->AddCollider({ (int)position.x, (int)position.y ,5 ,5 }, COLLIDER_TYPE::COLLIDER_BULLET);
+		bullet = app->collisions->AddCollider({ (int)position.x, (int)position.y ,5 ,5 }, ColliderType::COLLIDER_BULLET);
 	}
-	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && app->god_mode)
+	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && app->godMode)
 	{
-		bullet = app->collisions->AddCollider({ (int)position.x, (int)position.y ,5 ,5 }, COLLIDER_TYPE::COLLIDER_BULLET);
+		bullet = app->collisions->AddCollider({ (int)position.x, (int)position.y ,5 ,5 }, ColliderType::COLLIDER_BULLET);
 	}*/
 	
 }
@@ -129,7 +129,7 @@ void Player::PreUpdate(float dt)
 void Player::OnCollision(Collider* col1, Collider* col2)
 {
 	
-	if (col1->type == COLLIDER_TYPE::COLLIDER || col2->type == COLLIDER_TYPE::COLLIDER)
+	if (col1->type == ColliderType::COLLIDER || col2->type == ColliderType::COLLIDER)
 	{
 		//vertical collisions
 		if (collider->rect.x < col1->rect.x + col1->rect.w  && collider->rect.x + collider->rect.w > col1->rect.x || collider->rect.x < col2->rect.x + col2->rect.w  && collider->rect.x + collider->rect.w > col2->rect.x )
@@ -181,7 +181,7 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 
 	}
 			
-	if (col1->type == COLLIDER_TYPE::NEXTLVL || col2->type == COLLIDER_TYPE::NEXTLVL)
+	if (col1->type == ColliderType::NEXTLVL || col2->type == ColliderType::NEXTLVL)
 	{
 		speed.x = 0;
 		acceleration.x = 0;
@@ -200,12 +200,12 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 		}
 	}
 
-	else if (col1->type == COLLIDER_TYPE::COLLIDER_DAMAGE || col2->type == COLLIDER_TYPE::COLLIDER_DAMAGE)
+	else if (col1->type == ColliderType::COLLIDER_DAMAGE || col2->type == ColliderType::COLLIDER_DAMAGE)
 	{
 		state = DEAD;
 	}
 
-	else if (col1->type == COLLIDER_TYPE::COLLIDER_ENEMY || col2->type == COLLIDER_TYPE::COLLIDER_ENEMY)
+	else if (col1->type == ColliderType::COLLIDER_ENEMY || col2->type == ColliderType::COLLIDER_ENEMY)
 	{
 		if (hitCd < app->GetTime())
 		{
@@ -217,7 +217,7 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 			state = DEAD;
 	}
 	
-	else if (col1->type == COLLIDER_TYPE::CHECKPOINT || col2->type == COLLIDER_TYPE::CHECKPOINT)
+	else if (col1->type == ColliderType::CHECKPOINT || col2->type == ColliderType::CHECKPOINT)
 	{
 		if (checkpoint == false)
 		{
@@ -235,7 +235,7 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 		//checkpoint = true;
 	}
 
-	else if (col1->type == COLLIDER_TYPE::COLLIDER_PICKUP || col2->type == COLLIDER_TYPE::COLLIDER_PICKUP)
+	else if (col1->type == ColliderType::COLLIDER_PICKUP || col2->type == ColliderType::COLLIDER_PICKUP)
 	{
 		
 	}
@@ -255,7 +255,7 @@ void Player::Update(float dt)
 			break;
 		
 		case FALLING:
-			if (!app->god_mode)
+			if (!app->godMode)
 			{
 				acceleration.y = GRAVITY;
 				currentAnim = &jumpAnim;
@@ -320,7 +320,7 @@ void Player::CleanUp()
 {
 	app->tex->UnLoad(characterTex);
 	if(collider != nullptr)
-		collider->to_delete = true;
+		collider->toDelete = true;
 		
 }
 
