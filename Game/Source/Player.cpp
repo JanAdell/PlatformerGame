@@ -94,7 +94,7 @@ void Player::PreUpdate(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && state != JUMPING && doubleJump == true)
 	{
-		speed.y = -100;
+		speed.y = -40;
 		app->pause = false;
 		cont++;
 		state = JUMPING;
