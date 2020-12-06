@@ -56,6 +56,7 @@ public:
 	//void GetSaveGames();
 
 	float GetDt();
+	float GetTime();
 	void SetFPScap(uint fps)
 	{
 		if (fps > 0)
@@ -107,6 +108,7 @@ public:
 	bool god_mode = false;
 	bool pause = false;
 	float dtMove;
+	
 
 private:
 
@@ -142,7 +144,6 @@ private:
 	Uint64				timeFrameSecond = 0;
 	Uint64				frameCount = 0;
 	Uint32				fpsCap = 0;
-	
 };
 
 extern App* app;

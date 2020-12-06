@@ -4,6 +4,7 @@
 #include "Animation.h"
 #include "Entity.h"
 
+
 //#pragma comment(lib, "SDL_mixer/libx86/SDL2_mixer.lib")
 
 struct SDL_Texture;
@@ -50,7 +51,11 @@ public:
 	bool firstUpdate = true;
 	bool checkpoint = false;
 
-	int hp = 3;
+	int hp;
+	float hitCd;
+
+	int ammo;
+	
 
 private:
 	float moveSpeed = 20;

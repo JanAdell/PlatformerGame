@@ -189,7 +189,7 @@ void App::PrepareUpdate()
 	lastTime = SDL_GetTicks();
 	
 	if (pause == true)
-		dt = 0;
+		dtMove = 0;
 	
 	timerFrames.Start();
 }
@@ -431,4 +431,9 @@ bool App::SaveGameNow() const
 float App::GetDt()
 {
 	return dt;
+}
+
+float App::GetTime()
+{
+	return timerStarting.Read();
 }

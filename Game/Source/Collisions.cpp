@@ -19,6 +19,7 @@ Collisions::Collisions()
 	matrix[COLLIDER][CHECKPOINT] = false;
 	matrix[COLLIDER][COLLIDER_PICKUP] = false;
 	matrix[COLLIDER][COLLIDER_ENEMY] = true;
+	matrix[COLLIDER][COLLIDER_BULLET] = true;
 
 	matrix[COLLIDER_PLAYER][COLLIDER] = true;
 	matrix[COLLIDER_PLAYER][NEXTLVL] = true;
@@ -26,6 +27,7 @@ Collisions::Collisions()
 	matrix[COLLIDER_PLAYER][COLLIDER_DAMAGE] = true;
 	matrix[COLLIDER_PLAYER][CHECKPOINT] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_PICKUP] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
 
 	matrix[NEXTLVL][COLLIDER] = false;

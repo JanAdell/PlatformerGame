@@ -39855,9 +39855,7 @@
  <objectgroup id="17" name="FlyingEnemySpawn">
   <object id="332" x="902.667" y="860" width="50.6667" height="41.3333"/>
   <object id="333" x="1654.67" y="234.667" width="50.6667" height="58.6667"/>
-  <object id="334" x="1332" y="1442.67" width="42.6667" height="46.6667"/>
   <object id="335" x="1716" y="1752" width="44" height="44"/>
-  <object id="336" x="636.364" y="324.242" width="45.4545" height="36.3636"/>
  </objectgroup>
  <objectgroup id="18" name="AmmoSpawn">
   <properties>
@@ -39870,8 +39868,7 @@
   <object id="342" x="1672.73" y="554.545"/>
  </objectgroup>
  <objectgroup color="#ff00ff" id="16" name="GroundEnemySpawn">
-  <object id="327" x="268.667" y="1023.33" width="54.6667" height="26.6667"/>
-  <object id="328" x="848" y="1228" width="57.3333" height="29.3333"/>
+  <object id="328" x="848" y="1250" width="57.3333" height="29.3333"/>
   <object id="329" x="709.333" y="568.666" width="73.3333" height="30.6667"/>
   <object id="330" x="1218.67" y="350" width="54.6667" height="29.3333"/>
   <object id="331" x="1405.34" y="1661.34" width="50.6667" height="25.3333"/>
