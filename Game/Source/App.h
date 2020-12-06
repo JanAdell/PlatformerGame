@@ -54,6 +54,8 @@ public:
 	void SaveGame() const;
 	//void GetSaveGames();
 
+	float GetDt();
+
 private:
 
 	// Load config file

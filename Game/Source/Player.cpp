@@ -167,10 +167,16 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 		speed.y = 0;
 		acceleration.y = 0;
 		if (app->scene->lvl == 1)
+		{
+			checkpoint = false;
 			app->scene->LoadLevel2();
+		}
 
 		else if (app->scene->lvl == 2)
+		{
+			checkpoint = false;
 			app->scene->LoadLevel1();
+		}
 	}
 
 	else if (col1->type == COLLIDER_TYPE::COLLIDER_DAMAGE || col2->type == COLLIDER_TYPE::COLLIDER_DAMAGE)
@@ -181,7 +187,11 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 	else if (col1->type == COLLIDER_TYPE::CHECKPOINT || col2->type == COLLIDER_TYPE::CHECKPOINT)
 	{
 		app->SaveGame();
-		checkpoint;
+
+		checkpointPos.x = position.x;
+		checkpointPos.y = position.y;
+
+		checkpoint = true;
 	}
 	
 }
@@ -222,9 +232,16 @@ void Player::Update(float dt)
 		
 		case DEAD:
 						
-			position.x = spawnPos.x;
-			position.y = spawnPos.y;				
-			break;
+			if (checkpoint == false)
+			{
+				position.x = spawnPos.x;
+				position.y = spawnPos.y;
+			}
+			else
+			{
+				position.x = checkpointPos.x;
+				position.y = checkpointPos.y;
+			}
 		
 	}
 

@@ -55,11 +55,13 @@ public:
 	
 	fPoint position;
 	fPoint spawnPos;
+	fPoint checkpointPos;
 	fPoint speed;
 	iPoint size;
 	iPoint offset;
 	fPoint acceleration;
 	float gravity;
+	bool checkpoint = false;
 
 	ENTITY_TYPE type = ENTITY_TYPE::NO_ENTITY;
 	EntityState states = EntityState::UNKNOWN;

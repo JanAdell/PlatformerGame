@@ -69,7 +69,7 @@ bool Scene::Update(float dt)
 		app->entityManager->player->position.y = dynamic_cast<Player*>(app->entityManager->player)->spawnPos.y;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN && intro == false)
+	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN/* && intro == false*/)
 	{
 		app->entityManager->player->position.x = dynamic_cast<Player*>(app->entityManager->player)->checkpointPos.x;
 		app->entityManager->player->position.y = dynamic_cast<Player*>(app->entityManager->player)->checkpointPos.y;

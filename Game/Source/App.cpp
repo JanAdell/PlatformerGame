@@ -376,3 +376,8 @@ bool App::SaveGameNow() const
 	saveRequest = false;
 	return ret;
 }
+
+float App::GetDt()
+{
+	return dt;
+}
