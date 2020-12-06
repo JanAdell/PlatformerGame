@@ -37,7 +37,8 @@ bool Player::Start()
 	checkpointFx = app->audio->LoadFx("Assets/audio/fx/checkpoint.ogg");
 	collider = app->collisions->AddCollider({ (int)position.x, (int)position.y ,size.x ,size.y }, COLLIDER_TYPE::COLLIDER_PLAYER, (Module*)app->entityManager);
 	cont = 0;
-	
+	hp = 3;
+	ammo = 10;
 	return true;
 }
 
@@ -139,8 +140,7 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 			{
 				state = FALLING;
 				speed.y = 0;
-				
-			
+							
 			}
 		}
 
@@ -180,7 +180,7 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 		else if (app->scene->lvl == 2)
 		{
 			checkpoint = false;
-			app->scene->LoadLevel1();
+			app->scene->LoadIntro();
 		}
 	}
 
@@ -191,7 +191,14 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 
 	else if (col1->type == COLLIDER_TYPE::COLLIDER_ENEMY || col2->type == COLLIDER_TYPE::COLLIDER_ENEMY)
 	{
+		if (hitCd < app->GetTime())
+		{
+			hp--;
+			hitCd = app->GetTime() + 500;
+		}
 
+		if (hp == 0)
+			state = DEAD;
 	}
 	
 	else if (col1->type == COLLIDER_TYPE::CHECKPOINT || col2->type == COLLIDER_TYPE::CHECKPOINT)

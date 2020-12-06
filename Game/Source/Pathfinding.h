@@ -7,7 +7,7 @@
 #include "Entity.h"
 
 #define DEFAULT_PATH_LENGTH 50
-#define INVALID_WALK_CODE 255
+#define INVALID_WALK_CODE 510
 
 // --------------------------------------------------
 // Recommended reading:
