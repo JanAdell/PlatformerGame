@@ -27,7 +27,7 @@
   </file_system>
     
   <map>
-    <folder>Assets/maps/textures/</folder>
+    <folder>Assets/Maps/</folder>
   </map>
 
   <entities>
