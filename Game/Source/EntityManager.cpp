@@ -131,7 +131,7 @@ void EntityManager::OnCollision(Collider* col1, Collider* col2)
 {
 	for (ListItem<Entity*>* entityItem = entities.start; entityItem != nullptr; entityItem = entityItem->next)
 	{
-		if (entityItem != nullptr && entityItem->data->collider == col1)
+		if (entityItem != nullptr && entityItem->data != nullptr && entityItem->data->collider == col1)
 		{
 			entityItem->data->OnCollision(col1, col2);
 		}

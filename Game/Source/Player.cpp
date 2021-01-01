@@ -191,7 +191,7 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 		else if (app->scene->lvl == 2)
 		{
 			checkpoint = false;
-			app->scene->LoadIntro();
+			app->scene->LoadLevel1();
 		}
 	}
 	
