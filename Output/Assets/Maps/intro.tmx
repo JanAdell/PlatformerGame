@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="55" height="32" tilewidth="32" tileheight="32" nextobjectid="1040">
  <tileset firstgid="1" name="title" tilewidth="32" tileheight="32" tilecount="880" columns="40">
-  <image source="../Textures/title.png" width="1280" height="720"/>
+  <image source="title.png" width="1280" height="720"/>
  </tileset>
  <tileset firstgid="881" name="background2" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="42" columns="7">
-  <image source="../Textures/background2.png" width="249" height="218"/>
+  <image source="background2.png" width="249" height="218"/>
   <terraintypes>
    <terrain name="Rock" tile="-1"/>
   </terraintypes>
@@ -27,7 +27,7 @@
   <tile id="39" terrain="0,,,"/>
  </tileset>
  <tileset firstgid="923" name="warped_caves_spritesheet32x32" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="180" columns="18">
-  <image source="../Textures/warped_caves_spritesheet32x32.png" width="595" height="331"/>
+  <image source="warped_caves_spritesheet.png" width="595" height="331"/>
   <terraintypes>
    <terrain name="Ground" tile="-1"/>
   </terraintypes>
