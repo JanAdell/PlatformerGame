@@ -11,6 +11,7 @@
 #include "Collisions.h"
 #include "Pathfinding.h"
 #include "Player.h"
+#include "GuiManager.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -30,6 +31,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render();
 	tex = new Textures();
 	audio = new Audio();
+	gui = new GuiManager(true);
 	scene = new Scene();
 	map = new Map();
 	fade = new FadeToBlack();
@@ -43,6 +45,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(win);
 	AddModule(tex);
 	AddModule(audio);
+	AddModule(gui);
 	AddModule(scene);
 	AddModule(map);
 	AddModule(pathfinding);

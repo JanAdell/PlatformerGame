@@ -18,6 +18,7 @@ class FadeToBlack;
 class Player;
 class EntityManager;
 class Collisions;
+class GuiManager;
 class Pathfinding;
 
 class App
@@ -102,6 +103,7 @@ public:
 	EntityManager* entityManager;
 	Collisions* collisions;
 	Pathfinding* pathfinding;
+	GuiManager* gui;
 	
 public:
 
