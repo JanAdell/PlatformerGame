@@ -13,8 +13,8 @@ public:
     GuiButton(int id, SDL_Rect bounds, const char *text);
     virtual ~GuiButton();
 
-    bool Update(Input* input, float dt);
-    bool Draw(Render* render);
+    bool Update(float dt);
+    bool Draw();
 
 private:
 

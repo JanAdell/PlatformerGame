@@ -109,7 +109,14 @@ void Player::PreUpdate(float dt)
 	
 	if (app->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
 	{
-		currentAnim = &deathAnim;
+		hp--;
+		if (hp==0)
+		{
+			currentAnim = &deathAnim;
+			state = DEAD;
+			hp = 3;
+		}
+		LOG("hp: %i", hp);
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && ammo > 0)

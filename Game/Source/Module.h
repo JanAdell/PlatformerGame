@@ -6,6 +6,7 @@
 #include "PugiXml/src/pugixml.hpp"
 
 class GuiControl;
+enum class GuiControlState;
 class App;
 struct Collider;
 

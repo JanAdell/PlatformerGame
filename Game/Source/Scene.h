@@ -4,6 +4,8 @@
 #include "Module.h"
 
 struct SDL_Texture;
+class GuiControl;
+class GuiButton;
 
 class Scene : public Module
 {
@@ -37,6 +39,8 @@ public:
 	void LoadLevel2();
 	void LoadIntro();
 
+	bool OnGuiMouseClickEvent(GuiControl* control);
+
 	bool Load(pugi::xml_node& data);
 
 	bool Save(pugi::xml_node& data) const;
@@ -48,6 +52,12 @@ public:
 
 private:
 	SDL_Texture* img;
+
+	GuiButton* play;
+	GuiButton* resume;
+	GuiButton* settings;
+	GuiButton* credits;
+	GuiButton* quit;
 };
 
 #endif // __SCENE_H__

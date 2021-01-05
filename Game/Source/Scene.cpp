@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "Map.h"
 #include "Scene.h"
+//#include "SceneMenu.h"
 #include "Player.h"
 #include "FadetoBlack.h"
 #include "EntityManager.h"
@@ -13,6 +14,7 @@
 #include "Log.h"
 #include "Collisions.h"
 #include "Pathfinding.h"
+#include "GuiButton.h"
 
 Scene::Scene() : Module()
 {
@@ -51,8 +53,8 @@ bool Scene::PreUpdate(float dt)
 bool Scene::Update(float dt)
 {
 	
-	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && intro)
-		LoadLevel1();
+	//if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && intro)
+	//	LoadLevel1();
 
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
@@ -167,6 +169,8 @@ void Scene::LoadLevel2()
 
 void Scene::LoadIntro()
 {
+	//app->sceneMenu->Start();
+	
 	app->pause = true;
 	app->entityManager->CleanUp();
 	//app->fade->FadeTo();
@@ -205,4 +209,23 @@ bool Scene::Load(pugi::xml_node& data)
 	}
 	else LoadLevel2();
 	return ret;
+}
+
+bool Scene::OnGuiMouseClickEvent(GuiControl* control)
+{
+	switch (control->type)
+	{
+	case GuiControlType::BUTTON:
+	{
+		if (control->id == 1)
+			app->fade->FadeTo(30);
+		else if (control->id == 2)
+			return false;
+
+	default:
+		break;
+	}
+
+	return true;
+	}
 }

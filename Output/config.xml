@@ -81,7 +81,7 @@
      <animation name="cling" speed="0.05f" loop="true">
        <frame x="65" y="116" w="31" h="32"/>
      </animation>
-     <animation name="hurt" speed="0.05f" loop="false">
+     <animation name="hurt" speed="0.005f" loop="true">
        <frame x="97" y="116" w="20" h="34"/>
        <frame x="118" y="119" w="25" h="24"/>
      </animation>

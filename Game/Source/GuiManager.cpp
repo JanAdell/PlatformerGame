@@ -72,3 +72,24 @@ void GuiManager::DestroyAllGuiControl()
 	}
 	controls.clear();
 }
+
+void GuiManager::DestroyGuiControl(GuiControl* entity)
+{
+	int index = controls.find(entity);
+
+	ListItem<GuiControl*>* aux;
+	aux = controls.start;
+	int count = 0;
+	while (aux != nullptr)
+	{
+		if (count == index)
+		{
+			delete aux->data;
+			controls.del(aux);
+			aux = nullptr;
+			break;
+		}
+		count++;
+		aux = aux->next;
+	}
+}

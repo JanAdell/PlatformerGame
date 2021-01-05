@@ -10,17 +10,17 @@
 	<map />
 	<pathfinding />
 	<entities>
-		<enemy_stats type="4" gravity="0" position_x="1012" position_y="1052" />
-		<enemy_stats type="4" gravity="0" position_x="747" position_y="1538" />
-		<enemy_stats type="4" gravity="7.39845387e+31" position_x="1742" position_y="-2147483648" />
-		<enemy_stats type="3" gravity="0" position_x="2131" position_y="582" />
-		<enemy_stats type="3" gravity="0" position_x="2085" position_y="832" />
-		<enemy_stats type="3" gravity="0" position_x="1469" position_y="1288" />
-		<position x="1670.74048" y="602.660034" />
+		<enemy_stats type="4" gravity="1.17428811e-42" position_x="718" position_y="1052" />
+		<enemy_stats type="4" gravity="7.39845387e+31" position_x="776" position_y="-2147483648" />
+		<enemy_stats type="4" gravity="7.39845387e+31" position_x="1749" position_y="-2147483648" />
+		<enemy_stats type="3" gravity="7.39845387e+31" position_x="1912" position_y="582" />
+		<enemy_stats type="3" gravity="7.39845387e+31" position_x="2037" position_y="832" />
+		<enemy_stats type="3" gravity="7.39845387e+31" position_x="1250" position_y="1288" />
+		<position x="1664.88049" y="606.179749" />
 	</entities>
 	<:anonymous />
 	<FadeToBlack />
 	<renderer>
-		<camera x="-725" y="-115" />
+		<camera x="-720" y="-106" />
 	</renderer>
 </game_state>

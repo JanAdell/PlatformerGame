@@ -13,6 +13,7 @@ class Render;
 class Textures;
 class Audio;
 class Scene;
+class SceneMenu;
 class Map;
 class FadeToBlack;
 class Player;
@@ -97,6 +98,7 @@ public:
 	Textures* tex;
 	Audio* audio;
 	Scene* scene;
+	SceneMenu* sceneMenu;
 	Map* map;
 	FadeToBlack* fade;
 	//Player* player;
