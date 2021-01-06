@@ -1,4 +1,4 @@
-#include "SceneMenu.h"
+/*#include "SceneMenu.h"
 #include "App.h"
 #include "Audio.h"
 #include "Input.h"
@@ -103,29 +103,30 @@ bool SceneMenu::PostUpdate(float dt)
 	quit->Draw();
 
 	return ret;
-}
+}*/
 
-bool SceneMenu::OnGuiMouseClickEvent(GuiControl* control)
-{
-	switch (control->type)
-	{
-	case GuiControlType::BUTTON:
-	{
-		/*if (control->id == 1)
-			app->fade->FadeTo(1);
-		else if (control->id == 2)
-			return false;*/
+//bool SceneMenu::OnGuiMouseClickEvent(GuiControl* control)
+//{
+//	switch (control->type)
+//	{
+//	case GuiControlType::BUTTON:
+//	{
+//		/*if (control->id == 1)
+//			app->fade->FadeTo(1);
+//		else if (control->id == 2)
+//			return false;*/
+//
+//	default:
+//		break;
+//	}
+//
+//	return true;
+//	}
+//}
 
-	default:
-		break;
-	}
-
-	return true;
-	}
-}
-
-bool SceneMenu::CleanUp()
+/*bool SceneMenu::CleanUp()
 {
 	//app->tex->UnLoad(introText);
 	return true;
 }
+*/

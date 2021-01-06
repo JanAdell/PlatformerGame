@@ -1,4 +1,4 @@
-#ifndef __SCENE_MENU_H__
+/*#ifndef __SCENE_MENU_H__
 #define __SCENE_MENU_H__
 
 #include "Module.h"
@@ -39,4 +39,4 @@ private:
 
 
 
-#endif // !__SCENE_MENU_H__
+#endif // !__SCENE_MENU_H__*/

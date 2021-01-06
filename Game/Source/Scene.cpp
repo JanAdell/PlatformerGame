@@ -53,8 +53,8 @@ bool Scene::PreUpdate(float dt)
 bool Scene::Update(float dt)
 {
 	
-	//if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && intro)
-	//	LoadLevel1();
+	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && intro)
+		LoadLevel1();
 
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
@@ -90,6 +90,15 @@ bool Scene::Update(float dt)
 	//app->render->DrawTexture(img, 380, 100);
 	app->map->Draw();
 
+	if (intro)
+	{
+		play->Update(dt);
+		resume->Update(dt);
+		settings->Update(dt);
+		credits->Update(dt);
+		quit->Update(dt);
+	}
+
 	return true;
 }
 
@@ -100,6 +109,15 @@ bool Scene::PostUpdate(float dt)
 
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
+
+	if (intro)
+	{
+		play->Draw();
+		resume->Draw();
+		settings->Draw();
+		credits->Draw();
+		quit->Draw();
+	}
 
 	return ret;
 }
@@ -169,8 +187,22 @@ void Scene::LoadLevel2()
 
 void Scene::LoadIntro()
 {
-	//app->sceneMenu->Start();
-	
+	play = new GuiButton(1, { 640, 150, 300, 80 }, "START");
+	play->SetObserver(this);
+
+	resume = new GuiButton(2, { 640, 250, 300, 80 }, "RESUME");
+	resume->SetObserver(this);
+
+	settings = new GuiButton(3, { 640, 350, 300, 80 }, "SETTINGS");
+	settings->SetObserver(this);
+
+	credits = new GuiButton(4, { 640, 450, 300, 80 }, "CREDITS");
+	credits->SetObserver(this);
+
+	quit = new GuiButton(5, { 640, 550, 300, 80 }, "EXIT");
+	quit->SetObserver(this);
+
+
 	app->pause = true;
 	app->entityManager->CleanUp();
 	//app->fade->FadeTo();
@@ -218,10 +250,12 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	case GuiControlType::BUTTON:
 	{
 		if (control->id == 1)
-			app->fade->FadeTo(30);
-		else if (control->id == 2)
-			return false;
-
+			LoadLevel1();
+		/*else if (control->id == 2)
+			//Load();
+		else if (control->id == 3)
+		else if (control->id == 4)
+		else if (control->id == 5)*/
 	default:
 		break;
 	}

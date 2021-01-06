@@ -34,7 +34,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new Audio();
 	gui = new GuiManager(true);
 	scene = new Scene();
-	sceneMenu = new SceneMenu();
+	//sceneMenu = new SceneMenu();
 	map = new Map();
 	fade = new FadeToBlack();
 	entityManager = new EntityManager();
@@ -49,7 +49,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(gui);
 	AddModule(scene);
-	AddModule(sceneMenu);
+	//AddModule(sceneMenu);
 	AddModule(map);
 	AddModule(pathfinding);
 	AddModule(entityManager);
