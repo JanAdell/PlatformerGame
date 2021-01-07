@@ -6,7 +6,6 @@
 #include "Window.h"
 #include "Map.h"
 #include "Scene.h"
-//#include "SceneMenu.h"
 #include "Player.h"
 #include "FadetoBlack.h"
 #include "EntityManager.h"
@@ -15,6 +14,7 @@
 #include "Collisions.h"
 #include "Pathfinding.h"
 #include "GuiButton.h"
+#include "GuiSlider.h"
 
 Scene::Scene() : Module()
 {
@@ -99,6 +99,13 @@ bool Scene::Update(float dt)
 		quit->Update(dt);
 	}
 
+	if (settingsActive)
+	{
+		back->Update(dt);
+		musicVol->Update(dt);
+		fxVol->Update(dt);
+	}
+
 	return true;
 }
 
@@ -117,6 +124,13 @@ bool Scene::PostUpdate(float dt)
 		settings->Draw();
 		credits->Draw();
 		quit->Draw();
+	}
+
+	if (settingsActive)
+	{
+		back->Draw();
+		musicVol->Draw();
+		fxVol->Draw();
 	}
 
 	return ret;
@@ -221,6 +235,62 @@ void Scene::LoadIntro()
 	app->pause = false;
 }
 
+void Scene::LoadSettings()
+{
+	intro = false;
+	settingsActive = true;
+	musicVol = new GuiSlider(1, { 640, 150, 300, 80 }, "Music Volume");
+	musicVol->SetObserver(this);
+
+	back = new GuiButton(6, { 100, 550, 300, 80 }, "EXIT");
+	back->SetObserver(this);
+
+	app->pause = true;
+	//app->entityManager->CleanUp();
+	//app->fade->FadeTo();
+	//app->map->CleanUp();
+	//app->fade->FadeTo();
+	/*if (app->map->Load("intro.tmx")) {
+		int w, h;
+		uchar* data = NULL;
+		if (app->map->CreateWalkabilityMap(w, h, &data))
+			app->pathfinding->SetMap(w, h, data);
+
+		RELEASE_ARRAY(data);
+	}*/
+	//app->entityManager->Start();
+	//app->audio->PlayMusic("Assets/audio/music/lvl2bgm.ogg");
+	app->pause = false;
+}
+
+bool Scene::OnGuiMouseClickEvent(GuiControl* control)
+{
+	switch (control->type)
+	{
+	case GuiControlType::BUTTON:
+	{
+		if (control->id == 1)
+			LoadLevel1();
+		//else if (control->id == 2)
+			//Load();
+		else if (control->id == 3)
+			LoadSettings();
+		//else if (control->id == 4)
+		//else if (control->id == 5)
+		else if (control->id == 6)
+			intro = true;
+		break;
+	case GuiControlType::SLIDER:
+		//if (control->id == 1)
+		break;
+	}
+
+	return true;
+	}
+}
+
+
+
 bool Scene::Save(pugi::xml_node& data)const
 {
 	bool ret = true;
@@ -241,25 +311,4 @@ bool Scene::Load(pugi::xml_node& data)
 	}
 	else LoadLevel2();
 	return ret;
-}
-
-bool Scene::OnGuiMouseClickEvent(GuiControl* control)
-{
-	switch (control->type)
-	{
-	case GuiControlType::BUTTON:
-	{
-		if (control->id == 1)
-			LoadLevel1();
-		/*else if (control->id == 2)
-			//Load();
-		else if (control->id == 3)
-		else if (control->id == 4)
-		else if (control->id == 5)*/
-	default:
-		break;
-	}
-
-	return true;
-	}
 }

@@ -6,6 +6,7 @@
 struct SDL_Texture;
 class GuiControl;
 class GuiButton;
+class GuiSlider;
 
 class Scene : public Module
 {
@@ -38,6 +39,7 @@ public:
 	void LoadLevel1();
 	void LoadLevel2();
 	void LoadIntro();
+	void LoadSettings();
 
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
@@ -46,6 +48,7 @@ public:
 	bool Save(pugi::xml_node& data) const;
 
 	bool intro = true;
+	bool settingsActive = false;
 
 	uint lvl = 1;
 	pugi::xml_node playerNodeScene;
@@ -58,6 +61,9 @@ private:
 	GuiButton* settings;
 	GuiButton* credits;
 	GuiButton* quit;
+	GuiButton* back;
+	GuiSlider* musicVol;
+	GuiSlider* fxVol;
 };
 
 #endif // __SCENE_H__

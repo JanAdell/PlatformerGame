@@ -1,21 +1,27 @@
 #include "GuiSlider.h"
+#include "Window.h"
 
 GuiSlider::GuiSlider(int id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::SLIDER, id)
 {
     this->bounds = bounds;
     this->text = text;
+    this->minValue == bounds.x;
+    this->maxValue == bounds.w + bounds.x;
 }
 
 GuiSlider::~GuiSlider()
 {
 }
 
-bool GuiSlider::Update(Input* input, float dt)
+bool GuiSlider::Update(float dt)
 {
     if (state != GuiControlState::DISABLED)
     {
         int mouseX, mouseY;
-        input->GetMousePosition(mouseX, mouseY);
+        app->input->GetMousePosition(mouseX, mouseY);
+
+        mouseX += -app->render->camera.x / app->win->GetScale();
+        mouseY += -app->render->camera.y / app->win->GetScale();
 
         // Check collision between mouse and button bounds
         if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) && 
@@ -24,6 +30,17 @@ bool GuiSlider::Update(Input* input, float dt)
             state = GuiControlState::FOCUSED;
 
             // TODO.
+            if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
+                state = GuiControlState::PRESSED;
+        }
+        else if (state==GuiControlState::PRESSED)
+        {
+            if ((app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)&&(mouseX>minValue) && (mouseX < maxValue))
+            {
+                bounds.x = (mouseX - bounds.w / 2);
+                bounds.x = bounds.x / app->win->GetScale();
+                NotifyObserver();
+            }
         }
         else state = GuiControlState::NORMAL;
     }
@@ -31,20 +48,24 @@ bool GuiSlider::Update(Input* input, float dt)
     return false;
 }
 
-bool GuiSlider::Draw(Render* render)
+bool GuiSlider::Draw()
 {
     // Draw the right button depending on state
+
+    SDL_Rect sect = { bounds.x - 1, bounds.y - 1, 300, 30 };
+    app->render->DrawRectangle(sect, 0, 255, 100, 255);
+
     switch (state)
     {
-    case GuiControlState::DISABLED: render->DrawRectangle(bounds, 100, 100, 100, 255);
+    case GuiControlState::DISABLED: app->render->DrawRectangle(bounds, 100, 100, 100, 255);
         break;
-    case GuiControlState::NORMAL: render->DrawRectangle(bounds, 0, 255, 0, 255);
+    case GuiControlState::NORMAL: app->render->DrawRectangle(bounds, 0, 255, 0, 255);
         break;
-    case GuiControlState::FOCUSED: render->DrawRectangle(bounds, 255, 255, 0, 255);
+    case GuiControlState::FOCUSED: app->render->DrawRectangle(bounds, 255, 255, 0, 255);
         break;
-    case GuiControlState::PRESSED: render->DrawRectangle(bounds, 0, 255, 255, 255);
+    case GuiControlState::PRESSED: app->render->DrawRectangle(bounds, 0, 255, 255, 255);
         break;
-    case GuiControlState::SELECTED: render->DrawRectangle(bounds, 0, 255, 0, 255);
+    case GuiControlState::SELECTED: app->render->DrawRectangle(bounds, 0, 255, 0, 255);
         break;
     default:
         break;
