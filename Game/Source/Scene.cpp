@@ -100,7 +100,7 @@ bool Scene::Update(float dt)
 		quit->Update(dt);
 	}
 
-	else if (settingsActive)
+	else if (settingsActive && intro==false)
 	{
 		back->Update(dt);
 		musicVol->Update(dt);
@@ -127,7 +127,7 @@ bool Scene::PostUpdate(float dt)
 		quit->Draw();
 	}
 
-	else if (settingsActive)
+	else if (settingsActive && intro==false)
 	{
 		back->Draw();
 		musicVol->Draw();
@@ -242,12 +242,13 @@ void Scene::LoadIntro()
 
 void Scene::LoadSettings()
 {
-	intro = false;
-
-	musicVol = new GuiSlider(1, { 640, 150, 300, 80 }, "Music Volume");
+	musicVol = new GuiSlider(6, { 640, 150, 300, 80 }, "Music Volume");
 	musicVol->SetObserver(this);
 
-	back = new GuiButton(6, { 100, 550, 300, 80 }, "EXIT");
+	fxVol = new GuiSlider(7, { 640, 250, 300, 80 }, "FX Volume");
+	fxVol->SetObserver(this);
+
+	back = new GuiButton(8, { 640, 550, 300, 80 }, "EXIT");
 	back->SetObserver(this);
 
 	//app->pause = true;
@@ -281,11 +282,12 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		else if (control->id == 3)
 		{
 			settingsActive;
+			intro = false;
 			LoadSettings();
 		}
 		//else if (control->id == 4)
 		//else if (control->id == 5)
-		else if (control->id == 6)
+		else if (control->id == 8)
 			intro = true;
 		break;
 	case GuiControlType::SLIDER:

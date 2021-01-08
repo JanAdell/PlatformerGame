@@ -20,6 +20,7 @@ bool GuiSlider::Update(float dt)
         int mouseX, mouseY;
         app->input->GetMousePosition(mouseX, mouseY);
 
+        // mouse offset
         mouseX -= app->render->camera.x / app->win->GetScale();
         mouseY -= app->render->camera.y / app->win->GetScale();
 
