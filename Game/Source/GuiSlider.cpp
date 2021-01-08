@@ -20,8 +20,8 @@ bool GuiSlider::Update(float dt)
         int mouseX, mouseY;
         app->input->GetMousePosition(mouseX, mouseY);
 
-        mouseX += -app->render->camera.x / app->win->GetScale();
-        mouseY += -app->render->camera.y / app->win->GetScale();
+        mouseX -= app->render->camera.x / app->win->GetScale();
+        mouseY -= app->render->camera.y / app->win->GetScale();
 
         // Check collision between mouse and button bounds
         if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) && 
@@ -33,7 +33,7 @@ bool GuiSlider::Update(float dt)
             if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
                 state = GuiControlState::PRESSED;
         }
-        else if (state==GuiControlState::PRESSED)
+        if (state==GuiControlState::PRESSED)
         {
             if ((app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)&&(mouseX>minValue) && (mouseX < maxValue))
             {
@@ -67,7 +67,7 @@ bool GuiSlider::Draw()
         break;
     case GuiControlState::SELECTED: app->render->DrawRectangle(bounds, 0, 255, 0, 255);
         break;
-    default:
+       default:
         break;
     }
 

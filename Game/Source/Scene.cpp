@@ -243,7 +243,6 @@ void Scene::LoadIntro()
 void Scene::LoadSettings()
 {
 	intro = false;
-	settingsActive = true;
 
 	musicVol = new GuiSlider(1, { 640, 150, 300, 80 }, "Music Volume");
 	musicVol->SetObserver(this);
@@ -277,10 +276,13 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	{
 		if (control->id == 1)
 			LoadLevel1();
-		//else if (control->id == 2)
-			//Load();
+		else if (control->id == 2)
+			LoadLevel2();
 		else if (control->id == 3)
+		{
+			settingsActive;
 			LoadSettings();
+		}
 		//else if (control->id == 4)
 		//else if (control->id == 5)
 		else if (control->id == 6)
