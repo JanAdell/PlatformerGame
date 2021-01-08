@@ -15,6 +15,7 @@
 #include "Pathfinding.h"
 #include "GuiButton.h"
 #include "GuiSlider.h"
+#include "GuiCheckBox.h"
 #include "Font.h"
 
 Scene::Scene() : Module()
@@ -100,11 +101,12 @@ bool Scene::Update(float dt)
 		quit->Update(dt);
 	}
 
-	else if (settingsActive && intro==false)
+	else if (settingsActive)
 	{
 		back->Update(dt);
 		musicVol->Update(dt);
 		fxVol->Update(dt);
+		fullscreen->Update(dt);
 	}
 
 	return true;
@@ -127,11 +129,12 @@ bool Scene::PostUpdate(float dt)
 		quit->Draw();
 	}
 
-	else if (settingsActive && intro==false)
+	else if (settingsActive)
 	{
 		back->Draw();
 		musicVol->Draw();
 		fxVol->Draw();
+		fullscreen->Draw();
 	}
 	else if (creditsActive)
 	{
@@ -206,19 +209,19 @@ void Scene::LoadLevel2()
 
 void Scene::LoadIntro()
 {
-	play = new GuiButton(1, { 640, 150, 300, 80 }, "START");
+	play = new GuiButton(1, { 640, 150, 300, 80 }, "Start");
 	play->SetObserver(this);
 
-	resume = new GuiButton(2, { 640, 250, 300, 80 }, "RESUME");
+	resume = new GuiButton(2, { 640, 250, 300, 80 }, "Resume");
 	resume->SetObserver(this);
 
-	settings = new GuiButton(3, { 640, 350, 300, 80 }, "SETTINGS");
+	settings = new GuiButton(3, { 640, 350, 300, 80 }, "Settings");
 	settings->SetObserver(this);
 
-	credits = new GuiButton(4, { 640, 450, 300, 80 }, "CREDITS");
+	credits = new GuiButton(4, { 640, 450, 300, 80 }, "Credits");
 	credits->SetObserver(this);
 
-	quit = new GuiButton(5, { 640, 550, 300, 80 }, "EXIT");
+	quit = new GuiButton(5, { 640, 550, 300, 80 }, "Exit");
 	quit->SetObserver(this);
 
 
@@ -242,31 +245,20 @@ void Scene::LoadIntro()
 
 void Scene::LoadSettings()
 {
-	musicVol = new GuiSlider(6, { 640, 150, 300, 80 }, "Music Volume");
+	musicVol = new GuiSlider(1, { 640, 150, 300, 80 }, "Music Volume");
 	musicVol->SetObserver(this);
 
-	fxVol = new GuiSlider(7, { 640, 250, 300, 80 }, "FX Volume");
+	fxVol = new GuiSlider(2, { 640, 250, 300, 80 }, "FX Volume");
 	fxVol->SetObserver(this);
 
-	back = new GuiButton(8, { 640, 550, 300, 80 }, "EXIT");
+	back = new GuiButton(6, { 640, 550, 300, 80 }, "Exit");
 	back->SetObserver(this);
 
-	//app->pause = true;
-	//app->entityManager->CleanUp();
-	//app->fade->FadeTo();
-	//app->map->CleanUp();
-	//app->fade->FadeTo();
-	/*if (app->map->Load("intro.tmx")) {
-		int w, h;
-		uchar* data = NULL;
-		if (app->map->CreateWalkabilityMap(w, h, &data))
-			app->pathfinding->SetMap(w, h, data);
+	fullscreen = new GuiCheckBox(1, { 10, 10, 300, 80 }, "Fullscreen");
+	fullscreen->SetObserver(this);
 
-		RELEASE_ARRAY(data);
-	}*/
-	//app->entityManager->Start();
-	//app->audio->PlayMusic("Assets/audio/music/lvl2bgm.ogg");
-	//app->pause = false;
+	vsync = new GuiCheckBox(2, { 640, 550, 300, 80 }, "Vsync");
+	vsync->SetObserver(this);
 }
 
 bool Scene::OnGuiMouseClickEvent(GuiControl* control)
@@ -282,16 +274,37 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		else if (control->id == 3)
 		{
 			settingsActive;
-			intro = false;
+			//intro = false;
 			LoadSettings();
 		}
 		//else if (control->id == 4)
 		//else if (control->id == 5)
-		else if (control->id == 8)
+		else if (control->id == 6)
 			intro = true;
 		break;
 	case GuiControlType::SLIDER:
-		//if (control->id == 1)
+		/*
+		if (control->id == 1)
+		{
+
+		}
+		else if (control->id == 2)
+		{
+
+		}
+		*/
+		break;
+	case GuiControlType::CHECKBOX:
+		/*
+		if (control->id == 1)
+		{
+
+		}
+		else if (control->id == 2)
+		{
+
+		}
+		*/
 		break;
 	}
 

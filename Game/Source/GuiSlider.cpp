@@ -32,7 +32,9 @@ bool GuiSlider::Update(float dt)
 
             // TODO.
             if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
+            {
                 state = GuiControlState::PRESSED;
+            }
         }
         if (state==GuiControlState::PRESSED)
         {
@@ -68,7 +70,7 @@ bool GuiSlider::Draw()
         break;
     case GuiControlState::SELECTED: app->render->DrawRectangle(bounds, 0, 255, 0, 255);
         break;
-       default:
+    default:
         break;
     }
 

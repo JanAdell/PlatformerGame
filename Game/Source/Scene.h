@@ -7,6 +7,7 @@ struct SDL_Texture;
 class GuiControl;
 class GuiButton;
 class GuiSlider;
+class GuiCheckBox;
 
 class Scene : public Module
 {
@@ -65,7 +66,9 @@ private:
 	GuiButton* back;
 	GuiSlider* musicVol;
 	GuiSlider* fxVol;
-
+	GuiCheckBox* fullscreen;
+	GuiCheckBox* vsync;
+	
 	int bebasFont = -1;
 };
 
