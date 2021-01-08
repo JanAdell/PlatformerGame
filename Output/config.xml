@@ -114,6 +114,31 @@
       <speed x="3" y="3"/>
     </FlyingEnemy>
 
+    <Health>
+      <folder path="Assets/textures/hp.png" />
+      <animation name="hpAnim" speed="0.3f" loop="true">
+        <frame x="-109" y="0" w="7" h="9"/>
+      </animation>
+        <positionLvl1 w ="7" h ="9"/>
+    </Health>
+
+    <Ammo>
+      <folder path="Assets/textures/hp.png" />
+      <animation name="ammoAnim" speed="0.3f" loop="true">
+        <frame x="0" y="-31" w="13" h="22"/>
+        <frame x="-14" y="-31" w="13" h="22"/>
+        <frame x="-28" y="-31" w="13" h="22"/>
+        <frame x="-42" y="-31" w="13" h="22"/>
+        <frame x="-56" y="-31" w="13" h="22"/>
+        <frame x="-70" y="-31" w="13" h="22"/>
+        <frame x="-84" y="-31" w="13" h="22"/>
+        <frame x="-98" y="-31" w="13" h="22"/>
+        <frame x="-112" y="-31" w="13" h="22"/>
+        <frame x="-126" y="-31" w="13" h="22"/>
+      </animation>
+      <positionLvl1 w ="14" h ="14"/>
+    </Ammo>
+    
     <Pick>
       <folder path="Assets/textures/powerup.png" />
       <animation name="power" speed="0.3f" loop="true">
