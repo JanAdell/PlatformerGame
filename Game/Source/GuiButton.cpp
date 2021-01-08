@@ -1,4 +1,5 @@
 #include "GuiButton.h"
+#include "Window.h"
 
 GuiButton::GuiButton(int id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::BUTTON, id)
 {
@@ -16,6 +17,9 @@ bool GuiButton::Update(float dt)
     {
         int mouseX, mouseY;
         app->input->GetMousePosition(mouseX, mouseY);
+
+        mouseX += -app->render->camera.x / app->win->GetScale();
+        mouseY += -app->render->camera.y / app->win->GetScale();
 
         // Check collision between mouse and button bounds
         if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) && 
