@@ -49,12 +49,13 @@ public:
 
 	bool intro = true;
 	bool settingsActive = false;
+	bool creditsActive = false;
 
 	uint lvl = 1;
 	pugi::xml_node playerNodeScene;
 
 private:
-	SDL_Texture* img;
+	SDL_Texture* img = nullptr;
 
 	GuiButton* play;
 	GuiButton* resume;
@@ -64,6 +65,8 @@ private:
 	GuiButton* back;
 	GuiSlider* musicVol;
 	GuiSlider* fxVol;
+
+	int bebasFont = -1;
 };
 
 #endif // __SCENE_H__

@@ -14,6 +14,7 @@ class Textures;
 class Audio;
 class Scene;
 class Map;
+//class Font;
 class FadeToBlack;
 class Player;
 class EntityManager;
@@ -98,6 +99,7 @@ public:
 	Audio* audio;
 	Scene* scene;
 	Map* map;
+	//Font* font;
 	FadeToBlack* fade;
 	EntityManager* entityManager;
 	Collisions* collisions;

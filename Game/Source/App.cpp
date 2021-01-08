@@ -12,6 +12,7 @@
 #include "Pathfinding.h"
 #include "Player.h"
 #include "GuiManager.h"
+//#include "Font.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -34,6 +35,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	gui = new GuiManager(true);
 	scene = new Scene();
 	map = new Map();
+	//font = new Font();
 	fade = new FadeToBlack();
 	entityManager = new EntityManager();
 	collisions = new Collisions();
@@ -48,6 +50,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(gui);
 	AddModule(scene);
 	AddModule(map);
+	//AddModule(font);
 	AddModule(pathfinding);
 	AddModule(entityManager);
 	AddModule(collisions);

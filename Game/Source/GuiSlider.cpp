@@ -52,7 +52,7 @@ bool GuiSlider::Draw()
 {
     // Draw the right button depending on state
 
-    SDL_Rect sect = { bounds.x - 1, bounds.y - 1, 300, 30 };
+    SDL_Rect sect = { bounds.x, bounds.y, 300, 30 };
     app->render->DrawRectangle(sect, 0, 255, 100, 255);
 
     switch (state)

@@ -15,6 +15,7 @@
 #include "Pathfinding.h"
 #include "GuiButton.h"
 #include "GuiSlider.h"
+#include "Font.h"
 
 Scene::Scene() : Module()
 {
@@ -99,7 +100,7 @@ bool Scene::Update(float dt)
 		quit->Update(dt);
 	}
 
-	if (settingsActive)
+	else if (settingsActive)
 	{
 		back->Update(dt);
 		musicVol->Update(dt);
@@ -126,11 +127,15 @@ bool Scene::PostUpdate(float dt)
 		quit->Draw();
 	}
 
-	if (settingsActive)
+	else if (settingsActive)
 	{
 		back->Draw();
 		musicVol->Draw();
 		fxVol->Draw();
+	}
+	else if (creditsActive)
+	{
+		app->render->DrawTexture(img, 200, 900, NULL);
 	}
 
 	return ret;
@@ -239,13 +244,14 @@ void Scene::LoadSettings()
 {
 	intro = false;
 	settingsActive = true;
+
 	musicVol = new GuiSlider(1, { 640, 150, 300, 80 }, "Music Volume");
 	musicVol->SetObserver(this);
 
 	back = new GuiButton(6, { 100, 550, 300, 80 }, "EXIT");
 	back->SetObserver(this);
 
-	app->pause = true;
+	//app->pause = true;
 	//app->entityManager->CleanUp();
 	//app->fade->FadeTo();
 	//app->map->CleanUp();
@@ -260,7 +266,7 @@ void Scene::LoadSettings()
 	}*/
 	//app->entityManager->Start();
 	//app->audio->PlayMusic("Assets/audio/music/lvl2bgm.ogg");
-	app->pause = false;
+	//app->pause = false;
 }
 
 bool Scene::OnGuiMouseClickEvent(GuiControl* control)
