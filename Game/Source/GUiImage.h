@@ -5,11 +5,10 @@
 
 class GuiImage :public GuiControl {
 public:
-	GuiImage(int pos_x, int pos_y, const SDL_Rect& r, GuiControl* parent, bool drawable = true);
+	GuiImage(int id, SDL_Rect bounds, const char* text);
 	~GuiImage();
 	void CleanUp();
-	void InnerDraw();
-	SDL_Rect dimension;
+	void Draw(Render* render);
 };
 
-#endif 
+#endif

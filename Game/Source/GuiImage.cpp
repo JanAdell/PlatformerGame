@@ -4,22 +4,24 @@
 #include "GuiControl.h"
 
 
-GuiImage::GuiImage(int pos_x, int pos_y, const SDL_Rect& r, GuiControl* parent, bool drawable) :GuiControl(GuiControlType::IMAGE, id)
+GuiImage::GuiImage(int id, SDL_Rect bounds, const char* text) :GuiControl(GuiControlType::IMAGE, id)
 {
-	
+	this->bounds = bounds;
+	this->text = text;
 }
 
 GuiImage::~GuiImage()
 {
+
 }
 
 void GuiImage::CleanUp()
 {
 
 }
-void GuiImage::InnerDraw()
+void GuiImage::Draw(Render* render)
 {
-	
+	app->render->DrawRectangle(bounds, 0, 255, 0, 255);
 
 }
 #pragma once

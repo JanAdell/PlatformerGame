@@ -40,13 +40,15 @@ bool Player::Start()
 	cont = 0;
 	hp = 3;
 	ammo = 10;
+	life1 = new GuiImage(80, { 150, 150, 300, 80 }, "LIFE1");
+
 	return true;
 }
 
 void Player::PreUpdate(float dt)
 {
 	currentAnim = &idleAnim;
-	
+		
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		flip = SDL_FLIP_HORIZONTAL;
 		speed.x = -moveSpeed;
