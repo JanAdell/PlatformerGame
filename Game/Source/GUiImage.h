@@ -12,4 +12,4 @@ public:
 	SDL_Rect dimension;
 };
 
-#endif#pragma once
+#endif 
