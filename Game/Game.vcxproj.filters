@@ -32,6 +32,7 @@
     <ClCompile Include="Source\GuiManager.cpp" />
     <ClCompile Include="Source\GuiSlider.cpp" />
     <ClCompile Include="Source\Font.cpp" />
+    <ClCompile Include="Source\GuiImage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -88,6 +89,7 @@
     <ClInclude Include="Source\PQueue.h" />
     <ClInclude Include="Source\Queue.h" />
     <ClInclude Include="Source\GuiManager.h" />
+    <ClInclude Include="Source\GUiImage.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
