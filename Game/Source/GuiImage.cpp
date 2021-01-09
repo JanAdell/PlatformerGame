@@ -15,13 +15,15 @@ GuiImage::~GuiImage()
 
 }
 
-void GuiImage::CleanUp()
+bool GuiImage::CleanUp()
 {
-
+	return false;
 }
-void GuiImage::Draw(Render* render)
+
+bool GuiImage::Draw() const
 {
 	app->render->DrawRectangle(bounds, 0, 255, 0, 255);
 
+	return false;
 }
 #pragma once

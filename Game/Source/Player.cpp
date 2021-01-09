@@ -12,6 +12,7 @@
 #include "Audio.h"
 #include "Entity.h"
 #include "EntityManager.h"
+#include "GuiManager.h"
 
 #include "Map.h"
 #include "SString.h"
@@ -40,7 +41,7 @@ bool Player::Start()
 	cont = 0;
 	hp = 3;
 	ammo = 10;
-	life1 = new GuiImage(80, { 150, 150, 300, 80 }, "LIFE1");
+	app->gui->CreateGuiControl(GuiControlType::IMAGE, 80, { int(position.x), int(position.y), 300, 80 }, "LIFE1");
 
 	return true;
 }

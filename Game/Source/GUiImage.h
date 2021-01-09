@@ -7,8 +7,8 @@ class GuiImage :public GuiControl {
 public:
 	GuiImage(int id, SDL_Rect bounds, const char* text);
 	~GuiImage();
-	void CleanUp();
-	void Draw(Render* render);
+	bool CleanUp();
+	bool Draw() const override;
 };
 
 #endif
