@@ -46,6 +46,7 @@ public:
 	bool Save(pugi::xml_node&) const;
 	bool GoRight();
 	void OnCollision(Collider* c1, Collider* c2);
+	void AmmoUpdate();
 		
 	fPoint GetPos() const;
 	fPoint GetSpeed() const;
