@@ -16,6 +16,9 @@ public:
     bool Update(float dt);
     bool Draw();
 
+    bool hover = true;
+    bool click = true;
+
 private:
 
     // GuiSlider specific properties
@@ -25,6 +28,9 @@ private:
 
     int minValue;
     int maxValue;
+
+    int clickFx;
+    int hoverFx;
 };
 
 #endif // __GUISLIDER_H__
