@@ -1,6 +1,6 @@
 #include "GuiManager.h"
 #include "GuiButton.h"
-#include "GuiImage.h"
+
 
 GuiManager::GuiManager(bool startEnabled) : Module()
 {
@@ -20,9 +20,7 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, SDL_Rect r
 	case GuiControlType::BUTTON:
 		control = new GuiButton(id, rect, text);
 		break;
-	case GuiControlType::IMAGE:
-		control = new GuiImage(id, rect, text);
-		break;
+	
 	default:
 		break;
 	}

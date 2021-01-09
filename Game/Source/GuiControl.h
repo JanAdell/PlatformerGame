@@ -55,7 +55,7 @@ public:
         return true;
     }
 
-    virtual bool Draw() const
+    virtual bool Draw() 
     {
         return true;
     }

@@ -123,7 +123,6 @@
     </Health>
 
     <Ammo>
-      <folder path="Assets/textures/hp.png" />
       <animation name="ammoAnim" speed="0.3f" loop="true">
         <frame x="0" y="-31" w="13" h="22"/>
         <frame x="-14" y="-31" w="13" h="22"/>

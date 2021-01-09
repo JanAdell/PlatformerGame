@@ -4,7 +4,7 @@
 #include "Animation.h"
 #include "Entity.h"
 #include "Collisions.h"
-#include "GuiImage.h"
+
 
 
 //#pragma comment(lib, "SDL_mixer/libx86/SDL2_mixer.lib")
@@ -56,9 +56,11 @@ public:
 	float hitCd;
 	
 	SDL_Rect* rect = nullptr;
-	GuiImage* lifeImage = nullptr;
-	GuiImage* ammoImage = nullptr;
-		
+	SDL_Texture* hpTex = nullptr;
+	SDL_Texture* ammoTex = nullptr;
+
+	Animation lifeAnim;
+	Animation ammoAnim;
 
 private:
 	float moveSpeed = 20;

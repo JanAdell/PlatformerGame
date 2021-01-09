@@ -25,6 +25,20 @@ Player::Player(const fPoint& position) : Entity(position, "player", EntityType::
 	name.create("player");
 	
 	AwakeEntity(entNode);
+
+	lifeAnim.PushBack({ 0,0,48,48 });
+
+	ammoAnim.PushBack({ 0,31,13,22 });
+	ammoAnim.PushBack({ 14,31,13,22 });
+	ammoAnim.PushBack({ 28,31,13,22 });
+	ammoAnim.PushBack({ 42,31,13,22 });
+	ammoAnim.PushBack({ 56,31,13,22 });
+	ammoAnim.PushBack({ 70,31,13,22 });
+	ammoAnim.PushBack({ 84,31,13,22 });
+	ammoAnim.PushBack({ 98,31,13,22 });
+	ammoAnim.PushBack({ 112,31,13,22 });
+	ammoAnim.PushBack({ 126,31,13,22 });
+	ammoAnim.speed = 0.02f;
 }
 
 Player::~Player()
@@ -38,18 +52,14 @@ bool Player::Start()
 	characterTex = app->tex->Load("Assets/textures/player.png");
 	checkpointFx = app->audio->LoadFx("Assets/audio/fx/checkpoint.ogg");
 	collider = app->collisions->AddCollider({ (int)position.x, (int)position.y ,size.x ,size.y }, ColliderType::COLLIDER_PLAYER, (Module*)app->entityManager);
+
+	
 	cont = 0;
 	hp = 3;
 	ammo = 10;
 	
-
-	for (int i = 0; i < 3; i++) {
-		lifeImage = dynamic_cast<GuiImage*>(app->gui->CreateGuiControl(GuiControlType::IMAGE, 80, { 150 + 50*i, 200, 20, 20 }, "LIFE"));
-	}
-	for (int i = 0; i < 10; i++) {
-		ammoImage = dynamic_cast<GuiImage*>(app->gui->CreateGuiControl(GuiControlType::IMAGE, 80, { 150 + 20 * i, 230, 10, 20 }, "AMMO"));
-	}
-
+	ammoTex = app->tex->Load("Assets/textures/hp.png");
+	hpTex = app->tex->Load("Assets/textures/portrait.png");
 
 	return true;
 }
@@ -57,7 +67,8 @@ bool Player::Start()
 void Player::PreUpdate(float dt)
 {
 	currentAnim = &idleAnim;
-		
+	
+
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		flip = SDL_FLIP_HORIZONTAL;
 		speed.x = -moveSpeed;
@@ -326,17 +337,138 @@ void Player::Update(float dt)
 	
 	speed.x = 0;
 
+	if (hp == 3)
+	{
+		app->render->DrawTexture(hpTex, -app->render->camera.x, -app->render->camera.y, &(lifeAnim.GetCurrentFrame()));
+		app->render->DrawTexture(hpTex, -app->render->camera.x + 50, -app->render->camera.y, &(lifeAnim.GetCurrentFrame()));
+		app->render->DrawTexture(hpTex, -app->render->camera.x + 100, -app->render->camera.y, &(lifeAnim.GetCurrentFrame()));
+	}
+	if (hp == 2)
+	{
+		app->render->DrawTexture(hpTex, -app->render->camera.x, -app->render->camera.y, &(lifeAnim.GetCurrentFrame()));
+		app->render->DrawTexture(hpTex, -app->render->camera.x + 50, -app->render->camera.y, &(lifeAnim.GetCurrentFrame()));
+		
+	}
+	if (hp == 1)
+	{
+		app->render->DrawTexture(hpTex, -app->render->camera.x, -app->render->camera.y, &(lifeAnim.GetCurrentFrame()));
+	}
+
+	if (ammo == 10)
+	{
+		app->render->DrawTexture(ammoTex, -app->render->camera.x, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 20, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 40, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 60, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 80, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 100, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 120, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 140, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 160, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 180, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		
+	}
+
+	//app->render->CameraPos()
+
+	if (ammo == 9)
+	{
+		app->render->DrawTexture(ammoTex,-app->render->camera.x, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex,-app->render->camera.x + 20, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex,-app->render->camera.x + 40, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex,-app->render->camera.x + 60, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex,-app->render->camera.x + 80, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex,-app->render->camera.x + 100, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex,-app->render->camera.x + 120, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex,-app->render->camera.x + 140, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex,-app->render->camera.x + 160, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+																	   
+	}
+	if (ammo == 8)
+	{
+		app->render->DrawTexture(ammoTex,-app->render->camera.x, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex,-app->render->camera.x + 20, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex,-app->render->camera.x + 40, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex,-app->render->camera.x + 60, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex,-app->render->camera.x + 80, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex,-app->render->camera.x + 100, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex,-app->render->camera.x + 120, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex,-app->render->camera.x + 140, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+
+	}
+	if (ammo == 7)
+	{
+		app->render->DrawTexture(ammoTex, -app->render->camera.x, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 20, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 40, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 60, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 80, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 100, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 120, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		
+	}
+	if (ammo == 6)
+	{
+		app->render->DrawTexture(ammoTex, -app->render->camera.x, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 20, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 40, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 60, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 80, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 100, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		
+	}
+	if (ammo == 5)
+	{
+		app->render->DrawTexture(ammoTex, -app->render->camera.x, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 20, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 40, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 60, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 80, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		
+	}
+	if (ammo == 4)
+	{
+		app->render->DrawTexture(ammoTex, -app->render->camera.x, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 20, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 40, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 60, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		
+	}
+	if (ammo == 3)
+	{
+		app->render->DrawTexture(ammoTex, -app->render->camera.x, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 20, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 40, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		
+	}
+	if (ammo == 2)
+	{
+		app->render->DrawTexture(ammoTex, -app->render->camera.x, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		app->render->DrawTexture(ammoTex, -app->render->camera.x + 20, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+		
 	
+	}
+	if (ammo == 1)
+	{
+		app->render->DrawTexture(ammoTex, -app->render->camera.x, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
+				
+	}
+	
+	
+
 }
 
 void Player::PostUpdate(float dt)
 {
-			
+	
 }
 
 void Player::CleanUp()
 {
 	app->tex->UnLoad(characterTex);
+	app->tex->UnLoad(ammoTex);
+	app->tex->UnLoad(hpTex);
+
 	if(collider != nullptr)
 		collider->toDelete = true;
 		
