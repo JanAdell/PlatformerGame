@@ -1,5 +1,6 @@
 #include "GuiCheckBox.h"
 #include "Window.h"
+#include "Audio.h"
 
 GuiCheckBox::GuiCheckBox(int id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::CHECKBOX, id)
 {
@@ -58,14 +59,33 @@ bool GuiCheckBox::Draw()
     } break;
     case GuiControlState::NORMAL: 
     {
+        hover = true;
+        click = true;
         if (checked) app->render->DrawRectangle(bounds, 0, 255, 0, 255);
         else app->render->DrawRectangle(bounds, 0, 255, 0, 255);
     } break;
-    case GuiControlState::FOCUSED:app->render->DrawRectangle(bounds, 255, 255, 0, 255);
+    case GuiControlState::FOCUSED:
+        app->render->DrawRectangle(bounds, 255, 255, 0, 255);
+        click = true;
+        if (hover == true)
+        {
+            app->audio->PlayFx(hoverFx);
+            hover = false;
+        }
         break;
-    case GuiControlState::PRESSED: app->render->DrawRectangle(bounds, 0, 255, 255, 255);
+    case GuiControlState::PRESSED: 
+        app->render->DrawRectangle(bounds, 0, 255, 255, 255);
+        hover = true;
+        if (click == true)
+        {
+            app->audio->PlayFx(clickFx);
+            click = false;
+        }
         break;
-    case GuiControlState::SELECTED: app->render->DrawRectangle(bounds, 0, 255, 0, 255);
+    case GuiControlState::SELECTED: 
+        app->render->DrawRectangle(bounds, 0, 255, 0, 255);
+        hover = true;
+        click = true;
         break;
     default:
         break;

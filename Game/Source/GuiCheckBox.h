@@ -16,11 +16,16 @@ public:
     bool Update(float dt);
     bool Draw();
 
+    bool hover = true;
+    bool click = true;
 private:
 
     // GuiCheckBox specific properties
     // Maybe some animation properties for state change?
     bool checked;
+
+    int clickFx;
+    int hoverFx;
 };
 
 #endif // __GUICHECKBOX_H__
