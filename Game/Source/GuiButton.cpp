@@ -1,10 +1,15 @@
 #include "GuiButton.h"
 #include "Window.h"
+#include "Audio.h"
+
+#include "Log.h"
 
 GuiButton::GuiButton(int id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::BUTTON, id)
 {
     this->bounds = bounds;
     this->text = text;
+    hoverFx = app->audio->LoadFx("Assets/audio/fx/hover.ogg");
+    clickFx = app->audio->LoadFx("Assets/audio/fx/checkpoint.ogg");
 }
 
 GuiButton::~GuiButton()
@@ -52,13 +57,34 @@ bool GuiButton::Draw()
     {
     case GuiControlState::DISABLED: app->render->DrawRectangle(bounds, 100, 100, 100, 255);
         break;
-    case GuiControlState::NORMAL: app->render->DrawRectangle(bounds, 0, 255, 0, 255);
+    case GuiControlState::NORMAL: 
+        app->render->DrawRectangle(bounds, 0, 255, 0, 255);
+        hover = true;
+        click = true;
         break;
-    case GuiControlState::FOCUSED: app->render->DrawRectangle(bounds, 255, 255, 0, 255);
+    case GuiControlState::FOCUSED:
+        app->render->DrawRectangle(bounds, 255, 255, 0, 255);
+        click = true;
+        if (hover == true)
+        {
+            app->audio->PlayFx(hoverFx);
+            LOG("hovering");
+            hover = false;
+        }
         break;
-    case GuiControlState::PRESSED: app->render->DrawRectangle(bounds, 0, 255, 255, 255);
+    case GuiControlState::PRESSED: 
+        app->render->DrawRectangle(bounds, 0, 255, 255, 255);
+        hover = true;
+        if (click == true) 
+        { 
+            app->audio->PlayFx(clickFx);
+            click = false;
+        }
         break;
-    case GuiControlState::SELECTED: app->render->DrawRectangle(bounds, 0, 255, 0, 255);
+    case GuiControlState::SELECTED: 
+        app->render->DrawRectangle(bounds, 0, 255, 0, 255);
+        hover = true;
+        click = true;
         break;
     default:
         break;

@@ -15,11 +15,17 @@ public:
 
     bool Update(float dt);
     bool Draw();
+    bool hover = true;
+    bool click = true;
 
 private:
 
     // Gui Button specific properties
     // Maybe some animation properties for state change?
+
+    int clickFx;
+    int hoverFx;
+    
 };
 
 #endif // __GUIBUTTON_H__

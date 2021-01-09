@@ -41,6 +41,7 @@ bool Scene::Start()
 {
 	app->win->SetTitle("Platformer Game: Charged v0.1");
 	LoadIntro();
+	LoadSettings();
 
 	return true;
 }
@@ -101,12 +102,14 @@ bool Scene::Update(float dt)
 		quit->Update(dt);
 	}
 
-	else if (settingsActive)
+	else if (settingsActive && intro == false)
 	{
+		//LoadSettings();
 		back->Update(dt);
 		musicVol->Update(dt);
 		fxVol->Update(dt);
-		fullscreen->Update(dt);
+		//fullscreen->Update(dt);
+		//vsync->Update(dt);
 	}
 
 	return true;
@@ -129,12 +132,13 @@ bool Scene::PostUpdate(float dt)
 		quit->Draw();
 	}
 
-	else if (settingsActive)
+	else if (settingsActive && intro == false)
 	{
 		back->Draw();
 		musicVol->Draw();
 		fxVol->Draw();
-		fullscreen->Draw();
+		//fullscreen->Draw();
+		//vsync->Draw();
 	}
 	else if (creditsActive)
 	{
@@ -254,11 +258,11 @@ void Scene::LoadSettings()
 	back = new GuiButton(6, { 640, 550, 300, 80 }, "Exit");
 	back->SetObserver(this);
 
-	fullscreen = new GuiCheckBox(1, { 10, 10, 300, 80 }, "Fullscreen");
+	/*fullscreen = new GuiCheckBox(1, { 10, 10, 300, 80 }, "Fullscreen");
 	fullscreen->SetObserver(this);
 
 	vsync = new GuiCheckBox(2, { 640, 550, 300, 80 }, "Vsync");
-	vsync->SetObserver(this);
+	vsync->SetObserver(this);*/
 }
 
 bool Scene::OnGuiMouseClickEvent(GuiControl* control)
@@ -274,8 +278,8 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		else if (control->id == 3)
 		{
 			settingsActive;
-			//intro = false;
-			LoadSettings();
+			intro = false;
+			//LoadSettings();
 		}
 		//else if (control->id == 4)
 		//else if (control->id == 5)
@@ -306,11 +310,22 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		}
 		*/
 		break;
+
 	}
 
 	return true;
 	}
 }
+
+/*bool Scene::OnGuiMouseHoverEvent(GuiControl* control)
+{
+	switch (control->state)
+	{
+	case GuiControlState::FOCUSED:
+		app->audio->PlayFx(clickFx);
+		break;
+	}
+}*/
 
 
 
