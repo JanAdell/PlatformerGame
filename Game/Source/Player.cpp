@@ -41,7 +41,15 @@ bool Player::Start()
 	cont = 0;
 	hp = 3;
 	ammo = 10;
-	app->gui->CreateGuiControl(GuiControlType::IMAGE, 80, { int(position.x), int(position.y), 300, 80 }, "LIFE1");
+	
+
+	for (int i = 0; i < 3; i++) {
+		lifeImage = dynamic_cast<GuiImage*>(app->gui->CreateGuiControl(GuiControlType::IMAGE, 80, { 150 + 50*i, 200, 20, 20 }, "LIFE"));
+	}
+	for (int i = 0; i < 10; i++) {
+		ammoImage = dynamic_cast<GuiImage*>(app->gui->CreateGuiControl(GuiControlType::IMAGE, 80, { 150 + 20 * i, 230, 10, 20 }, "AMMO"));
+	}
+
 
 	return true;
 }
