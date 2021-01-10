@@ -389,6 +389,8 @@ bool Player::Load(pugi::xml_node& data)
 
 	position.x = data.child("position").attribute("x").as_int();
 	position.y = data.child("position").attribute("y").as_int();
+	hp = data.child("position").attribute("hp").as_int();
+	ammo = data.child("position").attribute("ammo").as_int();
 	LOG("%f", position.x);
 	LOG("%f", position.y);
 
@@ -401,6 +403,8 @@ bool Player::Save(pugi::xml_node& data) const
 
 	data.append_child("position").append_attribute("x") = position.x;
 	data.child("position").append_attribute("y") = position.y;
+	data.child("position").append_attribute("hp") = hp;
+	data.child("position").append_attribute("ammo") = ammo;
 
 	return ret;
 }
