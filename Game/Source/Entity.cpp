@@ -65,6 +65,8 @@ void Entity::Draw()
 	
 }
 
+
+
 void Entity::AwakeEntity(pugi::xml_node& playerNode)
 {
 	size.x = playerNode.child("positionLvl1").attribute("w").as_int();

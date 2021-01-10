@@ -13,6 +13,8 @@ public:
 	void Update(float dt) override;
 	void Draw()override;
 	void CleanUp();
+	bool Save(pugi::xml_node& node) const;
+	bool Load(pugi::xml_node& node);
 	virtual void OnCollision(Collider* c1, Collider* c2)override;
 
 

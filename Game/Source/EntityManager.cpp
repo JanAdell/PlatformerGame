@@ -156,6 +156,11 @@ bool EntityManager::Load(pugi::xml_node& file)
 		Entity* ent = CreateEntity(fPoint(enemy_stats.attribute("position_x").as_float(), enemy_stats.attribute("position_y").as_float()), EntityType(enemy_stats.attribute("type").as_int()));
 		ent->Start();
 	}
+	for (pugi::xml_node pickup_stats = file.child("pickup_stats"); pickup_stats != nullptr; pickup_stats = pickup_stats.next_sibling("pickup_stats"))
+	{
+		Entity* ent = CreateEntity(fPoint(pickup_stats.attribute("position_x").as_float(), pickup_stats.attribute("position_y").as_float()), EntityType(pickup_stats.attribute("type").as_int()));
+		ent->Start();
+	}
 	return ret;
 }
 

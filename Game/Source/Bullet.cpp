@@ -9,7 +9,7 @@ Bullet::Bullet(const fPoint position) : Entity(position, "Bullet", EntityType::B
 	name.create("Bullet");
 	AwakeEntity(entNode);
 	characterTex = app->tex->Load("Assets/textures/shot.png");
-	collider = app->collisions->AddCollider({ (int)position.x + offset.x,(int)position.y + offset.y, size.x, size.y }, ColliderType::COLLIDER_BULLET, (Module*)app->entityManager);
+	collider = app->collisions->AddCollider({ (int)position.x + offset.x,(int)position.y + offset.y, size.x, size.y + 10 }, ColliderType::COLLIDER_BULLET, (Module*)app->entityManager);
 	goRight = dynamic_cast<Player*>(app->entityManager->player)->GoRight();
 	currentAnim = &bulletFly;
 }

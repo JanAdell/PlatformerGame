@@ -44,6 +44,21 @@ void Pickup::CleanUp()
 	currentAnim = nullptr;
 }
 
+bool Pickup::Save(pugi::xml_node& node) const
+{
+	pugi::xml_node pickup_stats = node.append_child("pickup_stats");
+	pickup_stats.append_attribute("gravity") = (float)gravity;
+	pickup_stats.append_attribute("type") = (int)type;
+	pickup_stats.append_attribute("position_x") = (int)position.x;
+	pickup_stats.append_attribute("position_y") = (int)position.y;
+	return true;
+}
+
+bool Pickup::Load(pugi::xml_node& node)
+{
+	return true;
+}
+
 void Pickup::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c1->type == ColliderType::COLLIDER_PLAYER || c2->type == ColliderType::COLLIDER_PLAYER)

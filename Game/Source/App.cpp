@@ -223,9 +223,9 @@ void App::FinishUpdate()
 	static char title[256];
 
 	if (capFps)
-		sprintf_s(title, 256, "FPS %i | Average FPS: %.2f | Last Frame MS: %02u | Cap ON | VSync OFF | HP: %i | Ammo: %i", framesSinceLastUpdate, averageFrames, lastMsInFrames);
+		sprintf_s(title, 256, "FPS %i | Average FPS: %.2f | Last Frame MS: %02u | Cap ON | VSync OFF | ", framesSinceLastUpdate, averageFrames, lastMsInFrames);
 	else
-		sprintf_s(title, 256, "FPS %i | Average FPS: %.2f | Last Frame MS: %02u | Cap OFF | VSync OFF | HP: %i | Ammo: %i", framesSinceLastUpdate, averageFrames, lastMsInFrames);
+		sprintf_s(title, 256, "FPS %i | Average FPS: %.2f | Last Frame MS: %02u | Cap OFF | VSync OFF | ", framesSinceLastUpdate, averageFrames, lastMsInFrames);
 
 	win->SetTitle(title);
 
