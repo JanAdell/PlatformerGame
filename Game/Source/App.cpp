@@ -223,7 +223,7 @@ void App::FinishUpdate()
 	static char title[256];
 
 	if (capFps)
-		sprintf_s(title, 256, "FPS %i | Average FPS: %.2f | Last Frame MS: %02u | Cap ON | VSync OFF | ", framesSinceLastUpdate, averageFrames, lastMsInFrames);
+		sprintf_s(title, 256, "FPS %i | Average FPS: %.2f | Last Frame MS: %02u | Cap ON | VSync ON | ", framesSinceLastUpdate, averageFrames, lastMsInFrames);
 	else
 		sprintf_s(title, 256, "FPS %i | Average FPS: %.2f | Last Frame MS: %02u | Cap OFF | VSync OFF | ", framesSinceLastUpdate, averageFrames, lastMsInFrames);
 

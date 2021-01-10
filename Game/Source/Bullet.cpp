@@ -51,4 +51,10 @@ void Bullet::CleanUp()
 
 void Bullet::OnCollision(Collider* c1, Collider* c2)
 {
+	if (c1->type == ColliderType::COLLIDER || c2->type == ColliderType::COLLIDER)
+	{
+		collider->toDelete;
+		toDelete = true;
+
+	}
 }

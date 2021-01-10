@@ -62,7 +62,7 @@ bool GuiSlider::Draw()
 {
     SDL_Rect rect = { sliderBounds.x - 15, sliderBounds.y - 1, 300, 30 };
     
-    app->render->DrawRectangle({ rect.x - 50, rect.y,rect.w,rect.h}, 255, 105, 180, 255);
+    app->render->DrawRectangle({ rect.x - app->render->camera.x, rect.y - app->render->camera.y ,rect.w,rect.h }, 255, 105, 180, 255);
       
 
     switch (state)
@@ -99,11 +99,11 @@ void GuiSlider::ChangeSliderValue()
     else if (this->value <= 5) 
         this->value = 0;
 
-   if (bounds.x >= 840) 
-       bounds.x = 840;
+   if (bounds.x >= 770) 
+       bounds.x = 770;
 
-   if (bounds.x <= 580) 
-       bounds.x = 580;
+   if (bounds.x <= 550) 
+       bounds.x = 550;
 }
 
 int GuiSlider::ReturnValue() const
