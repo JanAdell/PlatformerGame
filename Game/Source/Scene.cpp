@@ -46,6 +46,7 @@ bool Scene::Start()
 
 	
 	sprintf_s(playButton, 64, "PLAY");
+	sprintf_s(continueButton, 64, "CONTINUE");
 	sprintf_s(resumeButton, 64, "RESUME");
 	sprintf_s(settingsButton, 64, "SETTINGS");
 	sprintf_s(creditsButton, 64, "CREDITS");
@@ -55,6 +56,7 @@ bool Scene::Start()
 	sprintf_s(musicVolButton, 64, "Music Volume");
 	sprintf_s(sfxVolButton, 64, "Sound Eeffects Volume");
 	sprintf_s(backButton, 64, "BACK");
+	sprintf_s(returnButton, 64, "Main Menu");
 	
 	return true;
 }
@@ -250,13 +252,13 @@ void Scene::LoadGUI()
 	back->SetObserver(this);
 
 	//------------ PAUSE ---------------
-	unpause = new GuiButton(7, { 640, 295, 200, 50 }, "Start");
+	unpause = new GuiButton(7, { 540, 295, 200, 50 }, "Start");
 	unpause->SetObserver(this);
 
-	settingsPause = new GuiButton(8, { 640, 365, 200, 50 }, "Resume");
+	settingsPause = new GuiButton(8, { 540, 365, 200, 50 }, "Resume");
 	settingsPause->SetObserver(this);
 
-	backTitle = new GuiButton(9, { 640, 435, 200, 50 }, "Settings");
+	backTitle = new GuiButton(9, { 540, 435, 200, 50 }, "Settings");
 	backTitle->SetObserver(this);
 	
 }
@@ -296,11 +298,11 @@ void Scene::DrawMenu()
 	play->Draw();
 	app->render->DrawText(uiFont, playButton, 695, 300, 40, 0, { 0, 0, 0, 255 });
 	resume->Draw();
-	app->render->DrawText(uiFont, resumeButton, 670, 370, 40, 0, { 0, 0, 0, 255 });
+	app->render->DrawText(uiFont, continueButton, 670, 370, 40, 0, { 0, 0, 0, 255 });
 	settings->Draw();
 	app->render->DrawText(uiFont, settingsButton, 670, 440, 40, 0, { 0, 0, 0, 255 });
 	credits->Draw();
-	app->render->DrawText(uiFont, creditsButton, 670, 510, 40, 0, { 0, 0, 0, 255 });
+	app->render->DrawText(uiFont, creditsButton, 660, 510, 40, 0, { 0, 0, 0, 255 });
 	quit->Draw();
 	app->render->DrawText(uiFont, exitButton, 700, 580, 40, 0, { 0, 0, 0, 255 });
 }
@@ -342,7 +344,7 @@ void Scene::DrawPauseSettings()
 	backPause->Draw();
 	app->render->DrawText(uiFont, backButton, 700, 580, 40, 0, { 0, 0, 0, 255 });
 	musicVol->Draw();
-	app->render->DrawText(uiFont, musicVolButton, 580, 260, 40, 0, { 255, 255, 255, 255 });
+	app->render->DrawText(uiFont, musicVolButton, 580,  260, 40, 0, { 255, 255, 255, 255 });
 	fxVol->Draw();
 	app->render->DrawText(uiFont, sfxVolButton, 580, 330, 40, 0, { 255, 255, 255, 255 });
 	fullscreen->Draw();
@@ -357,14 +359,19 @@ void Scene::UpdatePause(float dt)
 	settingsPause->Update(dt);
 	backTitle->Update(dt);
 	quit->Update(dt);
+	
 }
 
 void Scene::DrawPause()
 {
 	unpause->Draw();
+	app->render->DrawText(uiFont, resumeButton, 570, 300, 40, 0, { 0, 0, 0, 255 });
 	settingsPause->Draw();
+	app->render->DrawText(uiFont, settingsButton, 570, 370, 40, 0, { 0, 0, 0, 255 });
 	backTitle->Draw();
+	app->render->DrawText(uiFont, returnButton, 560, 440, 40, 0, { 0, 0, 0, 255 });
 	quit->Draw();
+	app->render->DrawText(uiFont, exitButton, 700, 580, 40, 0, { 0, 0, 0, 255 });
 }
 
 void Scene::UpdateCredits(float dt)
@@ -385,7 +392,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	case GuiControlType::BUTTON:
 	{
 		if (control->id == 1) LoadLevel1();												//play
-		else if (control->id == 2) LoadLevel2();										//resume
+		else if (control->id == 2) app->LoadGame();										//resume
 		else if (control->id == 3) { settingsActive = true; intro = false; }			//settings
 		else if (control->id == 4) { creditsActive = true; intro = false; }				//credits
 		else if (control->id == 5) playing = false;										//quit

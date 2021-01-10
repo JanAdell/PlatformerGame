@@ -397,6 +397,7 @@ bool App::LoadGameNow()
 	}
 	else
 		LOG("Could not parse game state xml file %s. pugi error: %s", loadGame.GetString(), result.description());
+		
 	loadRequest = false;
 	return ret;
 }
@@ -423,11 +424,15 @@ bool App::SaveGameNow() const
 
 	if (ret == true)
 	{
+		//saveExists = !saveExists;
 		data.save_file("save.xml");
 		LOG("... finished saving", );
 	}
 	else
+	{
+		//saveExists = false;
 		LOG("Save process halted from an error in module %s", (item != NULL) ? item->data->name.GetString() : "unknown");
+	}
 	data.reset();
 	saveRequest = false;
 	return ret;

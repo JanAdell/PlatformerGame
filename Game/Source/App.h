@@ -108,6 +108,7 @@ public:
 
 	bool godMode = false;
 	bool pause = false;
+	bool saveExists = false;
 	float dtMove;
 	
 

@@ -108,6 +108,7 @@ private:
 	char sfxVolButton[64] = { 0 };
 	char musicVolButton[64] = { 0 };
 	char backButton[64] = { 0 };
+	char returnButton[64] = { 0 };
 };
 
 #endif // __SCENE_H__
