@@ -84,7 +84,7 @@ private:
 	
 	
 	Font* font;
-	Textures* tex;
+	
 
 	//ingame timer vars
 	

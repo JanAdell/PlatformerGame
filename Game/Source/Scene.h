@@ -82,6 +82,19 @@ private:
 	
 	int squarifiedFont = -1;
 	bool playing = true;
+
+	Font* uiFont;
+	char playButton[64] = { 0 };
+	char continueButton[64] = { 0 };
+	char resumeButton[64] = { 0 };
+	char settingsButton[64] = { 0 };
+	char creditsButton[64] = { 0 };
+	char exitButton[64] = { 0 };
+	char fullscreenButton[64] = { 0 };
+	char vsyncButton[64] = { 0 };
+	char sfxVolButton[64] = { 0 };
+	char musicVolButton[64] = { 0 };
+	char backButton[64] = { 0 };
 };
 
 #endif // __SCENE_H__

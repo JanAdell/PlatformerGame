@@ -42,7 +42,20 @@ bool Scene::Start()
 	app->win->SetTitle("Platformer Game: Charged v0.1");
 	LoadIntro();
 	LoadGUI();
+	uiFont = new Font("Assets/Fonts/Squarified.xml", app->tex);
 
+	
+	sprintf_s(playButton, 64, "PLAY");
+	sprintf_s(resumeButton, 64, "RESUME");
+	sprintf_s(settingsButton, 64, "SETTINGS");
+	sprintf_s(creditsButton, 64, "CREDITS");
+	sprintf_s(exitButton, 64, "EXIT");
+	sprintf_s(fullscreenButton, 64, "FullScreen");
+	sprintf_s(vsyncButton, 64, "VSYNC");
+	sprintf_s(musicVolButton, 64, "Music Volume");
+	sprintf_s(sfxVolButton, 64, "Sound Eeffects Volume");
+	sprintf_s(backButton, 64, "BACK");
+	
 	return true;
 }
 
@@ -262,10 +275,15 @@ void Scene::UpdateMenu(float dt)
 void Scene::DrawMenu()
 {
 	play->Draw();
+	app->render->DrawText(uiFont, playButton, 695, 300, 40, 0, { 0, 0, 0, 255 });
 	resume->Draw();
+	app->render->DrawText(uiFont, resumeButton, 670, 370, 40, 0, { 0, 0, 0, 255 });
 	settings->Draw();
+	app->render->DrawText(uiFont, settingsButton, 670, 440, 40, 0, { 0, 0, 0, 255 });
 	credits->Draw();
+	app->render->DrawText(uiFont, creditsButton, 670, 510, 40, 0, { 0, 0, 0, 255 });
 	quit->Draw();
+	app->render->DrawText(uiFont, exitButton, 700, 580, 40, 0, { 0, 0, 0, 255 });
 }
 
 void Scene::UpdateSettings(float dt)
@@ -280,10 +298,15 @@ void Scene::UpdateSettings(float dt)
 void Scene::DrawSettings()
 {
 	back->Draw();
+	app->render->DrawText(uiFont, backButton, 700, 580, 40, 0, { 0, 0, 0, 255 });
 	musicVol->Draw();
+	app->render->DrawText(uiFont, musicVolButton, 580, 260, 40, 0, { 255, 255, 255, 255 });
 	fxVol->Draw();
+	app->render->DrawText(uiFont, sfxVolButton, 580, 330, 40, 0, { 255, 255, 255, 255 });
 	fullscreen->Draw();
+	app->render->DrawText(uiFont, fullscreenButton, 610, 440, 40, 0, { 255, 255, 255, 255 });
 	vsync->Draw();
+	app->render->DrawText(uiFont, vsyncButton, 610, 510, 40, 0, { 255, 255, 255, 255 });
 }
 
 void Scene::UpdateCredits(float dt)
