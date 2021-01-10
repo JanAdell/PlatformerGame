@@ -83,98 +83,101 @@ bool Player::Start()
 
 void Player::PreUpdate(float dt)
 {
-	currentAnim = &idleAnim;
-	
-
-
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		flip = SDL_FLIP_HORIZONTAL;
-		speed.x = -moveSpeed;
-		currentAnim = &runAnim;
-		app->pause = false;
-		lastMove = false;
-	}
-	else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_UP) {
-		currentAnim = &runAnim;
-		speed.x = 0;
-		app->pause = false;
-			
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_S)== KEY_REPEAT && !app->godMode)
+	if (app->scene->pauseGame == false)
 	{
-		currentAnim = &duckAnim;
-		app->pause = false;
-		
-	}
-	
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		flip = SDL_FLIP_NONE;
-		speed.x = moveSpeed;
-		currentAnim = &runAnim;
-		app->pause = false;
-		lastMove = true;
-	}
-	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP) {
-		speed.x = 0;
-		app->pause = false;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && app->godMode)
-	{
-		position.y -= 5;
-		app->pause = false;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && app->godMode)
-	{
-		position.y += 5;
-		app->pause = false;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && state != JUMPING && doubleJump == true)
-	{
-		speed.y = -40;
-		app->pause = false;
-		cont++;
-		state = JUMPING;
-		
-		
-		if (cont == 2) {
-			doubleJump = false;
-			
-			cont = 0;
-		}
-	}
-	
-	if (app->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
-	{
-		hp--;
-		if (hp==0)
+		if (app->scene->pauseGame == false)
 		{
-			currentAnim = &deathAnim;
-			state = DEAD;
-			hp = 3;
-		}
-		LOG("hp: %i", hp);
-	}
+			currentAnim = &idleAnim;
 
-	if (app->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && ammo > 0)
-	{
-		app->entityManager->CreateEntity({ position.x, position.y + 10 }, EntityType::BULLET);
-		ammo--;
+			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+				flip = SDL_FLIP_HORIZONTAL;
+				speed.x = -moveSpeed;
+				currentAnim = &runAnim;
+				app->pause = false;
+				lastMove = false;
+			}
+			else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_UP) {
+				currentAnim = &runAnim;
+				speed.x = 0;
+				app->pause = false;
+
+			}
+
+			if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && !app->godMode)
+			{
+				currentAnim = &duckAnim;
+				app->pause = false;
+
+			}
+
+			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+				flip = SDL_FLIP_NONE;
+				speed.x = moveSpeed;
+				currentAnim = &runAnim;
+				app->pause = false;
+				lastMove = true;
+			}
+			else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP) {
+				speed.x = 0;
+				app->pause = false;
+			}
+
+			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && app->godMode)
+			{
+				position.y -= 5;
+				app->pause = false;
+			}
+
+			if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && app->godMode)
+			{
+				position.y += 5;
+				app->pause = false;
+			}
+
+			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && state != JUMPING && doubleJump == true)
+			{
+				speed.y = -40;
+				app->pause = false;
+				cont++;
+				state = JUMPING;
+
+
+				if (cont == 2) {
+					doubleJump = false;
+
+					cont = 0;
+				}
+			}
+
+			if (app->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+			{
+				hp--;
+				if (hp == 0)
+				{
+					currentAnim = &deathAnim;
+					state = DEAD;
+					hp = 3;
+				}
+				LOG("hp: %i", hp);
+			}
+
+			if (app->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && ammo > 0)
+			{
+				app->entityManager->CreateEntity({ position.x, position.y + 10 }, EntityType::BULLET);
+				ammo--;
+			}
+		}
 	}
-	
 	
 }
 
 void Player::OnCollision(Collider* col1, Collider* col2)
 {
-	
+
 	if (col1->type == ColliderType::COLLIDER || col2->type == ColliderType::COLLIDER)
 	{
 		//vertical collisions
-		if (collider->rect.x < col1->rect.x + col1->rect.w  && collider->rect.x + collider->rect.w > col1->rect.x || collider->rect.x < col2->rect.x + col2->rect.w  && collider->rect.x + collider->rect.w > col2->rect.x )
+		if (collider->rect.x < col1->rect.x + col1->rect.w && collider->rect.x + collider->rect.w > col1->rect.x || collider->rect.x < col2->rect.x + col2->rect.w && collider->rect.x + collider->rect.w > col2->rect.x)
 		{
 			if (collider->rect.y + collider->rect.h > col1->rect.y && collider->rect.y < col1->rect.y && state != PlayerState::JUMPING && state != PlayerState::RUNNING || collider->rect.y + collider->rect.h > col2->rect.y && collider->rect.y < col2->rect.y && state != PlayerState::JUMPING && state != PlayerState::RUNNING)
 			{
@@ -190,15 +193,15 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 					flip = SDL_FLIP_NONE;
 					state = RUNNING;
 				}
-				
-				
+
+
 			}
 
 			else if (collider->rect.y < col1->rect.y + col1->rect.h && collider->rect.y + collider->rect.h > col1->rect.y + col1->rect.h || collider->rect.y < col2->rect.y + col2->rect.h && collider->rect.y + collider->rect.h > col2->rect.y + col2->rect.h)
 			{
 				state = FALLING;
 				speed.y = 0;
-							
+
 			}
 		}
 
@@ -215,15 +218,15 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 
 			//RIGHT
 			else if (collider->rect.x + collider->rect.w > col1->rect.x && collider->rect.x < col1->rect.x || collider->rect.x + collider->rect.w > col2->rect.x && collider->rect.x < col2->rect.x)
-			{	
+			{
 				speed.x = -moveSpeed;
 				doubleJump = true;
 			}
 		}
 
 	}
-			
-	if (col1->type == ColliderType::NEXTLVL || col2->type == ColliderType::NEXTLVL)
+
+	if (col1->type == ColliderType::NEXTLVL || col2->type == ColliderType::NEXTLVL && app->scene->pauseGame == false)
 	{
 		speed.x = 0;
 		acceleration.x = 0;
@@ -241,15 +244,15 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 			app->scene->LoadLevel1();
 		}
 	}
-	
 
-	else if (col1->type == ColliderType::COLLIDER_DAMAGE || col2->type == ColliderType::COLLIDER_DAMAGE)
+
+	else if (col1->type == ColliderType::COLLIDER_DAMAGE || col2->type == ColliderType::COLLIDER_DAMAGE && app->scene->pauseGame == false)
 	{
 		state = DEAD;
 		hp = 3;
 	}
 
-	else if (col1->type == ColliderType::COLLIDER_ENEMY || col2->type == ColliderType::COLLIDER_ENEMY)
+	else if (col1->type == ColliderType::COLLIDER_ENEMY || col2->type == ColliderType::COLLIDER_ENEMY && app->scene->pauseGame == false)
 	{
 		if (hitCd < app->GetTime())
 		{
@@ -263,8 +266,8 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 			hp = 3;
 		}
 	}
-	
-	else if (col1->type == ColliderType::CHECKPOINT || col2->type == ColliderType::CHECKPOINT)
+
+	else if (col1->type == ColliderType::CHECKPOINT || col2->type == ColliderType::CHECKPOINT && app->scene->pauseGame == false)
 	{
 		if (checkpoint == false)
 		{
@@ -282,34 +285,35 @@ void Player::OnCollision(Collider* col1, Collider* col2)
 		//checkpoint = true;
 	}
 
-	else if (col1->type == ColliderType::COLLIDER_PICKUP || col2->type == ColliderType::COLLIDER_PICKUP)
+	else if (col1->type == ColliderType::COLLIDER_PICKUP || col2->type == ColliderType::COLLIDER_PICKUP && app->scene->pauseGame == false)
 	{
-		
+
 	}
-	
+
 }
 
 void Player::Update(float dt)
 {
 	
 	deltaTime = app->dtMove;
-		
-	switch (state) 
+	if (app->scene->pauseGame == false)
 	{
+		switch (state)
+		{
 		case IDLE:
 			acceleration.y = 0;
 			speed.y = 0;
 			break;
-		
+
 		case FALLING:
 			if (!app->godMode)
 			{
 				acceleration.y = GRAVITY;
 				currentAnim = &jumpAnim;
 			}
-			
+
 			break;
-		
+
 		case RUNNING:
 			currentAnim = &runAnim;
 			acceleration.y = 0;
@@ -319,9 +323,9 @@ void Player::Update(float dt)
 		case JUMPING:
 			acceleration.y = GRAVITY;
 			break;
-		
+
 		case DEAD:
-						
+
 			if (checkpoint == false)
 			{
 				position.x = spawnPos.x;
@@ -332,32 +336,33 @@ void Player::Update(float dt)
 				position.x = checkpointPos.x;
 				position.y = checkpointPos.y;
 			}
-		
+
+		}
+
+
+		if (!app->pause)
+			speed.y = speed.y + acceleration.y;
+
+		if (speed.y >= 60) {
+			speed.y = 60;
+		}
+		if (speed.y <= -50) {
+			speed.y = -50;
+		}
+
+		position.x = position.x + speed.x * deltaTime;
+		position.y = position.y + speed.y * deltaTime;
+
+		collider->SetPos(position.x + 2, position.y);
+
+
+		state = FALLING;
+
+		speed.x = 0;
+
+		PlayerUIUpdate();
+
 	}
-
-	if(!app->pause)
-		speed.y = speed.y + acceleration.y;
-
-	if (speed.y >= 60) {
-		speed.y = 60;
-	}
-	if (speed.y <= -50) {
-		speed.y = -50;
-	}
-	
-	position.x = position.x + speed.x * deltaTime;
-	position.y = position.y + speed.y * deltaTime;
-
-	collider->SetPos(position.x + 2, position.y);
-	
-	
-	state = FALLING;
-	
-	speed.x = 0;
-
-	PlayerUIUpdate();
-
-	
 
 }
 

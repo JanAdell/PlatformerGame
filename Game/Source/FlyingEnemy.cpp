@@ -2,9 +2,10 @@
 #include "FlyingEnemy.h"
 #include "Collisions.h"
 #include "Render.h"
-#include "Map.h"
+#include "Scene.h"
 #include "Pathfinding.h"
 #include "EntityManager.h"
+#include "Map.h"
 
 FlyingEnemy::FlyingEnemy(const fPoint position) : Enemy(position, "FlyingEnemy", EntityType::FLYING_ENEMY)
 {
@@ -29,9 +30,11 @@ bool FlyingEnemy::Start()
 
 void FlyingEnemy::Update(float dt)
 {
-	
-		fPoint direction;
-		iPoint enemy_pos = app->map->WorldToMap(position.x + offset.x, position.y + offset.y);
+
+	fPoint direction;
+	iPoint enemy_pos = app->map->WorldToMap(position.x + offset.x, position.y + offset.y);
+	if (app->scene->pauseGame == false)
+	{
 		if (position.DistanceManhattan(app->entityManager->player->position) <= search)
 		{
 			iPoint player_pos = app->map->WorldToMap(app->entityManager->player->position.x + app->entityManager->player->size.x / 2, app->entityManager->player->position.y + app->entityManager->player->size.y);
@@ -41,8 +44,8 @@ void FlyingEnemy::Update(float dt)
 			{
 				enemyPath = app->pathfinding->GetLastPath();
 
-				if(app->collisions->debug)
- 					app->pathfinding->DrawPath(enemyPath);
+				if (app->collisions->debug)
+					app->pathfinding->DrawPath(enemyPath);
 
 				if (enemyPath->Count() > 0)
 				{
@@ -78,12 +81,12 @@ void FlyingEnemy::Update(float dt)
 			{
 				if (initialPos.x < position.x || !app->pathfinding->IsWalkable(cell_right))
 				{
-					
+
 					flip = SDL_RendererFlip::SDL_FLIP_HORIZONTAL;
 				}
 				else if (initialPos.x > position.x || !app->pathfinding->IsWalkable(cell_left))
 				{
-					
+
 					flip = SDL_RendererFlip::SDL_FLIP_NONE;
 				}
 
@@ -106,13 +109,14 @@ void FlyingEnemy::Update(float dt)
 			{
 				direction.create(objective.x - enemy_pos.x, objective.y - enemy_pos.y);
 				position.x += direction.x * speed.x * app->dtMove;
- 				position.y += direction.y * speed.y * app->dtMove;
+				position.y += direction.y * speed.y * app->dtMove;
 			}
 		}
-		
-		if(collider != nullptr)
+
+		if (collider != nullptr)
 			collider->SetPos((int)position.x + offset.x, (int)position.y + offset.y);
-		
+
+	}
 }
 
 void FlyingEnemy::Draw()
@@ -123,6 +127,7 @@ void FlyingEnemy::Draw()
 
 void FlyingEnemy::ChangeDir()
 {
+	if(app->scene->pauseGame == false)
 	goRight = !goRight;
 }
 

@@ -2,6 +2,7 @@
 #include "GroundEnemy.h"
 #include "Collisions.h"
 #include "Render.h"
+#include "Scene.h"
 #include "Pathfinding.h"
 #include "EntityManager.h"
 #include "Map.h"
@@ -28,10 +29,12 @@ bool GroundEnemy::Start()
 
 void GroundEnemy::Update(float dt)
 {
-	
-		fPoint direction;
-		iPoint enemy_pos = app->map->WorldToMap(position.x + offset.x, position.y + offset.y);
-		//enemy_pos.y -= 1;
+
+	fPoint direction;
+	iPoint enemy_pos = app->map->WorldToMap(position.x + offset.x, position.y + offset.y);
+	//enemy_pos.y -= 1;
+	if (app->scene->pauseGame == false)
+	{
 		if (position.DistanceManhattan(app->entityManager->player->position) <= search)
 		{
 			iPoint player_pos = app->map->WorldToMap(app->entityManager->player->position.x + app->entityManager->player->size.x / 2, app->entityManager->player->position.y + app->entityManager->player->size.y);
@@ -40,9 +43,9 @@ void GroundEnemy::Update(float dt)
 			if (app->pathfinding->CreatePath(enemy_pos, player_pos, EntityType::GROUND_ENEMY) != -1 && app->entityManager->player)
 			{
 				enemyPath = app->pathfinding->GetLastPath();
-				
+
 				if (app->collisions->debug)
-				app->pathfinding->DrawPath(enemyPath);
+					app->pathfinding->DrawPath(enemyPath);
 
 				if (enemyPath->Count() > 0)
 				{
@@ -50,7 +53,7 @@ void GroundEnemy::Update(float dt)
 
 					direction.create(next_node.x - enemy_pos.x, next_node.y - enemy_pos.y);
 					position.x += direction.x * speed.x;
-					
+
 				}
 			}
 		}
@@ -81,12 +84,12 @@ void GroundEnemy::Update(float dt)
 			if (objective.x != 0)
 			{
 				direction.create(objective.x - enemy_pos.x, objective.y - enemy_pos.y);
-				position.y += gravity *app->dtMove;
-				position.x += direction.x * speed.x*app->dtMove;
+				position.y += gravity * app->dtMove;
+				position.x += direction.x * speed.x * app->dtMove;
 			}
 		}
 
-		
+
 
 		if (direction.x > 0)
 		{
@@ -98,7 +101,8 @@ void GroundEnemy::Update(float dt)
 			flip = SDL_RendererFlip::SDL_FLIP_NONE;
 		}
 		collider->SetPos((int)position.x + offset.x, (int)position.y + offset.y);
-		
+
+	}
 }
 
 void GroundEnemy::Draw()
@@ -109,7 +113,7 @@ void GroundEnemy::Draw()
 
 void GroundEnemy::ChangeDir()
 {
-	goRight = !goRight;
+	if (app->scene->pauseGame == false) goRight = !goRight;
 }
 
 void GroundEnemy::CleanUp()
