@@ -87,10 +87,10 @@ private:
 	Textures* tex;
 
 	//ingame timer vars
-	/*int timerFont = -1;
+	
 	char timerValue[8] = { "\0" };
 	uint timer = 0;
-	int seconds = 0;*/
+	int seconds = 0;
 	
 
 };

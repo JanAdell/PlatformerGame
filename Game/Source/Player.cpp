@@ -69,16 +69,13 @@ bool Player::Start()
 	cont = 0;
 	hp = 3;
 	ammo = 10;
-	
+	timer = 0;
+	seconds = 0;
 	
 	ammoTex = app->tex->Load("Assets/textures/hp.png");
 	hpTex = app->tex->Load("Assets/textures/portrait.png");
 	collectTex = app->tex->Load("Assets/textures/powerupUI.png");
-
-	//char score[64] = { 0 };
-	//sprintf_s(score, 64, "SCORE: %03i", 56);
-
-	//app->render->DrawText(font, score, 10, 10, 200, 0, { 255, 0, 255, 255 });
+	
 
 
 	return true;
@@ -87,9 +84,7 @@ bool Player::Start()
 void Player::PreUpdate(float dt)
 {
 	currentAnim = &idleAnim;
-	char score[64] = { 0 };
-	sprintf_s(score, 64, "SCORE: %03i", 56);
-	app->render->DrawText(font, score, 10, 10, 1000, 0, { 255, 0, 255, 255 });
+	
 
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
@@ -576,7 +571,17 @@ void Player::PlayerUIUpdate()
 
 	}
 
+	seconds++;
+	if (seconds == 60)
+	{
+		timer++;
+		seconds = 0;
+	}
 
 	//Timer
-	
+	sprintf_s(timerValue, 10, "%d", timer);
+	if (timer < 10) app->render->DrawText(font, timerValue, 1200, 80, 75, 0, { 255, 0, 255, 255 });
+	else if (timer < 100) app->render->DrawText(font, timerValue, 1200, 80, 75, 0, { 255, 0, 255, 255 });
+	else if (timer < 1000) app->render->DrawText(font, timerValue, 1200, 80, 75, 0, { 255, 0, 255, 255 });
+	else app->render->DrawText(font, timerValue, 1200, 80, 75, 0, { 255, 0, 255, 255 });
 }
