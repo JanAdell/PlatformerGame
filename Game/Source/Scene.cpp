@@ -82,44 +82,50 @@ bool Scene::PreUpdate(float dt)
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	
-	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && intro && app->scene->pauseGame == false)
-		LoadLevel1();
-
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && app->scene->pauseGame == false)
+	if (app->scene->pauseGame == false)
 	{
-		LoadLevel1();
+		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && intro)
+			LoadLevel1();
+
+		if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		{
+			LoadLevel1();
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		{
+			LoadLevel2();
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+		{
+			app->entityManager->player->position.x = dynamic_cast<Player*>(app->entityManager->player)->spawnPos.x;
+			app->entityManager->player->position.y = dynamic_cast<Player*>(app->entityManager->player)->spawnPos.y;
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN/* && intro == false*/)
+		{
+			app->entityManager->player->position.x = dynamic_cast<Player*>(app->entityManager->player)->checkpointPos.x;
+			app->entityManager->player->position.y = dynamic_cast<Player*>(app->entityManager->player)->checkpointPos.y;
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN )
+			app->LoadGame();
+
+		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN )
+			app->SaveGame();
+
+		if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN && app->entityManager->player->debugUI == false)
+			app->entityManager->player->debugUI = true;
+		else if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN && app->entityManager->player->debugUI == true)
+			app->entityManager->player->debugUI = false;
+
+		if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+			app->godMode = !app->godMode;
+
+		if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+			LoadIntro();
 	}
-
-	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN && app->scene->pauseGame == false)
-	{
-		LoadLevel2();
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && app->scene->pauseGame == false)
-	{
-		app->entityManager->player->position.x = dynamic_cast<Player*>(app->entityManager->player)->spawnPos.x;
-		app->entityManager->player->position.y = dynamic_cast<Player*>(app->entityManager->player)->spawnPos.y;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN/* && intro == false*/ && app->scene->pauseGame == false)
-	{
-		app->entityManager->player->position.x = dynamic_cast<Player*>(app->entityManager->player)->checkpointPos.x;
-		app->entityManager->player->position.y = dynamic_cast<Player*>(app->entityManager->player)->checkpointPos.y;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN && app->scene->pauseGame == false)
-		app->LoadGame();
-
-	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN && app->scene->pauseGame == false)
-		app->SaveGame();
-
-	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && app->scene->pauseGame == false)
-		app->godMode = !app->godMode;
-
-	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN && app->scene->pauseGame == false)
-		LoadIntro();
-
 	//app->render->DrawTexture(img, 380, 100);
 	app->map->Draw();
 
@@ -294,7 +300,7 @@ void Scene::LoadGUI()
 
 void Scene::LoadIntro()
 {
-
+	canPause = false;
 	pugi::xml_document data;
 	pugi::xml_parse_result result = data.load_file("save.xml");
 

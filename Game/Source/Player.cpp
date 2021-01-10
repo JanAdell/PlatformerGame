@@ -424,6 +424,7 @@ fPoint Player::GetSpeed() const
 	return speed;
 }
 
+
 void Player::PlayerUIUpdate()
 {
 	//Player lives UI
@@ -432,16 +433,33 @@ void Player::PlayerUIUpdate()
 		app->render->DrawTexture(hpTex, -app->render->camera.x, -app->render->camera.y, &(lifeAnim.GetCurrentFrame()));
 		app->render->DrawTexture(hpTex, -app->render->camera.x + 65, -app->render->camera.y, &(lifeAnim.GetCurrentFrame()));
 		app->render->DrawTexture(hpTex, -app->render->camera.x + 130, -app->render->camera.y, &(lifeAnim.GetCurrentFrame()));
+		
+		if (debugUI == true)
+		{
+			app->render->DrawRectangle({ -app->render->camera.x, -app->render->camera.y, 50, 50 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 65, -app->render->camera.y, 50, 50 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 130, -app->render->camera.y, 50, 50 }, 180, 205, 85, 100);
+		}
 	}
 	if (hp == 2)
 	{
 		app->render->DrawTexture(hpTex, -app->render->camera.x, -app->render->camera.y, &(lifeAnim.GetCurrentFrame()));
 		app->render->DrawTexture(hpTex, -app->render->camera.x + 65, -app->render->camera.y, &(lifeAnim.GetCurrentFrame()));
-
+	
+		if (debugUI == true)
+		{
+			app->render->DrawRectangle({ -app->render->camera.x, -app->render->camera.y, 50, 50 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 65, -app->render->camera.y, 50, 50 }, 180, 205, 85, 100);
+		}
 	}
 	if (hp == 1)
 	{
 		app->render->DrawTexture(hpTex, -app->render->camera.x, -app->render->camera.y, &(lifeAnim.GetCurrentFrame()));
+	
+		if (debugUI == true)
+		{
+			app->render->DrawRectangle({ -app->render->camera.x, -app->render->camera.y, 50, 50 }, 180, 205, 85, 100);
+		}
 	}
 	//Ammo UI
 	if (ammo == 10)
@@ -456,7 +474,20 @@ void Player::PlayerUIUpdate()
 		app->render->DrawTexture(ammoTex, -app->render->camera.x + 140, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
 		app->render->DrawTexture(ammoTex, -app->render->camera.x + 160, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
 		app->render->DrawTexture(ammoTex, -app->render->camera.x + 180, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
-
+	
+		if (debugUI == true)
+		{
+			app->render->DrawRectangle({ -app->render->camera.x, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 20, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 40, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 60, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 80, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 100,-app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 120,-app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 140,-app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 160,-app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 180,-app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+		}
 	}
 
 	if (ammo == 9)
@@ -471,6 +502,18 @@ void Player::PlayerUIUpdate()
 		app->render->DrawTexture(ammoTex, -app->render->camera.x + 140, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
 		app->render->DrawTexture(ammoTex, -app->render->camera.x + 160, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
 
+		if (debugUI == true)
+		{
+			app->render->DrawRectangle({ -app->render->camera.x, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 20, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 40, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 60, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 80, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 100,-app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 120,-app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 140,-app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 160,-app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+		}
 	}
 	if (ammo == 8)
 	{
@@ -483,6 +526,17 @@ void Player::PlayerUIUpdate()
 		app->render->DrawTexture(ammoTex, -app->render->camera.x + 120, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
 		app->render->DrawTexture(ammoTex, -app->render->camera.x + 140, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
 
+		if (debugUI == true)
+		{
+			app->render->DrawRectangle({ -app->render->camera.x, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 20, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 40, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 60, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 80, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 100,-app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 120,-app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 140,-app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+		}
 	}
 	if (ammo == 7)
 	{
@@ -494,6 +548,16 @@ void Player::PlayerUIUpdate()
 		app->render->DrawTexture(ammoTex, -app->render->camera.x + 100, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
 		app->render->DrawTexture(ammoTex, -app->render->camera.x + 120, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
 
+		if (debugUI == true)
+		{
+			app->render->DrawRectangle({ -app->render->camera.x, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 20, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 40, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 60, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 80, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 100,-app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 120,-app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+		}
 	}
 	if (ammo == 6)
 	{
@@ -504,6 +568,15 @@ void Player::PlayerUIUpdate()
 		app->render->DrawTexture(ammoTex, -app->render->camera.x + 80, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
 		app->render->DrawTexture(ammoTex, -app->render->camera.x + 100, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
 
+		if (debugUI == true)
+		{
+			app->render->DrawRectangle({ -app->render->camera.x, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 20, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 40, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 60, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 80, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 100,-app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+		}
 	}
 	if (ammo == 5)
 	{
@@ -513,6 +586,14 @@ void Player::PlayerUIUpdate()
 		app->render->DrawTexture(ammoTex, -app->render->camera.x + 60, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
 		app->render->DrawTexture(ammoTex, -app->render->camera.x + 80, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
 
+		if (debugUI == true)
+		{
+			app->render->DrawRectangle({ -app->render->camera.x, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 20, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 40, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 60, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 80, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+		}
 	}
 	if (ammo == 4)
 	{
@@ -521,6 +602,13 @@ void Player::PlayerUIUpdate()
 		app->render->DrawTexture(ammoTex, -app->render->camera.x + 40, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
 		app->render->DrawTexture(ammoTex, -app->render->camera.x + 60, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
 
+		if (debugUI == true)
+		{
+			app->render->DrawRectangle({ -app->render->camera.x, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 20, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 40, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 60, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+		}
 	}
 	if (ammo == 3)
 	{
@@ -528,18 +616,32 @@ void Player::PlayerUIUpdate()
 		app->render->DrawTexture(ammoTex, -app->render->camera.x + 20, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
 		app->render->DrawTexture(ammoTex, -app->render->camera.x + 40, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
 
+		if (debugUI == true)
+		{
+			app->render->DrawRectangle({ -app->render->camera.x, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 20, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 40, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+		}
 	}
 	if (ammo == 2)
 	{
 		app->render->DrawTexture(ammoTex, -app->render->camera.x, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
 		app->render->DrawTexture(ammoTex, -app->render->camera.x + 20, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
 
-
+		if (debugUI == true)
+		{
+			app->render->DrawRectangle({ -app->render->camera.x, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 20, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+		}
 	}
 	if (ammo == 1)
 	{
 		app->render->DrawTexture(ammoTex, -app->render->camera.x, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
 
+		if (debugUI == true)
+		{
+			app->render->DrawRectangle({ -app->render->camera.x, -app->render->camera.y + 51, 13, 25 }, 180, 205, 85, 100);
+		}
 	}
 
 	//collectibles
@@ -551,7 +653,15 @@ void Player::PlayerUIUpdate()
 		app->render->DrawTexture(collectTex, -app->render->camera.x + 1150, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
 		app->render->DrawTexture(collectTex, -app->render->camera.x + 1190, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
 		app->render->DrawTexture(collectTex, -app->render->camera.x + 1230, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
-
+		
+		if (debugUI == true)
+		{
+			app->render->DrawRectangle({ -app->render->camera.x + 1070, -app->render->camera.y + 10, 30,30 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 1110, -app->render->camera.y + 10, 30,30 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 1150, -app->render->camera.y + 10, 30,30 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 1190, -app->render->camera.y + 10, 30,30 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 1230, -app->render->camera.y + 10, 30,30 }, 180, 205, 85, 100);
+		}
 	}
 	if (pickupCount == 4)
 	{
@@ -559,25 +669,47 @@ void Player::PlayerUIUpdate()
 		app->render->DrawTexture(collectTex, -app->render->camera.x + 1180, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
 		app->render->DrawTexture(collectTex, -app->render->camera.x + 1220, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
 		app->render->DrawTexture(collectTex, -app->render->camera.x + 1260, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
-
+		
+		if (debugUI == true)
+		{
+			app->render->DrawRectangle({ -app->render->camera.x + 1110, -app->render->camera.y + 10, 30,30 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 1150, -app->render->camera.y + 10, 30,30 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 1190, -app->render->camera.y + 10, 30,30 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 1230, -app->render->camera.y + 10, 30,30 }, 180, 205, 85, 100);
+		}
 	}
 	if (pickupCount == 3)
 	{
 		app->render->DrawTexture(collectTex, -app->render->camera.x + 1150, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
 		app->render->DrawTexture(collectTex, -app->render->camera.x + 1190, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
 		app->render->DrawTexture(collectTex, -app->render->camera.x + 1230, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
-
+		
+		if (debugUI == true)
+		{
+			app->render->DrawRectangle({ -app->render->camera.x + 1150, -app->render->camera.y + 10, 30,30 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 1190, -app->render->camera.y + 10, 30,30 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 1230, -app->render->camera.y + 10, 30,30 }, 180, 205, 85, 100);
+		}
 	}
 	if (pickupCount == 2)
 	{
 		app->render->DrawTexture(collectTex, -app->render->camera.x + 1190, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
 		app->render->DrawTexture(collectTex, -app->render->camera.x + 1230, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
-
+		
+		if (debugUI == true)
+		{
+			app->render->DrawRectangle({ -app->render->camera.x + 1190, -app->render->camera.y + 10, 30,30 }, 180, 205, 85, 100);
+			app->render->DrawRectangle({ -app->render->camera.x + 1230, -app->render->camera.y + 10, 30,30 }, 180, 205, 85, 100);
+		}
 	}
 	if (pickupCount == 1)
 	{
 		app->render->DrawTexture(collectTex, -app->render->camera.x + 1230, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
-
+		
+		if (debugUI == true)
+		{
+			app->render->DrawRectangle({ -app->render->camera.x + 1230, -app->render->camera.y + 10, 30,30 }, 180, 205, 85, 100);
+		}
 	}
 
 	seconds++;
@@ -593,4 +725,12 @@ void Player::PlayerUIUpdate()
 	else if (timer < 100) app->render->DrawText(font, timerValue, 620, 15, 50, 0, { 255, 0, 255, 255 });
 	else if (timer < 1000) app->render->DrawText(font, timerValue, 620, 15, 50, 0, { 255, 0, 255, 255 });
 	else app->render->DrawText(font, timerValue, 620, 15, 50, 0, { 255, 0, 255, 255 });
+
+	if (debugUI == true)
+	{
+		app->render->DrawRectangle({ -app->render->camera.x, -app->render->camera.y, 180,50 }, 105, 240, 240, 100);
+		app->render->DrawRectangle({ -app->render->camera.x, -app->render->camera.y+51, 195,25 }, 105, 240, 240, 100);
+		app->render->DrawRectangle({ -app->render->camera.x + 560, -app->render->camera.y + 10, 150,50 }, 105, 240, 240, 100);
+		app->render->DrawRectangle({ -app->render->camera.x + 1070, -app->render->camera.y + 10, 200,30 }, 105, 240, 240, 100);
+	}
 }

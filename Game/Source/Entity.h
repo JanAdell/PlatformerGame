@@ -76,6 +76,7 @@ public:
 	Animation animIdle;
 	Animation* currentAnim = nullptr;
 	bool toDelete = false;
+	bool debugUI = false;
 
 	SDL_Texture* characterTex = nullptr;
 	
