@@ -126,7 +126,7 @@ bool Scene::Update(float dt)
 			app->godMode = !app->godMode;
 
 		if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
-			LoadIntro();
+			app->capFps = !app->capFps;
 	}
 	//app->render->DrawTexture(img, 380, 100);
 	app->map->Draw();
@@ -490,7 +490,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	case GuiControlType::CHECKBOX:
 
 		if (control->id == 1) { app->win->fullscreen = !app->win->fullscreen; app->win->SetFullScreen(); }
-		else if (control->id == 2){}
+		else if (control->id == 2) { app->capFps = !app->capFps; }
 		break;
 
 	}

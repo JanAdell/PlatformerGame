@@ -110,7 +110,7 @@ public:
 	bool pause = false;
 	bool saveExists = false;
 	float dtMove;
-	
+	bool capFps = true;
 
 private:
 
@@ -137,7 +137,7 @@ private:
 	float dt;
 	float lastTime;
 
-	bool				capFps = true;
+	
 	uint				framesCap = 0;
 	Timer				timerFrames;
 	Timer				timerFramesSecond;
