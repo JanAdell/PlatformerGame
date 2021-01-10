@@ -55,6 +55,9 @@ public:
 	void UpdatePause(float dt);
 	void DrawPause();
 
+	void UpdatePauseSettings(float dt);
+	void DrawPauseSettings();
+
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
 	bool Load(pugi::xml_node& data);
@@ -63,6 +66,7 @@ public:
 
 	bool intro = true;
 	bool settingsActive = false;
+	bool settingsPauseActive = false;
 	bool creditsActive = false;
 	bool pauseGame = false;
 
@@ -82,6 +86,7 @@ private:
 	GuiButton* backTitle;
 	GuiButton* unpause;
 	GuiButton* settingsPause;
+	GuiButton* backPause;
 	GuiSlider* musicVol;
 	GuiSlider* fxVol;
 	GuiCheckBox* fullscreen;
@@ -89,6 +94,7 @@ private:
 	
 	int squarifiedFont = -1;
 	bool playing = true;
+	bool printPause = true;
 
 	Font* uiFont;
 	char playButton[64] = { 0 };

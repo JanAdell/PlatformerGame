@@ -103,13 +103,17 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && app->scene->pauseGame == false)
 		app->godMode = !app->godMode;
 
+	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN && app->scene->pauseGame == false)
+		LoadIntro();
+
 	//app->render->DrawTexture(img, 380, 100);
 	app->map->Draw();
 
 	if (intro == true) UpdateMenu(dt);
 	else if (settingsActive == true && intro == false) UpdateSettings(dt);
 	else if (creditsActive == true && intro == false) UpdateCredits(dt);
-	if (pauseGame == true) UpdatePause(dt);
+	if (pauseGame == true && printPause == true) UpdatePause(dt);
+	if (pauseGame == true && settingsPauseActive == true) UpdatePauseSettings(dt);
 
 	return true;
 }
@@ -119,7 +123,7 @@ bool Scene::PostUpdate(float dt)
 {
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && pauseGame == false && intro == false) pauseGame = true;
-	else if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && pauseGame == true && intro == false) pauseGame = false;
+	else if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && pauseGame == true && intro == false) { pauseGame = false; settingsPauseActive = false; printPause = true; }
 
 	if (intro == true)
 	{
@@ -133,7 +137,8 @@ bool Scene::PostUpdate(float dt)
 	if (intro == true) DrawMenu();
 	else if (settingsActive == true && intro == false) DrawSettings();
 	else if (creditsActive == true && intro == false) DrawCredits();
-	if (pauseGame == true) DrawPause();
+	if (pauseGame == true && printPause == true) DrawPause();
+	if (pauseGame == true && settingsPauseActive == true) DrawPauseSettings();
 
 	return playing;
 }
@@ -236,6 +241,8 @@ void Scene::LoadGUI()
 	back = new GuiButton(6, { 640, 575, 200, 50 }, "Exit");
 	back->SetObserver(this);
 
+	backPause = new GuiButton(10, { 640, 575, 200, 50 }, "Exit");
+	backPause->SetObserver(this);
 
 	//------------ CREDITS ---------------
 
@@ -321,6 +328,29 @@ void Scene::DrawSettings()
 	app->render->DrawText(uiFont, vsyncButton, 610, 510, 40, 0, { 255, 255, 255, 255 });
 }
 
+void Scene::UpdatePauseSettings(float dt)
+{
+	backPause->Update(dt);
+	musicVol->Update(dt);
+	fxVol->Update(dt);
+	fullscreen->Update(dt);
+	vsync->Update(dt);
+}
+
+void Scene::DrawPauseSettings()
+{
+	backPause->Draw();
+	app->render->DrawText(uiFont, backButton, 700, 580, 40, 0, { 0, 0, 0, 255 });
+	musicVol->Draw();
+	app->render->DrawText(uiFont, musicVolButton, 580, 260, 40, 0, { 255, 255, 255, 255 });
+	fxVol->Draw();
+	app->render->DrawText(uiFont, sfxVolButton, 580, 330, 40, 0, { 255, 255, 255, 255 });
+	fullscreen->Draw();
+	app->render->DrawText(uiFont, fullscreenButton, 610, 440, 40, 0, { 255, 255, 255, 255 });
+	vsync->Draw();
+	app->render->DrawText(uiFont, vsyncButton, 610, 510, 40, 0, { 255, 255, 255, 255 });
+}
+
 void Scene::UpdatePause(float dt)
 {
 	unpause->Update(dt);
@@ -354,22 +384,16 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	{
 	case GuiControlType::BUTTON:
 	{
-		if (control->id == 1)
-			LoadLevel1();
-		else if (control->id == 2)
-			LoadLevel2();
-		else if (control->id == 3)
-		{
-			settingsActive = true;
-			intro = false;
-		}
-		else if (control->id == 4)
-		{
-			creditsActive = true;
-			intro = false;
-		}
-		else if (control->id == 5) playing = false;
-		else if (control->id == 6) intro = true;
+		if (control->id == 1) LoadLevel1();												//play
+		else if (control->id == 2) LoadLevel2();										//resume
+		else if (control->id == 3) { settingsActive = true; intro = false; }			//settings
+		else if (control->id == 4) { creditsActive = true; intro = false; }				//credits
+		else if (control->id == 5) playing = false;										//quit
+		else if (control->id == 6) intro = true;										//back
+		else if (control->id == 7) { pauseGame = false; printPause = true; }			//unpause
+		else if (control->id == 8) { settingsPauseActive = true; printPause = false; }	//settingspause
+		else if (control->id == 9) { intro = true; LoadIntro(); }						//backtitle
+		else if (control->id == 10) { settingsPauseActive = false; printPause = true; }	//backpause
 		break;
 	case GuiControlType::SLIDER:
 		if (control->id == 1) app->audio->ChangeMusicVolume(musicVol->ReturnValue());
@@ -378,16 +402,8 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		break;
 	case GuiControlType::CHECKBOX:
 
-		if (control->id == 1)
-		{
-			app->win->fullscreen = !app->win->fullscreen;
-			app->win->SetFullScreen();
-		}
-		else if (control->id == 2)
-		{
-
-		}
-
+		if (control->id == 1) { app->win->fullscreen = !app->win->fullscreen;	app->win->SetFullScreen(); }
+		else if (control->id == 2){}
 		break;
 
 	}
