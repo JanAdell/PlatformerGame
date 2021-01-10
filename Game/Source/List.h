@@ -13,8 +13,10 @@ struct ListItem
 
 	inline ListItem(const tdata& _data)
 	{
+		
 		data = _data;
 		next = prev = NULL;
+		
 	}
 
 	~ListItem()

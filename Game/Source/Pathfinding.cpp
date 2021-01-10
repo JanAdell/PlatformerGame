@@ -144,7 +144,7 @@ uint PathNode::FindWalkableAdjacents(PathList& list_to_fill, EntityType type) co
 	if (app->pathfinding->IsWalkable(cell))
 		list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
-	if (type == EntityType::FLYING_ENEMY)
+	/*if (type == EntityType::FLYING_ENEMY)
 	{
 		// north-west
 		cell.create(pos.x + 1, pos.y + 1);
@@ -165,7 +165,7 @@ uint PathNode::FindWalkableAdjacents(PathList& list_to_fill, EntityType type) co
 		cell.create(pos.x - 1, pos.y - 1);
 		if (app->pathfinding->IsWalkable(cell))
 			list_to_fill.list.add(PathNode(-1, -1, cell, this));
-	}
+	}*/
 	return list_to_fill.list.count();
 }
 
@@ -202,14 +202,17 @@ int Pathfinding::CreatePath(const iPoint& origin, const iPoint& destination, Ent
 	PathList open;
 	PathList close;
 	PathNode origin_path(0, origin.DistanceManhattan(destination), origin, nullptr);
-
+		
 	open.list.add(origin_path);
 
 
 	while (open.list.count() != 0)
 	{
+		
 		close.list.add(open.GetNodeLowestScore()->data);
 		open.list.del(open.GetNodeLowestScore());
+				
+
 		if (close.list.end->data.pos == destination)
 		{
 			const PathNode* parent = &close.list.end->data;

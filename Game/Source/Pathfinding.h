@@ -6,8 +6,8 @@
 #include "DynArray.h"
 #include "Entity.h"
 
-#define DEFAULT_PATH_LENGTH 50
-#define INVALID_WALK_CODE 1000
+#define DEFAULT_PATH_LENGTH 100
+#define INVALID_WALK_CODE 100
 
 // --------------------------------------------------
 // Recommended reading:
