@@ -43,21 +43,23 @@ bool Scene::Start()
 	LoadIntro();
 	LoadGUI();
 	uiFont = new Font("Assets/Fonts/Squarified.xml", app->tex);
-
 	
-	sprintf_s(playButton, 64, "PLAY");
-	sprintf_s(continueButton, 64, "CONTINUE");
-	sprintf_s(resumeButton, 64, "RESUME");
-	sprintf_s(settingsButton, 64, "SETTINGS");
-	sprintf_s(creditsButton, 64, "CREDITS");
-	sprintf_s(exitButton, 64, "EXIT");
+	
+	sprintf_s(playButton, 64, "Play");
+	sprintf_s(continueButton, 64, "Continue");
+	sprintf_s(resumeButton, 64, "Resume");
+	sprintf_s(settingsButton, 64, "Settings");
+	sprintf_s(creditsButton, 64, "Credits");
+	sprintf_s(exitButton, 64, "Exit");
 	sprintf_s(fullscreenButton, 64, "FullScreen");
 	sprintf_s(vsyncButton, 64, "VSYNC");
 	sprintf_s(musicVolButton, 64, "Music Volume");
 	sprintf_s(sfxVolButton, 64, "Sound Eeffects Volume");
-	sprintf_s(backButton, 64, "BACK");
+	sprintf_s(backButton, 64, "Back");
 	sprintf_s(returnButton, 64, "Main Menu");
 	
+	
+
 	return true;
 }
 
@@ -221,6 +223,19 @@ void Scene::LoadGUI()
 	resume = new GuiButton(2, { 550, 365, 200, 50 }, "Resume");
 	resume->SetObserver(this);
 
+	pugi::xml_document data;
+	pugi::xml_parse_result result = data.load_file("save.xml");
+
+	if (result == true)
+	{
+		resume->state = GuiControlState::NORMAL;
+	}
+	else
+	{
+		resume->state = GuiControlState::DISABLED;
+	}
+
+
 	settings = new GuiButton(3, { 550, 435, 200, 50 }, "Settings");
 	settings->SetObserver(this);
 
@@ -269,6 +284,32 @@ void Scene::LoadGUI()
 
 void Scene::LoadIntro()
 {
+
+	pugi::xml_document data;
+	pugi::xml_parse_result result = data.load_file("save.xml");
+
+	if (result == true)
+	{
+		saveExists = true;
+	}
+	else
+	{
+		saveExists = false;
+	}
+
+	if (resume != nullptr) 
+	{
+		if (!saveExists)
+		{
+			resume->state = GuiControlState::DISABLED;
+		}
+		else if (saveExists)
+		{
+			resume->state = GuiControlState::NORMAL;
+		}
+	}
+
+	app->entityManager->player = nullptr;
 	app->pause = true;
 	app->entityManager->CleanUp();
 	//app->fade->FadeTo();
@@ -295,6 +336,8 @@ void Scene::UpdateMenu(float dt)
 	settings->Update(dt);
 	credits->Update(dt);
 	quit->Update(dt);
+
+	
 }
 
 void Scene::DrawMenu()
@@ -405,7 +448,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		else if (control->id == 6) intro = true;										//back
 		else if (control->id == 7) { pauseGame = false; printPause = true; }			//unpause
 		else if (control->id == 8) { settingsPauseActive = true; printPause = false; }	//settingspause
-		else if (control->id == 9) { intro = true; LoadIntro(); }						//backtitle
+		else if (control->id == 9) { intro = true; LoadIntro(); pauseGame = false; printPause = false;}						//backtitle
 		else if (control->id == 10) { settingsPauseActive = false; printPause = true; }	//backpause
 		break;
 	case GuiControlType::SLIDER:

@@ -581,7 +581,7 @@ void Player::PlayerUIUpdate()
 	}
 
 	seconds++;
-	if (seconds == 60)
+	if (seconds == 30)
 	{
 		timer++;
 		seconds = 0;
@@ -589,8 +589,8 @@ void Player::PlayerUIUpdate()
 
 	//Timer
 	sprintf_s(timerValue, 10, "%d", timer);
-	if (timer < 10) app->render->DrawText(font, timerValue, 1200, 80, 75, 0, { 255, 0, 255, 255 });
-	else if (timer < 100) app->render->DrawText(font, timerValue, 1200, 80, 75, 0, { 255, 0, 255, 255 });
-	else if (timer < 1000) app->render->DrawText(font, timerValue, 1200, 80, 75, 0, { 255, 0, 255, 255 });
-	else app->render->DrawText(font, timerValue, 1200, 80, 75, 0, { 255, 0, 255, 255 });
+	if (timer < 10) app->render->DrawText(font, timerValue, 620, 15, 50, 0, { 255, 0, 255, 255 });
+	else if (timer < 100) app->render->DrawText(font, timerValue, 620, 15, 50, 0, { 255, 0, 255, 255 });
+	else if (timer < 1000) app->render->DrawText(font, timerValue, 620, 15, 50, 0, { 255, 0, 255, 255 });
+	else app->render->DrawText(font, timerValue, 620, 15, 50, 0, { 255, 0, 255, 255 });
 }

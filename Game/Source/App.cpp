@@ -359,7 +359,6 @@ void App::SaveGame() const
 {
 	// we should be checking if that file actually exist
 	// from the "GetSaveGames" list ... should we overwrite ?
-
 	saveRequest = true;
 }
 
@@ -379,7 +378,7 @@ bool App::LoadGameNow()
 	if (result != NULL)
 	{
 		LOG("Loading new Game State from %s...", loadGame.GetString());
-
+		
 		root = data.child("game_state");
 		ListItem<Module*>* item = modules.start;
 		ret = true;
@@ -424,15 +423,11 @@ bool App::SaveGameNow() const
 
 	if (ret == true)
 	{
-		//saveExists = !saveExists;
 		data.save_file("save.xml");
 		LOG("... finished saving", );
 	}
 	else
-	{
-		//saveExists = false;
 		LOG("Save process halted from an error in module %s", (item != NULL) ? item->data->name.GetString() : "unknown");
-	}
 	data.reset();
 	saveRequest = false;
 	return ret;

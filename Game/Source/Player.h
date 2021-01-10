@@ -88,7 +88,7 @@ private:
 
 	//ingame timer vars
 	
-	char timerValue[8] = { "\0" };
+	char timerValue[10] = { "\0" };
 	uint timer = 0;
 	int seconds = 0;
 	

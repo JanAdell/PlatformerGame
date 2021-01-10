@@ -70,6 +70,7 @@ public:
 	bool creditsActive = false;
 	bool pauseGame = false;
 	bool canPause = false;
+	bool saveExists = false;
 
 	uint lvl = 1;
 	pugi::xml_node playerNodeScene;
@@ -110,6 +111,8 @@ private:
 	char musicVolButton[64] = { 0 };
 	char backButton[64] = { 0 };
 	char returnButton[64] = { 0 };
+
+	
 };
 
 #endif // __SCENE_H__
