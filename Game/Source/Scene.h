@@ -52,6 +52,9 @@ public:
 	void UpdateCredits(float dt);
 	void DrawCredits();
 
+	void UpdatePause(float dt);
+	void DrawPause();
+
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
 	bool Load(pugi::xml_node& data);
@@ -61,6 +64,7 @@ public:
 	bool intro = true;
 	bool settingsActive = false;
 	bool creditsActive = false;
+	bool pauseGame = false;
 
 	uint lvl = 1;
 	pugi::xml_node playerNodeScene;
@@ -75,6 +79,9 @@ private:
 	GuiButton* credits;
 	GuiButton* quit;
 	GuiButton* back;
+	GuiButton* backTitle;
+	GuiButton* unpause;
+	GuiButton* settingsPause;
 	GuiSlider* musicVol;
 	GuiSlider* fxVol;
 	GuiCheckBox* fullscreen;

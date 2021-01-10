@@ -69,38 +69,38 @@ bool Scene::PreUpdate(float dt)
 bool Scene::Update(float dt)
 {
 	
-	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && intro)
+	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && intro && app->scene->pauseGame == false)
 		LoadLevel1();
 
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && app->scene->pauseGame == false)
 	{
 		LoadLevel1();
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN && app->scene->pauseGame == false)
 	{
 		LoadLevel2();
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && app->scene->pauseGame == false)
 	{
 		app->entityManager->player->position.x = dynamic_cast<Player*>(app->entityManager->player)->spawnPos.x;
 		app->entityManager->player->position.y = dynamic_cast<Player*>(app->entityManager->player)->spawnPos.y;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN/* && intro == false*/)
+	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN/* && intro == false*/ && app->scene->pauseGame == false)
 	{
 		app->entityManager->player->position.x = dynamic_cast<Player*>(app->entityManager->player)->checkpointPos.x;
 		app->entityManager->player->position.y = dynamic_cast<Player*>(app->entityManager->player)->checkpointPos.y;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN && app->scene->pauseGame == false)
 		app->LoadGame();
 
-	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN && app->scene->pauseGame == false)
 		app->SaveGame();
 
-	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && app->scene->pauseGame == false)
 		app->godMode = !app->godMode;
 
 	//app->render->DrawTexture(img, 380, 100);
@@ -109,6 +109,7 @@ bool Scene::Update(float dt)
 	if (intro == true) UpdateMenu(dt);
 	else if (settingsActive == true && intro == false) UpdateSettings(dt);
 	else if (creditsActive == true && intro == false) UpdateCredits(dt);
+	if (pauseGame == true) UpdatePause(dt);
 
 	return true;
 }
@@ -117,8 +118,8 @@ bool Scene::Update(float dt)
 bool Scene::PostUpdate(float dt)
 {
 
-	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		playing = false;
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && pauseGame == false && intro == false) pauseGame = true;
+	else if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && pauseGame == true && intro == false) pauseGame = false;
 
 	if (intro == true)
 	{
@@ -132,6 +133,7 @@ bool Scene::PostUpdate(float dt)
 	if (intro == true) DrawMenu();
 	else if (settingsActive == true && intro == false) DrawSettings();
 	else if (creditsActive == true && intro == false) DrawCredits();
+	if (pauseGame == true) DrawPause();
 
 	return playing;
 }
@@ -239,6 +241,16 @@ void Scene::LoadGUI()
 
 	back = new GuiButton(6, { 640, 575, 200, 50 }, "Exit");
 	back->SetObserver(this);
+
+	//------------ PAUSE ---------------
+	unpause = new GuiButton(7, { 640, 295, 200, 50 }, "Start");
+	unpause->SetObserver(this);
+
+	settingsPause = new GuiButton(8, { 640, 365, 200, 50 }, "Resume");
+	settingsPause->SetObserver(this);
+
+	backTitle = new GuiButton(9, { 640, 435, 200, 50 }, "Settings");
+	backTitle->SetObserver(this);
 	
 }
 
@@ -307,6 +319,22 @@ void Scene::DrawSettings()
 	app->render->DrawText(uiFont, fullscreenButton, 610, 440, 40, 0, { 255, 255, 255, 255 });
 	vsync->Draw();
 	app->render->DrawText(uiFont, vsyncButton, 610, 510, 40, 0, { 255, 255, 255, 255 });
+}
+
+void Scene::UpdatePause(float dt)
+{
+	unpause->Update(dt);
+	settingsPause->Update(dt);
+	backTitle->Update(dt);
+	quit->Update(dt);
+}
+
+void Scene::DrawPause()
+{
+	unpause->Draw();
+	settingsPause->Draw();
+	backTitle->Draw();
+	quit->Draw();
 }
 
 void Scene::UpdateCredits(float dt)
