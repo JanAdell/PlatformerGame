@@ -81,6 +81,7 @@ private:
 	GuiCheckBox* vsync;
 	
 	int squarifiedFont = -1;
+	bool playing = true;
 };
 
 #endif // __SCENE_H__

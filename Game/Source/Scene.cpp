@@ -103,10 +103,9 @@ bool Scene::Update(float dt)
 // Called each loop iteration
 bool Scene::PostUpdate(float dt)
 {
-	bool ret = true;
 
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
+		playing = false;
 
 	if (intro == true)
 	{
@@ -121,7 +120,7 @@ bool Scene::PostUpdate(float dt)
 	else if (settingsActive == true && intro == false) DrawSettings();
 	else if (creditsActive == true && intro == false) DrawCredits();
 
-	return ret;
+	return playing;
 }
 
 // Called before quitting
@@ -312,17 +311,14 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		{
 			settingsActive = true;
 			intro = false;
-			//LoadSettings();
 		}
 		else if (control->id == 4)
 		{
 			creditsActive = true;
 			intro = false;
-			//LoadSettings();
 		}
-		//else if (control->id == 5)
-		else if (control->id == 6)
-			intro = true;
+		else if (control->id == 5) playing = false;
+		else if (control->id == 6) intro = true;
 		break;
 	case GuiControlType::SLIDER:
 		/*
