@@ -41,7 +41,7 @@ bool Scene::Start()
 {
 	app->win->SetTitle("Platformer Game: Charged v0.1");
 	LoadIntro();
-	LoadSettings();
+	LoadGUI();
 
 	return true;
 }
@@ -93,24 +93,9 @@ bool Scene::Update(float dt)
 	//app->render->DrawTexture(img, 380, 100);
 	app->map->Draw();
 
-	if (intro)
-	{
-		play->Update(dt);
-		resume->Update(dt);
-		settings->Update(dt);
-		credits->Update(dt);
-		quit->Update(dt);
-	}
-
-	else if (settingsActive && intro == false)
-	{
-		//LoadSettings();
-		back->Update(dt);
-		musicVol->Update(dt);
-		fxVol->Update(dt);
-		//fullscreen->Update(dt);
-		//vsync->Update(dt);
-	}
+	UpdateMenu(dt);
+	UpdateSettings(dt);
+	UpdateCredits(dt);
 
 	return true;
 }
@@ -132,18 +117,9 @@ bool Scene::PostUpdate(float dt)
 		quit->Draw();
 	}
 
-	else if (settingsActive && intro == false)
-	{
-		back->Draw();
-		musicVol->Draw();
-		fxVol->Draw();
-		//fullscreen->Draw();
-		//vsync->Draw();
-	}
-	else if (creditsActive)
-	{
-		app->render->DrawTexture(img, 200, 900, NULL);
-	}
+	DrawMenu();
+	DrawSettings();
+	DrawCredits();
 
 	return ret;
 }
@@ -211,24 +187,48 @@ void Scene::LoadLevel2()
 	
 }
 
-void Scene::LoadIntro()
+void Scene::LoadGUI()
 {
-	play = new GuiButton(1, { 640, 150, 300, 80 }, "Start");
+	//------------ MAIN MENU ---------------
+	play = new GuiButton(1, { 640, 295, 200, 50 }, "Start");
 	play->SetObserver(this);
 
-	resume = new GuiButton(2, { 640, 250, 300, 80 }, "Resume");
+	resume = new GuiButton(2, { 640, 365, 200, 50 }, "Resume");
 	resume->SetObserver(this);
 
-	settings = new GuiButton(3, { 640, 350, 300, 80 }, "Settings");
+	settings = new GuiButton(3, { 640, 435, 200, 50 }, "Settings");
 	settings->SetObserver(this);
 
-	credits = new GuiButton(4, { 640, 450, 300, 80 }, "Credits");
+	credits = new GuiButton(4, { 640, 505, 200, 50 }, "Credits");
 	credits->SetObserver(this);
 
-	quit = new GuiButton(5, { 640, 550, 300, 80 }, "Exit");
+	quit = new GuiButton(5, { 640, 575, 200, 50 }, "Exit");
 	quit->SetObserver(this);
 
 
+	//------------ SETTINGS ---------------
+	musicVol = new GuiSlider(1, { 640, 150, 200, 50 }, "Music Volume");
+	musicVol->SetObserver(this);
+
+	fxVol = new GuiSlider(2, { 640, 250, 200, 50 }, "FX Volume");
+	fxVol->SetObserver(this);
+
+	back = new GuiButton(6, { 640, 550, 200, 50 }, "Exit");
+	back->SetObserver(this);
+
+	fullscreen = new GuiCheckBox(1, { 10, 10, 200, 50 }, "Fullscreen");
+	fullscreen->SetObserver(this);
+
+	vsync = new GuiCheckBox(2, { 640, 550, 200, 50 }, "Vsync");
+	vsync->SetObserver(this);
+
+
+	//------------ CREDITS ---------------
+	
+}
+
+void Scene::LoadIntro()
+{
 	app->pause = true;
 	app->entityManager->CleanUp();
 	//app->fade->FadeTo();
@@ -247,22 +247,70 @@ void Scene::LoadIntro()
 	app->pause = false;
 }
 
-void Scene::LoadSettings()
+
+void Scene::UpdateMenu(float dt)
 {
-	musicVol = new GuiSlider(1, { 640, 150, 300, 80 }, "Music Volume");
-	musicVol->SetObserver(this);
+	if (intro)
+	{
+		play->Update(dt);
+		resume->Update(dt);
+		settings->Update(dt);
+		credits->Update(dt);
+		quit->Update(dt);
+	}
+}
 
-	fxVol = new GuiSlider(2, { 640, 250, 300, 80 }, "FX Volume");
-	fxVol->SetObserver(this);
+void Scene::DrawMenu()
+{
+	if (intro)
+	{
+		play->Draw();
+		resume->Draw();
+		settings->Draw();
+		credits->Draw();
+		quit->Draw();
+	}
+}
 
-	back = new GuiButton(6, { 640, 550, 300, 80 }, "Exit");
-	back->SetObserver(this);
+void Scene::UpdateSettings(float dt)
+{
+	if (settingsActive && intro == false)
+	{
+		back->Update(dt);
+		musicVol->Update(dt);
+		fxVol->Update(dt);
+		fullscreen->Update(dt);
+		vsync->Update(dt);
+	}
+}
 
-	/*fullscreen = new GuiCheckBox(1, { 10, 10, 300, 80 }, "Fullscreen");
-	fullscreen->SetObserver(this);
+void Scene::DrawSettings()
+{
+	if (settingsActive && intro == false)
+	{
+		back->Draw();
+		musicVol->Draw();
+		fxVol->Draw();
+		fullscreen->Draw();
+		vsync->Draw();
+	}
+}
 
-	vsync = new GuiCheckBox(2, { 640, 550, 300, 80 }, "Vsync");
-	vsync->SetObserver(this);*/
+void Scene::UpdateCredits(float dt)
+{
+	if (creditsActive && intro == false)
+	{
+		back->Update(dt);
+	}
+}
+
+void Scene::DrawCredits()
+{
+	if (creditsActive && intro == false)
+	{
+		app->render->DrawTexture(img, 200, 900, NULL);
+		back->Draw();
+	}
 }
 
 bool Scene::OnGuiMouseClickEvent(GuiControl* control)

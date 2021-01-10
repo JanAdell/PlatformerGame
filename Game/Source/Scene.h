@@ -40,7 +40,17 @@ public:
 	void LoadLevel1();
 	void LoadLevel2();
 	void LoadIntro();
-	void LoadSettings();
+
+	void LoadGUI();
+
+	void UpdateMenu(float dt);
+	void DrawMenu();
+
+	void UpdateSettings(float dt);
+	void DrawSettings();
+
+	void UpdateCredits(float dt);
+	void DrawCredits();
 
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
