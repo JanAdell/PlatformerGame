@@ -17,6 +17,7 @@
 #include "GuiSlider.h"
 #include "GuiCheckBox.h"
 #include "Font.h"
+#include "Animation.h"
 
 Scene::Scene() : Module()
 {
@@ -43,7 +44,8 @@ bool Scene::Start()
 	LoadIntro();
 	LoadGUI();
 	uiFont = new Font("Assets/Fonts/Squarified.xml", app->tex);
-	
+	logo = app->tex->Load("Assets/Textures/logo.png");
+	logoImg.PushBack({ 0,0,474,188 });
 	
 	sprintf_s(playButton, 64, "Play");
 	sprintf_s(continueButton, 64, "Continue");
@@ -358,6 +360,8 @@ void Scene::UpdateMenu(float dt)
 
 void Scene::DrawMenu()
 {
+	app->render->DrawTexture(logo, -app->render->camera.x+415, -app->render->camera.y+50, &(logoImg.GetCurrentFrame()));
+
 	play->Draw();
 	app->render->DrawText(uiFont, playButton, 620, 302, 40, 0, { 0, 0, 0, 255 });
 	resume->Draw();

@@ -2,6 +2,8 @@
 #define __SCENE_H__
 
 #include "Module.h"
+#include "Animation.h"
+
 
 struct SDL_Texture;
 class GuiControl;
@@ -78,6 +80,9 @@ public:
 private:
 	SDL_Texture* img = nullptr;
 	SDL_Texture* creditsBack = nullptr;
+	SDL_Texture* logo = nullptr;
+
+	Animation logoImg;
 
 	GuiButton* play;
 	GuiButton* resume;
