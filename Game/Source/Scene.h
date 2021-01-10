@@ -69,6 +69,7 @@ public:
 	bool settingsPauseActive = false;
 	bool creditsActive = false;
 	bool pauseGame = false;
+	bool canPause = false;
 
 	uint lvl = 1;
 	pugi::xml_node playerNodeScene;

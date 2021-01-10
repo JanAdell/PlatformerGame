@@ -123,9 +123,11 @@ bool Scene::Update(float dt)
 // Called each loop iteration
 bool Scene::PostUpdate(float dt)
 {
-
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && pauseGame == false && intro == false) pauseGame = true;
-	else if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && pauseGame == true && intro == false) { pauseGame = false; settingsPauseActive = false; printPause = true; }
+	if (canPause == true)
+	{
+		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && pauseGame == false) pauseGame = true;
+		else if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && pauseGame == true) { pauseGame = false; settingsPauseActive = false; printPause = true; }
+	}
 
 	if (intro == true)
 	{
@@ -178,6 +180,7 @@ void Scene::LoadLevel()
 
 void Scene::LoadLevel1()
 {
+	canPause = true;
 	app->pause = true;
 	app->godMode = false;
 	lvl = 1;
@@ -193,6 +196,7 @@ void Scene::LoadLevel1()
 
 void Scene::LoadLevel2()
 {
+	canPause = true;
 	app->pause = true;
 	app->godMode = false;
 	lvl = 2;
@@ -211,54 +215,54 @@ void Scene::LoadLevel2()
 void Scene::LoadGUI()
 {
 	//------------ MAIN MENU ---------------
-	play = new GuiButton(1, { 640, 295, 200, 50 }, "Start");
+	play = new GuiButton(1, { 550, 295, 200, 50 }, "Start");
 	play->SetObserver(this);
 
-	resume = new GuiButton(2, { 640, 365, 200, 50 }, "Resume");
+	resume = new GuiButton(2, { 550, 365, 200, 50 }, "Resume");
 	resume->SetObserver(this);
 
-	settings = new GuiButton(3, { 640, 435, 200, 50 }, "Settings");
+	settings = new GuiButton(3, { 550, 435, 200, 50 }, "Settings");
 	settings->SetObserver(this);
 
-	credits = new GuiButton(4, { 640, 505, 200, 50 }, "Credits");
+	credits = new GuiButton(4, { 550, 505, 200, 50 }, "Credits");
 	credits->SetObserver(this);
 
-	quit = new GuiButton(5, { 640, 575, 200, 50 }, "Exit");
+	quit = new GuiButton(5, { 550, 575, 200, 50 }, "Exit");
 	quit->SetObserver(this);
 
 
 	//------------ SETTINGS ---------------
-	musicVol = new GuiSlider(1, { 640, 295, 50, 28 }, "Music Volume");
+	musicVol = new GuiSlider(1, { 550, 295, 50, 28 }, "Music Volume");
 	musicVol->SetObserver(this);
 
-	fxVol = new GuiSlider(2, { 640, 365, 50, 28 }, "FX Volume");
+	fxVol = new GuiSlider(2, { 550, 365, 50, 28 }, "FX Volume");
 	fxVol->SetObserver(this);
 
-	fullscreen = new GuiCheckBox(1, { 790, 435, 50, 50 }, "Fullscreen");
+	fullscreen = new GuiCheckBox(1, { 700, 435, 50, 50 }, "Fullscreen");
 	fullscreen->SetObserver(this);
 
-	vsync = new GuiCheckBox(2, { 790, 505, 50, 50 }, "Vsync");
+	vsync = new GuiCheckBox(2, { 700, 505, 50, 50 }, "Vsync");
 	vsync->SetObserver(this);
 
-	back = new GuiButton(6, { 640, 575, 200, 50 }, "Exit");
+	back = new GuiButton(6, { 550, 575, 200, 50 }, "Exit");
 	back->SetObserver(this);
 
-	backPause = new GuiButton(10, { 640, 575, 200, 50 }, "Exit");
+	backPause = new GuiButton(10, { 550, 575, 200, 50 }, "Exit");
 	backPause->SetObserver(this);
 
 	//------------ CREDITS ---------------
 
-	back = new GuiButton(6, { 640, 575, 200, 50 }, "Exit");
+	back = new GuiButton(6, { 550, 575, 200, 50 }, "Exit");
 	back->SetObserver(this);
 
 	//------------ PAUSE ---------------
-	unpause = new GuiButton(7, { 540, 295, 200, 50 }, "Start");
+	unpause = new GuiButton(7, { 550, 295, 200, 50 }, "Start");
 	unpause->SetObserver(this);
 
-	settingsPause = new GuiButton(8, { 540, 365, 200, 50 }, "Resume");
+	settingsPause = new GuiButton(8, { 550, 365, 200, 50 }, "Resume");
 	settingsPause->SetObserver(this);
 
-	backTitle = new GuiButton(9, { 540, 435, 200, 50 }, "Settings");
+	backTitle = new GuiButton(9, { 550, 435, 200, 50 }, "Settings");
 	backTitle->SetObserver(this);
 	
 }
@@ -296,15 +300,15 @@ void Scene::UpdateMenu(float dt)
 void Scene::DrawMenu()
 {
 	play->Draw();
-	app->render->DrawText(uiFont, playButton, 695, 300, 40, 0, { 0, 0, 0, 255 });
+	app->render->DrawText(uiFont, playButton, 605, 300, 40, 0, { 0, 0, 0, 255 });
 	resume->Draw();
-	app->render->DrawText(uiFont, continueButton, 670, 370, 40, 0, { 0, 0, 0, 255 });
+	app->render->DrawText(uiFont, continueButton, 575, 370, 40, 0, { 0, 0, 0, 255 });
 	settings->Draw();
-	app->render->DrawText(uiFont, settingsButton, 670, 440, 40, 0, { 0, 0, 0, 255 });
+	app->render->DrawText(uiFont, settingsButton, 575, 440, 40, 0, { 0, 0, 0, 255 });
 	credits->Draw();
-	app->render->DrawText(uiFont, creditsButton, 660, 510, 40, 0, { 0, 0, 0, 255 });
+	app->render->DrawText(uiFont, creditsButton, 580, 510, 40, 0, { 0, 0, 0, 255 });
 	quit->Draw();
-	app->render->DrawText(uiFont, exitButton, 700, 580, 40, 0, { 0, 0, 0, 255 });
+	app->render->DrawText(uiFont, exitButton, 615, 580, 40, 0, { 0, 0, 0, 255 });
 }
 
 void Scene::UpdateSettings(float dt)
@@ -319,15 +323,15 @@ void Scene::UpdateSettings(float dt)
 void Scene::DrawSettings()
 {
 	back->Draw();
-	app->render->DrawText(uiFont, backButton, 700, 580, 40, 0, { 0, 0, 0, 255 });
+	app->render->DrawText(uiFont, backButton, 610, 580, 40, 0, { 0, 0, 0, 255 });
 	musicVol->Draw();
-	app->render->DrawText(uiFont, musicVolButton, 580, 260, 40, 0, { 255, 255, 255, 255 });
+	app->render->DrawText(uiFont, musicVolButton, 490, 260, 40, 0, { 255, 255, 255, 255 });
 	fxVol->Draw();
-	app->render->DrawText(uiFont, sfxVolButton, 580, 330, 40, 0, { 255, 255, 255, 255 });
+	app->render->DrawText(uiFont, sfxVolButton, 490, 330, 40, 0, { 255, 255, 255, 255 });
 	fullscreen->Draw();
-	app->render->DrawText(uiFont, fullscreenButton, 610, 440, 40, 0, { 255, 255, 255, 255 });
+	app->render->DrawText(uiFont, fullscreenButton, 520, 440, 40, 0, { 255, 255, 255, 255 });
 	vsync->Draw();
-	app->render->DrawText(uiFont, vsyncButton, 610, 510, 40, 0, { 255, 255, 255, 255 });
+	app->render->DrawText(uiFont, vsyncButton, 520, 510, 40, 0, { 255, 255, 255, 255 });
 }
 
 void Scene::UpdatePauseSettings(float dt)
@@ -342,15 +346,15 @@ void Scene::UpdatePauseSettings(float dt)
 void Scene::DrawPauseSettings()
 {
 	backPause->Draw();
-	app->render->DrawText(uiFont, backButton, 700, 580, 40, 0, { 0, 0, 0, 255 });
+	app->render->DrawText(uiFont, backButton, 610, 580, 40, 0, { 0, 0, 0, 255 });
 	musicVol->Draw();
-	app->render->DrawText(uiFont, musicVolButton, 580,  260, 40, 0, { 255, 255, 255, 255 });
+	app->render->DrawText(uiFont, musicVolButton, 490,  260, 40, 0, { 255, 255, 255, 255 });
 	fxVol->Draw();
-	app->render->DrawText(uiFont, sfxVolButton, 580, 330, 40, 0, { 255, 255, 255, 255 });
+	app->render->DrawText(uiFont, sfxVolButton, 490, 330, 40, 0, { 255, 255, 255, 255 });
 	fullscreen->Draw();
-	app->render->DrawText(uiFont, fullscreenButton, 610, 440, 40, 0, { 255, 255, 255, 255 });
+	app->render->DrawText(uiFont, fullscreenButton, 520, 440, 40, 0, { 255, 255, 255, 255 });
 	vsync->Draw();
-	app->render->DrawText(uiFont, vsyncButton, 610, 510, 40, 0, { 255, 255, 255, 255 });
+	app->render->DrawText(uiFont, vsyncButton, 520, 510, 40, 0, { 255, 255, 255, 255 });
 }
 
 void Scene::UpdatePause(float dt)
@@ -365,13 +369,13 @@ void Scene::UpdatePause(float dt)
 void Scene::DrawPause()
 {
 	unpause->Draw();
-	app->render->DrawText(uiFont, resumeButton, 570, 300, 40, 0, { 0, 0, 0, 255 });
+	app->render->DrawText(uiFont, resumeButton, 580, 300, 40, 0, { 0, 0, 0, 255 });
 	settingsPause->Draw();
-	app->render->DrawText(uiFont, settingsButton, 570, 370, 40, 0, { 0, 0, 0, 255 });
+	app->render->DrawText(uiFont, settingsButton, 575, 370, 40, 0, { 0, 0, 0, 255 });
 	backTitle->Draw();
-	app->render->DrawText(uiFont, returnButton, 560, 440, 40, 0, { 0, 0, 0, 255 });
+	app->render->DrawText(uiFont, returnButton, 565, 440, 40, 0, { 0, 0, 0, 255 });
 	quit->Draw();
-	app->render->DrawText(uiFont, exitButton, 700, 580, 40, 0, { 0, 0, 0, 255 });
+	app->render->DrawText(uiFont, exitButton, 615, 580, 40, 0, { 0, 0, 0, 255 });
 }
 
 void Scene::UpdateCredits(float dt)
@@ -383,6 +387,8 @@ void Scene::DrawCredits()
 {
 	app->render->DrawTexture(img, 0, 0, NULL);
 	back->Draw();
+	app->render->DrawText(uiFont, backButton, 610, 580, 40, 0, { 0, 0, 0, 255 });
+
 }
 
 bool Scene::OnGuiMouseClickEvent(GuiControl* control)
@@ -409,7 +415,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		break;
 	case GuiControlType::CHECKBOX:
 
-		if (control->id == 1) { app->win->fullscreen = !app->win->fullscreen;	app->win->SetFullScreen(); }
+		if (control->id == 1) { app->win->fullscreen = !app->win->fullscreen; app->win->SetFullScreen(); }
 		else if (control->id == 2){}
 		break;
 
