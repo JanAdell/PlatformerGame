@@ -26,6 +26,8 @@ Simply try to reach the end of the level though jumping. Some colliders might fe
 * **Entity Loading** from XML:
   * Both animations, speed, size and position are taken from there.
 * **Enemy Pathfinding**: Enemies approach the player at a certain distance.
+* **Save File Detection**: Game allows the "Continue" option when a save file is detected only.
+* **Menuing and settings**: Fullscreen and Volume can be modified from settings menu.
  
   
  ### Gameplay Related
@@ -33,11 +35,17 @@ Simply try to reach the end of the level though jumping. Some colliders might fe
 * Double Jump
 * Wall Jump (when colliding against a vertical wall jump can be performed again).
 > Wall Jumping can sometimes feel strange due to collision feedback, we reccommend letting the character collide clearly and then fall a bit off the wall so a double jump can be performed comfortably again.
-* Player health and ammo can be found in the app bar alongside FPS and VSYNC.
+* Player **health** can be seen as a portrait of the character on the topleft corner.
+* Player **ammo** can be seen under player health.
+* Level **collectibles** can be seen on the topright corner. These pickups also work as a way for the player to recover **1 life and 5 bullets**.
+* Level **timer** which shows time spent on current level.
+
 
 ## Bugs
 
-* If God Mode is activated while jumping the player will still have gravity applied. Deactivating it and reactivating on solid ground will fix it.
+* If **God Mode is activated while jumping** the player will still have gravity applied. Deactivating it and reactivating on solid ground will fix it, otherwise the player will fall into the void;
+* Game **chrashes** sometimes if a collision is happening at the same time as the player collides with the end of the level.
+* Entities might sometimes **travel through solid ground** if the player is detected on the opposite side.
 
 ## Controls
 
@@ -54,6 +62,7 @@ Simply try to reach the end of the level though jumping. Some colliders might fe
 * F4 - Teleport to last checkpoint
 * F5 - Save
 * F6 - Load
+* F8 - See UI boxes
 * F9 - View colliders, pathfinding and logic
 * F10 - God Mode
 * F11 - Activate/deactivate Framerate cap (30 FPS)
@@ -67,12 +76,6 @@ Simply try to reach the end of the level though jumping. Some colliders might fe
 * Jan Adell - Design & Code
 > https://github.com/JanAdell
 
-## Future Implementations
-
-* Charged jump from any surface in any direction, using mouse coords as target/base.
-* Fixes to entities so enemies cant go through walls.
-* Fixes to colliders so it becomes more comfortable to play.
-
 ## Found and Fixed bugs
 
 * Parallax desynced from camera movement.
@@ -80,7 +83,7 @@ Simply try to reach the end of the level though jumping. Some colliders might fe
 * When level changing, acceleration from the player during loading made subsequent spawn point be in the wrong position.
 * Enemies not appearing on screen.
 * Some enemies can go through colliders.
-
+* Continue button didn't work as intended after saving the game in one session.
 
 
 ## Assets
@@ -96,6 +99,9 @@ Simply try to reach the end of the level though jumping. Some colliders might fe
 
 * Enemy death sound
 > https://freesound.org/people/spookymodem/sounds/249813/
+
+* Graphical user interface sound effects taken from the Dev Tones section of RCP Tones (click_04 used as clicking sound, and digi_plink as hover sound)
+> https://rcptones.com/dev_tones/
 
 ## Project Repository
 
