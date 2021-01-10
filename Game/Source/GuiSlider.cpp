@@ -68,19 +68,19 @@ bool GuiSlider::Draw()
     switch (state)
     {
     case 
-        GuiControlState::DISABLED: app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 100, 100, 100, 255);
+        GuiControlState::DISABLED: app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 100, 100, 100, 100);
         break;
     case 
-        GuiControlState::NORMAL: app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 140, 75, 185, 255);
+        GuiControlState::NORMAL: app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 105, 240, 240, 255);
         break;
     case 
-        GuiControlState::FOCUSED: app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 200, 100, 220, 255);
+        GuiControlState::FOCUSED: app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 255, 230, 100, 255);
         break;
     case 
-        GuiControlState::PRESSED: app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 250, 75, 150, 255);
+        GuiControlState::PRESSED: app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 230, 105, 200, 255);
         break;
     case 
-        GuiControlState::SELECTED: app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 0, 255, 0, 255);
+        GuiControlState::SELECTED: app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 180, 205, 85, 255);
         break;
     default:
         break;

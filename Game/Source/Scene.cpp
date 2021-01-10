@@ -343,15 +343,15 @@ void Scene::UpdateMenu(float dt)
 void Scene::DrawMenu()
 {
 	play->Draw();
-	app->render->DrawText(uiFont, playButton, 605, 300, 40, 0, { 0, 0, 0, 255 });
+	app->render->DrawText(uiFont, playButton, 620, 302, 40, 0, { 0, 0, 0, 255 });
 	resume->Draw();
-	app->render->DrawText(uiFont, continueButton, 575, 370, 40, 0, { 0, 0, 0, 255 });
+	app->render->DrawText(uiFont, continueButton, 590, 372, 40, 0, { 0, 0, 0, 255 });
 	settings->Draw();
-	app->render->DrawText(uiFont, settingsButton, 575, 440, 40, 0, { 0, 0, 0, 255 });
+	app->render->DrawText(uiFont, settingsButton, 590, 442, 40, 0, { 0, 0, 0, 255 });
 	credits->Draw();
-	app->render->DrawText(uiFont, creditsButton, 580, 510, 40, 0, { 0, 0, 0, 255 });
+	app->render->DrawText(uiFont, creditsButton, 600, 512, 40, 0, { 0, 0, 0, 255 });
 	quit->Draw();
-	app->render->DrawText(uiFont, exitButton, 615, 580, 40, 0, { 0, 0, 0, 255 });
+	app->render->DrawText(uiFont, exitButton, 615, 582, 40, 0, { 0, 0, 0, 255 });
 }
 
 void Scene::UpdateSettings(float dt)
@@ -430,7 +430,7 @@ void Scene::DrawCredits()
 {
 	app->render->DrawTexture(img, 0, 0, NULL);
 	back->Draw();
-	app->render->DrawText(uiFont, backButton, 610, 580, 40, 0, { 0, 0, 0, 255 });
+	app->render->DrawText(uiFont, backButton, 615, 583, 40, 0, { 0, 0, 0, 255 });
 
 }
 

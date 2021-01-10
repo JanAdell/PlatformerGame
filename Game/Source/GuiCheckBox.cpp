@@ -54,18 +54,18 @@ bool GuiCheckBox::Draw()
     {
     case GuiControlState::DISABLED:
     {
-        if (checked) app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 100, 100, 100, 255);
-        else app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 100, 100, 100, 255);
+        if (checked) app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 100, 100, 100, 100);
+        else app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 100, 100, 100, 100);
     } break;
     case GuiControlState::NORMAL: 
     {
         hover = true;
         click = true;
-        if (checked) app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 0, 255, 0, 255);
-        else app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 0, 255, 0, 255);
+        if (checked) app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 105, 240, 240, 255);
+        else app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 105, 240, 240, 255);
     } break;
     case GuiControlState::FOCUSED:
-        app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 255, 255, 0, 255);
+        app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 255, 230, 100, 255);
         click = true;
         if (hover == true)
         {
@@ -74,7 +74,7 @@ bool GuiCheckBox::Draw()
         }
         break;
     case GuiControlState::PRESSED: 
-        app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 0, 255, 255, 255);
+        app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 230, 105, 200, 255);
         hover = true;
         if (click == true)
         {
@@ -83,7 +83,7 @@ bool GuiCheckBox::Draw()
         }
         break;
     case GuiControlState::SELECTED: 
-        app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 0, 255, 0, 255);
+        app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 180, 205, 85, 255);
         hover = true;
         click = true;
         break;
