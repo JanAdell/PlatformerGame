@@ -206,10 +206,10 @@ void Scene::LoadGUI()
 
 
 	//------------ SETTINGS ---------------
-	musicVol = new GuiSlider(1, { 640, 295, 200, 50 }, "Music Volume");
+	musicVol = new GuiSlider(1, { 640, 295, 50, 28 }, "Music Volume");
 	musicVol->SetObserver(this);
 
-	fxVol = new GuiSlider(2, { 640, 365, 200, 50 }, "FX Volume");
+	fxVol = new GuiSlider(2, { 640, 365, 50, 28 }, "FX Volume");
 	fxVol->SetObserver(this);
 
 	fullscreen = new GuiCheckBox(1, { 790, 435, 50, 50 }, "Fullscreen");
@@ -321,16 +321,9 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		else if (control->id == 6) intro = true;
 		break;
 	case GuiControlType::SLIDER:
-		/*
-		if (control->id == 1)
-		{
-
-		}
-		else if (control->id == 2)
-		{
-
-		}
-		*/
+		if (control->id == 1) app->audio->ChangeMusicVolume(musicVol->ReturnValue());
+		else if (control->id == 2) app->audio->ChangeFxVolume(fxVol->ReturnValue());
+		break;
 		break;
 	case GuiControlType::CHECKBOX:
 

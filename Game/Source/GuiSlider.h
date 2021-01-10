@@ -16,6 +16,10 @@ public:
     bool Update(float dt);
     bool Draw();
 
+    void ChangeSliderValue();
+    
+    int ReturnValue() const;
+
     bool hover = true;
     bool click = true;
 
