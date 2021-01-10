@@ -14,6 +14,7 @@
 #include "EntityManager.h"
 #include "GuiManager.h"
 
+
 #include "Map.h"
 #include "SString.h"
 
@@ -39,6 +40,15 @@ Player::Player(const fPoint& position) : Entity(position, "player", EntityType::
 	ammoAnim.PushBack({ 112,31,13,22 });
 	ammoAnim.PushBack({ 126,31,13,22 });
 	ammoAnim.speed = 0.02f;
+
+	collectAnim.PushBack({ 12,16,22,16 });
+	collectAnim.PushBack({ 56,12,24,20 });
+	collectAnim.PushBack({ 98,8,28,26 });
+	collectAnim.PushBack({ 142,4,28,28 });
+	collectAnim.PushBack({ 200,16,14,14 });
+	collectAnim.PushBack({ 242,14,24,18 });
+	collectAnim.PushBack({ 288,12,24,28 });
+	collectAnim.speed = 0.04f;
 }
 
 Player::~Player()
@@ -52,14 +62,24 @@ bool Player::Start()
 	characterTex = app->tex->Load("Assets/textures/player.png");
 	checkpointFx = app->audio->LoadFx("Assets/audio/fx/checkpoint.ogg");
 	collider = app->collisions->AddCollider({ (int)position.x, (int)position.y ,size.x ,size.y }, ColliderType::COLLIDER_PLAYER, (Module*)app->entityManager);
-
 	
+	font = new Font("Assets/Fonts/Squarified.xml", app->tex);
+
+	pickupCount = 5;
 	cont = 0;
 	hp = 3;
 	ammo = 10;
 	
+	
 	ammoTex = app->tex->Load("Assets/textures/hp.png");
 	hpTex = app->tex->Load("Assets/textures/portrait.png");
+	collectTex = app->tex->Load("Assets/textures/powerupUI.png");
+
+	//char score[64] = { 0 };
+	//sprintf_s(score, 64, "SCORE: %03i", 56);
+
+	//app->render->DrawText(font, score, 10, 10, 200, 0, { 255, 0, 255, 255 });
+
 
 	return true;
 }
@@ -67,7 +87,10 @@ bool Player::Start()
 void Player::PreUpdate(float dt)
 {
 	currentAnim = &idleAnim;
-	
+	char score[64] = { 0 };
+	sprintf_s(score, 64, "SCORE: %03i", 56);
+	app->render->DrawText(font, score, 10, 10, 1000, 0, { 255, 0, 255, 255 });
+
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		flip = SDL_FLIP_HORIZONTAL;
@@ -337,7 +360,9 @@ void Player::Update(float dt)
 	
 	speed.x = 0;
 
-	AmmoUpdate();
+	PlayerUIUpdate();
+
+	
 
 }
 
@@ -351,6 +376,7 @@ void Player::CleanUp()
 	app->tex->UnLoad(characterTex);
 	app->tex->UnLoad(ammoTex);
 	app->tex->UnLoad(hpTex);
+	app->tex->UnLoad(collectTex);
 
 	if(collider != nullptr)
 		collider->toDelete = true;
@@ -394,25 +420,26 @@ fPoint Player::GetSpeed() const
 	return speed;
 }
 
-void Player::AmmoUpdate()
+void Player::PlayerUIUpdate()
 {
+	//Player lives UI
 	if (hp == 3)
 	{
 		app->render->DrawTexture(hpTex, -app->render->camera.x, -app->render->camera.y, &(lifeAnim.GetCurrentFrame()));
-		app->render->DrawTexture(hpTex, -app->render->camera.x + 50, -app->render->camera.y, &(lifeAnim.GetCurrentFrame()));
-		app->render->DrawTexture(hpTex, -app->render->camera.x + 100, -app->render->camera.y, &(lifeAnim.GetCurrentFrame()));
+		app->render->DrawTexture(hpTex, -app->render->camera.x + 65, -app->render->camera.y, &(lifeAnim.GetCurrentFrame()));
+		app->render->DrawTexture(hpTex, -app->render->camera.x + 130, -app->render->camera.y, &(lifeAnim.GetCurrentFrame()));
 	}
 	if (hp == 2)
 	{
 		app->render->DrawTexture(hpTex, -app->render->camera.x, -app->render->camera.y, &(lifeAnim.GetCurrentFrame()));
-		app->render->DrawTexture(hpTex, -app->render->camera.x + 50, -app->render->camera.y, &(lifeAnim.GetCurrentFrame()));
+		app->render->DrawTexture(hpTex, -app->render->camera.x + 65, -app->render->camera.y, &(lifeAnim.GetCurrentFrame()));
 
 	}
 	if (hp == 1)
 	{
 		app->render->DrawTexture(hpTex, -app->render->camera.x, -app->render->camera.y, &(lifeAnim.GetCurrentFrame()));
 	}
-
+	//Ammo UI
 	if (ammo == 10)
 	{
 		app->render->DrawTexture(ammoTex, -app->render->camera.x, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
@@ -510,4 +537,46 @@ void Player::AmmoUpdate()
 		app->render->DrawTexture(ammoTex, -app->render->camera.x, -app->render->camera.y + 50, &(ammoAnim.GetCurrentFrame()));
 
 	}
+
+	//collectibles
+
+	if (pickupCount == 5)
+	{
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1000, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1040, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1080, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1120, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1160, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+
+	}
+	if (pickupCount == 4)
+	{
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1040, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1080, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1120, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1160, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+
+	}
+	if (pickupCount == 3)
+	{
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1080, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1120, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1160, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+
+	}
+	if (pickupCount == 2)
+	{
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1120, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1160, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+
+	}
+	if (pickupCount == 1)
+	{
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1160, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+
+	}
+
+
+	//Timer
+	
 }

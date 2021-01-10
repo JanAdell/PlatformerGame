@@ -66,6 +66,7 @@ public:
 	bool checkpoint = false;
 	int checkpointFx;
 	int hp;
+	int pickupCount;
 	int ammo;
 	
 	EntityType type = EntityType::NO_ENTITY;

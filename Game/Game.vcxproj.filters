@@ -25,9 +25,6 @@
     <ClCompile Include="Source\Bullet.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Font.cpp">
-      <Filter>Gui</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GuiButton.cpp">
       <Filter>Gui</Filter>
     </ClCompile>
@@ -76,6 +73,9 @@
     <ClCompile Include="Source\Player.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Font.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -122,9 +122,6 @@
     </ClInclude>
     <ClInclude Include="Source\Bullet.h">
       <Filter>Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Font.h">
-      <Filter>Gui</Filter>
     </ClInclude>
     <ClInclude Include="Source\GuiButton.h">
       <Filter>Gui</Filter>
@@ -179,6 +176,9 @@
     </ClInclude>
     <ClInclude Include="Source\Player.h">
       <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Font.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

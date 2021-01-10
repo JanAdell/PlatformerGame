@@ -3,6 +3,7 @@
 
 #include "Animation.h"
 #include "Entity.h"
+#include "Font.h"
 #include "Collisions.h"
 
 
@@ -46,7 +47,7 @@ public:
 	bool Save(pugi::xml_node&) const;
 	bool GoRight();
 	void OnCollision(Collider* c1, Collider* c2);
-	void AmmoUpdate();
+	void PlayerUIUpdate();
 		
 	fPoint GetPos() const;
 	fPoint GetSpeed() const;
@@ -59,9 +60,13 @@ public:
 	SDL_Rect* rect = nullptr;
 	SDL_Texture* hpTex = nullptr;
 	SDL_Texture* ammoTex = nullptr;
+	SDL_Texture* collectTex = nullptr;
 
 	Animation lifeAnim;
 	Animation ammoAnim;
+	Animation collectAnim;
+
+
 
 private:
 	float moveSpeed = 20;
@@ -76,6 +81,18 @@ private:
 	int cont = 0;
 	bool solidGround;
 	int jumpPower = -10;
+	
+	
+	Font* font;
+	Textures* tex;
+
+	//ingame timer vars
+	/*int timerFont = -1;
+	char timerValue[8] = { "\0" };
+	uint timer = 0;
+	int seconds = 0;*/
+	
+
 };
 
 #endif 

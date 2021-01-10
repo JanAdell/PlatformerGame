@@ -2,6 +2,7 @@
 #include "Render.h"
 #include "Collisions.h"
 #include "EntityManager.h"
+#include "Player.h"
 
 
 
@@ -57,6 +58,7 @@ void Pickup::OnCollision(Collider* c1, Collider* c2)
 		if(app->entityManager->player->hp < 3)
 			app->entityManager->player->hp += 1;
 
+		app->entityManager->player->pickupCount--;
 		toDelete = true;
 		
 		
