@@ -50,6 +50,8 @@ public:
 	bool Save(pugi::xml_node& data) const;
 	bool Load(pugi::xml_node& data);
 
+	bool ManageVsync();
+
 public:
 
 	SDL_Renderer* renderer;

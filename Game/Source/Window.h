@@ -30,6 +30,8 @@ public:
 	// Retrieve window scale
 	uint GetScale() const;
 
+	bool SetFullScreen();
+
 public:
 	// The window we'll be rendering to
 	SDL_Window* window;
@@ -39,6 +41,8 @@ public:
 
 	uint width;
 	uint height;
+
+	bool fullscreen;
 
 private:
 	SString title;

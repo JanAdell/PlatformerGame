@@ -337,16 +337,17 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		*/
 		break;
 	case GuiControlType::CHECKBOX:
-		/*
+
 		if (control->id == 1)
 		{
-
+			app->win->fullscreen = !app->win->fullscreen;
+			app->win->SetFullScreen();
 		}
 		else if (control->id == 2)
 		{
 
 		}
-		*/
+
 		break;
 
 	}

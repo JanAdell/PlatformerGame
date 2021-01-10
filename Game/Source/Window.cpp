@@ -35,7 +35,7 @@ bool Window::Awake(pugi::xml_node& config)
 		// Create window
 		// TODO 6: Load all required configurations from config.xml
 		Uint32 flags = SDL_WINDOW_SHOWN;
-		bool fullscreen = config.child("fullscreen").attribute("value").as_bool(false);
+		fullscreen = config.child("fullscreen").attribute("value").as_bool(false);
 		bool borderless = config.child("borderless").attribute("value").as_bool(false);
 		bool resizable = config.child("resizable").attribute("value").as_bool(false);
 		bool fullscreen_window = config.child("fullscreen_window").attribute("value").as_bool(false);
@@ -108,6 +108,17 @@ void Window::GetWindowSize(uint& width, uint& height) const
 {
 	width = this->width;
 	height = this->height;
+}
+
+bool Window::SetFullScreen()
+{
+	bool ret = true;
+
+	if (fullscreen)
+		SDL_SetWindowFullscreen(window, true);
+	else SDL_SetWindowFullscreen(window, false);
+
+	return ret;
 }
 
 uint Window::GetScale() const
