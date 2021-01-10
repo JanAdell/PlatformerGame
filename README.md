@@ -100,6 +100,9 @@ Simply try to reach the end of the level though jumping. Some colliders might fe
 * Enemy death sound
 > https://freesound.org/people/spookymodem/sounds/249813/
 
+* Font used was Squarified, which was turned into an Atlas and made into an xml document with **rTexPacker**
+> https://raylibtech.itch.io/rtexpacker
+
 * Graphical user interface sound effects taken from the Dev Tones section of RCP Tones (click_04 used as clicking sound, and digi_plink as hover sound)
 > https://rcptones.com/dev_tones/
 
