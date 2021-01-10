@@ -542,37 +542,37 @@ void Player::PlayerUIUpdate()
 
 	if (pickupCount == 5)
 	{
-		app->render->DrawTexture(collectTex, -app->render->camera.x + 1000, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
-		app->render->DrawTexture(collectTex, -app->render->camera.x + 1040, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
-		app->render->DrawTexture(collectTex, -app->render->camera.x + 1080, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
-		app->render->DrawTexture(collectTex, -app->render->camera.x + 1120, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
-		app->render->DrawTexture(collectTex, -app->render->camera.x + 1160, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1070, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1110, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1150, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1190, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1230, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
 
 	}
 	if (pickupCount == 4)
 	{
-		app->render->DrawTexture(collectTex, -app->render->camera.x + 1040, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
-		app->render->DrawTexture(collectTex, -app->render->camera.x + 1080, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
-		app->render->DrawTexture(collectTex, -app->render->camera.x + 1120, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
-		app->render->DrawTexture(collectTex, -app->render->camera.x + 1160, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1140, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1180, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1220, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1260, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
 
 	}
 	if (pickupCount == 3)
 	{
-		app->render->DrawTexture(collectTex, -app->render->camera.x + 1080, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
-		app->render->DrawTexture(collectTex, -app->render->camera.x + 1120, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
-		app->render->DrawTexture(collectTex, -app->render->camera.x + 1160, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1150, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1190, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1230, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
 
 	}
 	if (pickupCount == 2)
 	{
-		app->render->DrawTexture(collectTex, -app->render->camera.x + 1120, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
-		app->render->DrawTexture(collectTex, -app->render->camera.x + 1160, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1190, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1230, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
 
 	}
 	if (pickupCount == 1)
 	{
-		app->render->DrawTexture(collectTex, -app->render->camera.x + 1160, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
+		app->render->DrawTexture(collectTex, -app->render->camera.x + 1230, -app->render->camera.y + 10, &(collectAnim.GetCurrentFrame()));
 
 	}
 
