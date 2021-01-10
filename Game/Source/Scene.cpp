@@ -412,13 +412,13 @@ void Scene::UpdatePause(float dt)
 void Scene::DrawPause()
 {
 	unpause->Draw();
-	app->render->DrawText(uiFont, resumeButton, 580, 300, 40, 0, { 0, 0, 0, 255 });
+	app->render->DrawText(uiFont, resumeButton, 590, 302, 40, 0, { 0, 0, 0, 255 });
 	settingsPause->Draw();
-	app->render->DrawText(uiFont, settingsButton, 575, 370, 40, 0, { 0, 0, 0, 255 });
+	app->render->DrawText(uiFont, settingsButton, 590, 372, 40, 0, { 0, 0, 0, 255 });
 	backTitle->Draw();
-	app->render->DrawText(uiFont, returnButton, 565, 440, 40, 0, { 0, 0, 0, 255 });
+	app->render->DrawText(uiFont, returnButton, 565, 442, 40, 0, { 0, 0, 0, 255 });
 	quit->Draw();
-	app->render->DrawText(uiFont, exitButton, 615, 580, 40, 0, { 0, 0, 0, 255 });
+	app->render->DrawText(uiFont, exitButton, 620, 582, 40, 0, { 0, 0, 0, 255 });
 }
 
 void Scene::UpdateCredits(float dt)
