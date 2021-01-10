@@ -93,9 +93,9 @@ bool Scene::Update(float dt)
 	//app->render->DrawTexture(img, 380, 100);
 	app->map->Draw();
 
-	UpdateMenu(dt);
-	UpdateSettings(dt);
-	UpdateCredits(dt);
+	if (intro == true) UpdateMenu(dt);
+	else if (settingsActive == true && intro == false) UpdateSettings(dt);
+	else if (creditsActive == true && intro == false) UpdateCredits(dt);
 
 	return true;
 }
@@ -108,7 +108,7 @@ bool Scene::PostUpdate(float dt)
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
-	if (intro)
+	if (intro == true)
 	{
 		play->Draw();
 		resume->Draw();
@@ -117,9 +117,9 @@ bool Scene::PostUpdate(float dt)
 		quit->Draw();
 	}
 
-	DrawMenu();
-	DrawSettings();
-	DrawCredits();
+	if (intro == true) DrawMenu();
+	else if (settingsActive == true && intro == false) DrawSettings();
+	else if (creditsActive == true && intro == false) DrawCredits();
 
 	return ret;
 }
@@ -207,23 +207,26 @@ void Scene::LoadGUI()
 
 
 	//------------ SETTINGS ---------------
-	musicVol = new GuiSlider(1, { 640, 150, 200, 50 }, "Music Volume");
+	musicVol = new GuiSlider(1, { 640, 295, 200, 50 }, "Music Volume");
 	musicVol->SetObserver(this);
 
-	fxVol = new GuiSlider(2, { 640, 250, 200, 50 }, "FX Volume");
+	fxVol = new GuiSlider(2, { 640, 365, 200, 50 }, "FX Volume");
 	fxVol->SetObserver(this);
 
-	back = new GuiButton(6, { 640, 550, 200, 50 }, "Exit");
-	back->SetObserver(this);
-
-	fullscreen = new GuiCheckBox(1, { 10, 10, 200, 50 }, "Fullscreen");
+	fullscreen = new GuiCheckBox(1, { 790, 435, 50, 50 }, "Fullscreen");
 	fullscreen->SetObserver(this);
 
-	vsync = new GuiCheckBox(2, { 640, 550, 200, 50 }, "Vsync");
+	vsync = new GuiCheckBox(2, { 790, 505, 50, 50 }, "Vsync");
 	vsync->SetObserver(this);
+
+	back = new GuiButton(6, { 640, 575, 200, 50 }, "Exit");
+	back->SetObserver(this);
 
 
 	//------------ CREDITS ---------------
+
+	back = new GuiButton(6, { 640, 575, 200, 50 }, "Exit");
+	back->SetObserver(this);
 	
 }
 
@@ -250,67 +253,49 @@ void Scene::LoadIntro()
 
 void Scene::UpdateMenu(float dt)
 {
-	if (intro)
-	{
-		play->Update(dt);
-		resume->Update(dt);
-		settings->Update(dt);
-		credits->Update(dt);
-		quit->Update(dt);
-	}
+	play->Update(dt);
+	resume->Update(dt);
+	settings->Update(dt);
+	credits->Update(dt);
+	quit->Update(dt);
 }
 
 void Scene::DrawMenu()
 {
-	if (intro)
-	{
-		play->Draw();
-		resume->Draw();
-		settings->Draw();
-		credits->Draw();
-		quit->Draw();
-	}
+	play->Draw();
+	resume->Draw();
+	settings->Draw();
+	credits->Draw();
+	quit->Draw();
 }
 
 void Scene::UpdateSettings(float dt)
 {
-	if (settingsActive && intro == false)
-	{
-		back->Update(dt);
-		musicVol->Update(dt);
-		fxVol->Update(dt);
-		fullscreen->Update(dt);
-		vsync->Update(dt);
-	}
+	back->Update(dt);
+	musicVol->Update(dt);
+	fxVol->Update(dt);
+	fullscreen->Update(dt);
+	vsync->Update(dt);
 }
 
 void Scene::DrawSettings()
 {
-	if (settingsActive && intro == false)
-	{
-		back->Draw();
-		musicVol->Draw();
-		fxVol->Draw();
-		fullscreen->Draw();
-		vsync->Draw();
-	}
+	back->Draw();
+	musicVol->Draw();
+	fxVol->Draw();
+	fullscreen->Draw();
+	vsync->Draw();
 }
 
 void Scene::UpdateCredits(float dt)
 {
-	if (creditsActive && intro == false)
-	{
-		back->Update(dt);
-	}
+	back->Update(dt);
 }
 
 void Scene::DrawCredits()
 {
-	if (creditsActive && intro == false)
-	{
-		app->render->DrawTexture(img, 200, 900, NULL);
-		back->Draw();
-	}
+	app->render->DrawTexture(img, 0, 0, NULL);
+	back->Draw();
 }
 
 bool Scene::OnGuiMouseClickEvent(GuiControl* control)
@@ -325,11 +310,16 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 			LoadLevel2();
 		else if (control->id == 3)
 		{
-			settingsActive;
+			settingsActive = true;
 			intro = false;
 			//LoadSettings();
 		}
-		//else if (control->id == 4)
+		else if (control->id == 4)
+		{
+			creditsActive = true;
+			intro = false;
+			//LoadSettings();
+		}
 		//else if (control->id == 5)
 		else if (control->id == 6)
 			intro = true;

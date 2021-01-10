@@ -67,6 +67,7 @@ public:
 
 private:
 	SDL_Texture* img = nullptr;
+	SDL_Texture* creditsBack = nullptr;
 
 	GuiButton* play;
 	GuiButton* resume;
@@ -79,7 +80,7 @@ private:
 	GuiCheckBox* fullscreen;
 	GuiCheckBox* vsync;
 	
-	int bebasFont = -1;
+	int squarifiedFont = -1;
 };
 
 #endif // __SCENE_H__
