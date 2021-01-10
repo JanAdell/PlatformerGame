@@ -31,8 +31,8 @@ bool GuiSlider::Update(float dt)
         mouseY -= app->render->camera.y / app->win->GetScale();
 
         // Check collision between mouse and button bounds
-        if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) && 
-            (mouseY > bounds.y) && (mouseY < (bounds.y + bounds.h)))
+        if ((mouseX > bounds.x - app->render->camera.x) && (mouseX < (bounds.x - app->render->camera.x + bounds.w)) &&
+            (mouseY > bounds.y - app->render->camera.y) && (mouseY < (bounds.y - app->render->camera.y + bounds.h)))
         {
             state = GuiControlState::FOCUSED;
 
@@ -68,19 +68,19 @@ bool GuiSlider::Draw()
     switch (state)
     {
     case 
-        GuiControlState::DISABLED: app->render->DrawRectangle(bounds, 100, 100, 100, 255);
+        GuiControlState::DISABLED: app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 100, 100, 100, 255);
         break;
     case 
-        GuiControlState::NORMAL: app->render->DrawRectangle(bounds, 140, 75, 185, 255);
+        GuiControlState::NORMAL: app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 140, 75, 185, 255);
         break;
     case 
-        GuiControlState::FOCUSED: app->render->DrawRectangle(bounds, 200, 100, 220, 255);
+        GuiControlState::FOCUSED: app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 200, 100, 220, 255);
         break;
     case 
-        GuiControlState::PRESSED: app->render->DrawRectangle(bounds, 250, 75, 150, 255);
+        GuiControlState::PRESSED: app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 250, 75, 150, 255);
         break;
     case 
-        GuiControlState::SELECTED: app->render->DrawRectangle(bounds, 0, 255, 0, 255);
+        GuiControlState::SELECTED: app->render->DrawRectangle({ bounds.x - app->render->camera.x, bounds.y - app->render->camera.y, bounds.w, bounds.h }, 0, 255, 0, 255);
         break;
     default:
         break;
