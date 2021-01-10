@@ -58,7 +58,17 @@ bool Scene::Start()
 	sprintf_s(backButton, 64, "Back");
 	sprintf_s(returnButton, 64, "Main Menu");
 	
-	
+	sprintf_s(creditsText1, 64, "Project for the Development subject (GDDV - C ITM, UPC)");
+	sprintf_s(creditsText2, 64, "Charged is the result of a semester long assignment");
+	sprintf_s(creditsText3, 64, "which tasked us with developing a platforming videogame");
+	sprintf_s(creditsText4, 64, "from scratch with the tools given to us in class.");
+	sprintf_s(creditsText5, 64, "Developed by");
+	sprintf_s(creditsText6, 64, "Jan Adell Mill # github.com/ JanAdell");
+	sprintf_s(creditsText7, 64, "Oscar Reguera Parera # github.com/ oscarrep");
+	sprintf_s(creditsText8, 64, "Thanks for trying out Charged!");
+	sprintf_s(creditsText9, 64, "Check the project repository at ");
+	sprintf_s(creditsText10, 64, "github.com/ JanAdell/ PlatformerGame");
+	sprintf_s(creditsText11, 64, "github.com/ JanAdell/ PlatformerGame");
 
 	return true;
 }
@@ -424,6 +434,17 @@ void Scene::DrawPause()
 void Scene::UpdateCredits(float dt)
 {
 	back->Update(dt);
+	app->render->DrawText(uiFont, creditsText1, 300, 50, 40, 0, { 255, 255, 255, 255 });
+	app->render->DrawText(uiFont, creditsText2, 300, 90, 40, 0, { 255, 255, 255, 255 });
+	app->render->DrawText(uiFont, creditsText3, 300, 130, 40, 0, { 255, 255, 255, 255 });
+	app->render->DrawText(uiFont, creditsText4, 300, 170, 40, 0, { 255, 255, 255, 255 });
+	app->render->DrawText(uiFont, creditsText5, 300, 230, 40, 0, { 255, 255, 255, 255 });
+	app->render->DrawText(uiFont, creditsText6, 300, 290, 40, 0, { 255, 255, 80, 255 });
+	app->render->DrawText(uiFont, creditsText7, 300, 350, 40, 0, { 255, 255, 80, 255 });
+	app->render->DrawText(uiFont, creditsText8, 300, 410, 40, 0, { 255, 255, 255, 255 });
+	app->render->DrawText(uiFont, creditsText9, 300, 470, 40, 0, { 255, 255, 255, 255 });
+	app->render->DrawText(uiFont, creditsText10, 400, 530, 40, 0, { 255, 255, 255, 255 });
+	app->render->DrawText(uiFont, creditsText10, 398, 528, 40, 0, { 49, 36, 45, 255 });
 }
 
 void Scene::DrawCredits()

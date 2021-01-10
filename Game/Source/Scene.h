@@ -112,6 +112,17 @@ private:
 	char backButton[64] = { 0 };
 	char returnButton[64] = { 0 };
 
+	char creditsText1[64] = { 0 };
+	char creditsText2[64] = { 0 };
+	char creditsText3[64] = { 0 };
+	char creditsText4[64] = { 0 };
+	char creditsText5[64] = { 0 };
+	char creditsText6[64] = { 0 };
+	char creditsText7[64] = { 0 };
+	char creditsText8[64] = { 0 };
+	char creditsText9[64] = { 0 };
+	char creditsText10[64] = { 0 };
+	char creditsText11[64] = { 0 };
 	
 };
 
